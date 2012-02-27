@@ -10,7 +10,11 @@ WATCHR ?= `which watchr`
 # lessc & uglifyjs are required
 #
 
-bootstrap:
+mediawiki: bootstrap
+	cat bootstrap/js/bootstrap.js js/jquery-dotimeout/jquery.ba-dotimeout.js js/behavior.js > js/site.js
+	uglifyjs -nc js/site.js > js/site.min.js
+
+bootstrap: 
 	rm -rf bootstrap
 	mkdir -p bootstrap
 	mkdir -p bootstrap/img
@@ -22,7 +26,6 @@ bootstrap:
 	lessc ${BOOTSTRAP_RESPONSIVE_LESS} > bootstrap/css/bootstrap-responsive.css
 	lessc --compress ${BOOTSTRAP_RESPONSIVE_LESS} > bootstrap/css/bootstrap-responsive.min.css
 	cat bootstrap-git/js/bootstrap-transition.js bootstrap-git/js/bootstrap-alert.js bootstrap-git/js/bootstrap-button.js bootstrap-git/js/bootstrap-carousel.js bootstrap-git/js/bootstrap-collapse.js bootstrap-git/js/bootstrap-dropdown.js bootstrap-git/js/bootstrap-modal.js bootstrap-git/js/bootstrap-tooltip.js bootstrap-git/js/bootstrap-popover.js bootstrap-git/js/bootstrap-scrollspy.js bootstrap-git/js/bootstrap-tab.js bootstrap-git/js/bootstrap-typeahead.js > bootstrap/js/bootstrap.js
-	uglifyjs -nc bootstrap/js/bootstrap.js > bootstrap/js/bootstrap.min.js
 
 #
 # WATCH LESS FILES
@@ -33,4 +36,4 @@ watch:
 	watchr -e "watch('less/.*\.less') { system 'make' }"
 
 
-.PHONY: dist docs watch gh-pages
+.PHONY: dist docs watch

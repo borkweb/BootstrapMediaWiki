@@ -35,5 +35,29 @@ $(function() {
 	$('.tip').tooltip();
 	$('.pop').popover();
 
+	$('#toc').each(function() {
+		var $toc = $(this);
+		var $title = $toc.find('#toctitle');
+		var $links = $title.siblings('ul');
+
+		$('.page-header').prepend('<ul class="nav nav-pills pull-right"><li class="dropdown" id="page-contents"><a class="dropdown-toggle" href="#"><i class="icon-list"></i> Contents <b class="caret"></b></a> <ul class="dropdown-menu"></ul></li></ul>');
+
+		$('.page-header #page-contents').find('.dropdown-menu').html( $links.html() );
+
+		var $intent = $('#page-contents, .navbar .dropdown');
+
+		$intent
+			.on('mouseenter', function(){
+				$(this).doTimeout( 'dropdown', 300, 'addClass', 'open' );
+			})
+			.on('mouseleave', function(){
+				$(this).doTimeout( 'dropdown', 500, 'removeClass', 'open' );
+			})
+			.find('.dropdown-toggle')
+			.on('click', function(e){ 
+				e.preventDefault(); 
+			});
+	});
+
 	prettyPrint();
 });

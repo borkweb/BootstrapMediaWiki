@@ -66,7 +66,18 @@ h6:hover .editsection {
 	margin-bottom: 0.5em;
 }
 
+#page-contents ul li { list-style: none; }
+#page-contents .dropdown-menu {
+	right: 0;
+	left: auto;
+}
+
+#page-contents i {
+	opacity: 0.3;
+}
+
 #toc {
+	display: none;
 	float: right;
 	margin: 0 0 1em 1em;
 }
@@ -105,6 +116,57 @@ a.new {
 
 .printfooter { display: none;}
 
+/* thumb, copied from vector */
+div.thumb {
+	margin-bottom: .5em;
+	width: auto;
+	background-color: transparent;
+}
+div.thumbinner {
+	border: 1px solid #ccc;
+	padding: 3px !important;
+	background-color: #f9f9f9;
+	font-size: 94%;
+	text-align: center;
+	overflow: hidden;
+}
+html .thumbimage {
+	border: 1px solid #ccc;
+}
+html .thumbcaption {
+	border: none;
+	text-align: left;
+	line-height: 1.4em;
+	padding: 3px !important;
+	font-size: 94%;
+}
+div.magnify {
+	float: right;
+	border: none !important;
+	background: none !important;
+}
+div.magnify a, div.magnify img {
+	display: block;
+	border: none !important;
+	background: none !important;
+}
+/* @noflip */
+div.tright {
+	clear: right;
+	float: right;
+	margin: .5em 0 1.3em 1.4em;
+}
+/* @noflip */
+div.tleft {
+	float: left;
+	clear: left;
+	margin: .5em 1.4em 1.3em 0;
+}
+img.thumbborder {
+	border: 1px solid #dddddd;
+}
+
+/* responsive */
 @media (max-width: 480px) {
 
 	#toc {

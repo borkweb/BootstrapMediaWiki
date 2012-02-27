@@ -2044,18 +2044,18 @@ $(function() {
 		var $title = $toc.find('#toctitle');
 		var $links = $title.siblings('ul');
 
-		$('.page-header').prepend('<ul class="nav nav-pills pull-right"><li class="dropdown" id="page-contents"><a class="dropdown-toggle" href="#">Contents <b class="caret"></b></a> <ul class="dropdown-menu"></ul></li></ul>');
+		$('.page-header').prepend('<ul class="nav nav-pills pull-right"><li class="dropdown" id="page-contents"><a class="dropdown-toggle" href="#"><i class="icon-list"></i> Contents <b class="caret"></b></a> <ul class="dropdown-menu"></ul></li></ul>');
 
 		$('.page-header #page-contents').find('.dropdown-menu').html( $links.html() );
 
-		var $page_contents = $('#page-contents');
+		var $intent = $('#page-contents, .navbar .dropdown');
 
-		$page_contents
+		$intent
 			.on('mouseenter', function(){
-				$page_contents.doTimeout( 'dropdown', 300, 'addClass', 'open' );
+				$(this).doTimeout( 'dropdown', 300, 'addClass', 'open' );
 			})
 			.on('mouseleave', function(){
-				$page_contents.doTimeout( 'dropdown', 500, 'removeClass', 'open' );
+				$(this).doTimeout( 'dropdown', 500, 'removeClass', 'open' );
 			})
 			.find('.dropdown-toggle')
 			.on('click', function(e){ 
