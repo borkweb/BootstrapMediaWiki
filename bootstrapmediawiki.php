@@ -197,9 +197,10 @@ class BootstrapMW_Template extends QuickTemplate {
       </div><!-- container -->
     </div><!-- bottom -->
 
+		<?php $js_file = dirname( $_SERVER['SCRIPT_FILENAME'] ) . '/skins/' . $this->skin->skinname . '/js/site.min.js'; ?>
   	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
-  	<script type="text/javascript" src="<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/js/site.min.js"></script>
+		<script type="text/javascript" src="<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/js/site.min.js?v=<?php echo filemtime( $js_file ); ?>"></script>
   	<script type="text/javascript" src="<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/google-code-prettify/prettify.js"></script>
 </body>
 </html>
