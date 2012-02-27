@@ -121,7 +121,7 @@ class BootstrapMW_Template extends QuickTemplate {
 		if ( count( $this->data['personal_urls'] ) > 0 ) {
 			$user_icon = '<span class="user-icon"><img src="https://secure.gravatar.com/avatar/'.md5(strtolower( $wgUser->getName()) . '@plymouth.edu').'.jpg?s=20&r=g"/></span>';
 			$name = strtolower( $wgUser->getName() );
-			$user_nav = $this->get_array_links( $this->data['personal_urls'], $user_icon . $name );
+			$user_nav = $this->get_array_links( $this->data['personal_urls'], $user_icon . $name, 'user' );
 		?>
 		<ul<?php $this->html('userlangattributes') ?> class="nav pull-right">
 			<?php echo $user_nav; ?>
@@ -132,7 +132,7 @@ class BootstrapMW_Template extends QuickTemplate {
 
 		<?php
 		if ( count( $this->data['content_actions']) > 0 ) {
-			$content_nav = $this->get_array_links( $this->data['content_actions'], 'Page' );
+			$content_nav = $this->get_array_links( $this->data['content_actions'], 'Page', 'page' );
 		?>
 			<ul class="nav pull-right"><?php echo $content_nav; ?></ul>
 		<?php
@@ -199,8 +199,7 @@ class BootstrapMW_Template extends QuickTemplate {
 
   	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
-  	<script type="text/javascript" src="<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/bootstrap/js/bootstrap.min.js"></script>
-  	<script type="text/javascript" src="<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/behavior.js"></script>
+  	<script type="text/javascript" src="<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/js/site.min.js"></script>
   	<script type="text/javascript" src="<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/google-code-prettify/prettify.js"></script>
 </body>
 </html>
@@ -246,16 +245,16 @@ class BootstrapMW_Template extends QuickTemplate {
 			
 			if(preg_match('/^\*\s*\[\[(.+)\]\]/', $line, $match)) {
 				$nav[] = array('title'=>$match[1], 'link'=>$match[1]);
-			}elseif(preg_match('/\*\*\s*\[\[(.+)\]\]/', $line, $match)) {
-				if( strpos( $match[1], '|' ) !== false ) {
-					$item = explode( '|', $match[1] );
+			}elseif(preg_match('/\*\*\s*(.*)\[\[(.+)\]\]/', $line, $match)) {
+				if( strpos( $match[2], '|' ) !== false ) {
+					$item = explode( '|', $match[2] );
 					$item = array(
-						'title' => $item[1],
+						'title' => $match[1] . $item[1],
 						'link' => $item[0],
 						'local' => true,
 					);
 				} else {
-					$item = $match[1];
+					$item = $match[1] . $match[2];
 				}//end else
 
 				$nav[count($nav)-1]['sublinks'][] = $item;
@@ -266,11 +265,11 @@ class BootstrapMW_Template extends QuickTemplate {
 		return $nav;	
 	}//end get_page_links
 
-	private function get_array_links( $array, $title ) {
+	private function get_array_links( $array, $title, $which ) {
 		$nav = array();
 		$nav[] = array('title' => $title );
 		foreach( $array as $key => $item ) {
-			$nav[0]['sublinks'][] = array(
+			$link = array(
 				'id' => Sanitizer::escapeId( $key ),
 				'attributes' => $item['attributes'],
 				'link' => htmlspecialchars( $item['href'] ),
@@ -278,6 +277,34 @@ class BootstrapMW_Template extends QuickTemplate {
 				'class' => htmlspecialchars( $item['class'] ),
 				'title' => htmlspecialchars( $item['text'] ),
 			);
+
+			if( 'page' == $which ) {
+				switch( $link['title'] ) {
+					case 'Page': $icon = 'file'; break;
+					case 'Discussion': $icon = 'comment'; break;
+					case 'Edit': $icon = 'pencil'; break;
+					case 'History': $icon = 'time'; break;
+					case 'Delete': $icon = 'remove'; break;
+					case 'Move': $icon = 'move'; break;
+					case 'Protect': $icon = 'lock'; break;
+					case 'Watch': $icon = 'eye-open'; break;
+				}//end switch
+
+				$link['title'] = '<i class="icon-' . $icon . '"></i> ' . $link['title'];
+			} elseif( 'user' == $which ) {
+				switch( $link['title'] ) {
+					case 'My talk': $icon = 'comment'; break;
+					case 'My preferences': $icon = 'cog'; break;
+					case 'My watchlist': $icon = 'eye-close'; break;
+					case 'My contributions': $icon = 'list-alt'; break;
+					case 'Log out': $icon = 'off'; break;
+					default: $icon = 'user'; break;
+				}//end switch
+
+				$link['title'] = '<i class="icon-' . $icon . '"></i> ' . $link['title'];
+			}//end elseif
+
+			$nav[0]['sublinks'][] = $link;
 		}//end foreach
 
 		return $this->nav( $nav );
