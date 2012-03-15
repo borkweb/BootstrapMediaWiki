@@ -23,12 +23,24 @@ require_once('includes/SkinTemplate.php');
  */
 class SkinBootstrapMediawiki extends SkinTemplate {
     /** Using Bootstrap */
-    function initPage( &$out ) {
-        SkinTemplate::initPage( $out );
-        $this->skinname  = 'bootstrap-mediawiki';
-        $this->stylename = 'bootstrap-mediawiki';
-        $this->template  = 'BootstrapMW_Template';
-    }
+	public $skinname = 'bootstrap-mediawiki';
+	public $stylename = 'bootstrap-mediawiki';
+	public $template = 'BootstrapMW_Template';
+	public $useHeadElement = true;
+
+	function setupSkinUserCss( OutputPage $out ) {
+		global $wgHandheldStyle, $wgSiteCSS;
+
+		parent::setupSkinUserCss( $out );
+
+		$out->addStyle( 'bootstrap-mediawiki/bootstrap/css/bootstrap.min.css' );
+		$out->addStyle( 'bootstrap-mediawiki/bootstrap/css/bootstrap-responsive.min.css' );
+		$out->addStyle( 'bootstrap-mediawiki/google-code-prettify/prettify.css' );
+		$out->addStyle( 'bootstrap-mediawiki/style.css' );
+		if( $wgSiteCSS ) {
+			$out->addStyle( 'bootstrap-mediawiki/' . $wgSiteCSS );
+		}//end if
+	}
 }
 
 /**
@@ -51,49 +63,16 @@ class BootstrapMW_Template extends QuickTemplate {
    * @access private
    */
   function execute() {
-		global $wgUser, $wgSitename, $wgSitenameshort, $wgCopyrightLink, $wgCopyright, $wgBootstrap, $wgArticlePath, $wgGoogleAnalyticsID, $wgSiteCSS;
+		global $wgRequest, $wgUser, $wgSitename, $wgSitenameshort, $wgCopyrightLink, $wgCopyright, $wgBootstrap, $wgArticlePath, $wgGoogleAnalyticsID, $wgSiteCSS;
 
 		$this->skin = $this->data['skin'];
+		$action = $wgRequest->getText( 'action' );
 
-        // Suppress warnings to prevent notices about missing indexes in $this->data
-        wfSuppressWarnings();
-?><!DOCTYPE html>
-<html xml:lang="<?php $this->text('lang') ?>" lang="<?php $this->text('lang') ?>" dir="<?php $this->text('dir') ?>">
-<head>
-    <meta http-equiv="Content-Type" content="<?php $this->text('mimetype') ?>; charset=<?php $this->text('charset') ?>" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php $this->text('pagetitle') ?></title>
-    <link rel="stylesheet" type="text/css" href="<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/bootstrap/css/bootstrap-responsive.min.css" />
-    <link rel="stylesheet" type="text/css" href="<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/google-code-prettify/prettify.css" />
-    <link rel="stylesheet" type="text/css" href="<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/style.css" />
-    <?php if(isset($wgSiteCSS)) { ?>
-    	<link rel="stylesheet" type="text/css" href="<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/<?php echo $wgSiteCSS ?>" />
-    <?php } ?>
-    <?php $this->html('headlinks') ?>
-    <?php 
-    
-    if(isset($wgGoogleAnalyticsID)) { ?>
+    // Suppress warnings to prevent notices about missing indexes in $this->data
+    wfSuppressWarnings();
 
-<script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', '<?php echo $wgGoogleAnalyticsID; ?>']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
-      <?php
-    }
-    ?>
-</head>
-<body class="<?php echo Sanitizer::escapeClass('page-' . $this->data['title'])?>">
-
+		$this->html('headelement');
+?>
 <div class="navbar navbar-fixed-top">
 	<div class="navbar-inner">
 		<div class="container">
@@ -108,7 +87,7 @@ class BootstrapMW_Template extends QuickTemplate {
 		<div class="nav-collapse">
 			<ul class="nav">
 				<li>
-					<a href="/webapp/devwiki/wiki/Main_Page">Home</a>
+					<a href="/webapp/mis/wiki/Main_Page">Home</a>
 				</li>
 				<?php
 					echo $this->nav( $this->get_page_links( 'Bootstrap:TitleBar' ) );
@@ -158,30 +137,53 @@ class BootstrapMW_Template extends QuickTemplate {
 		</div>
 	</div>
 </div><!-- topbar -->
-
-
+<?php
+if( $subnav_links = $this->get_page_links('Bootstrap:Subnav') ) {
+?>
+<div class="subnav subnav-fixed">
+	<ul class="nav nav-pills">
+	<?php echo $this->nav( $subnav_links ); ?>
+	</ul>
+</div>
+<?php
+}//end if
+?>
     <div id="wiki-body" class="container">
-
       <?php if( $this->data['sitenotice'] ) { ?><div id="siteNotice" class="alert-message warning"><?php $this->html('sitenotice') ?></div><?php } ?>
+			<?php if ( $this->data['undelete'] ): ?>
+			<!-- undelete -->
+			<div id="contentSub2"><?php $this->html( 'undelete' ) ?></div>
+			<!-- /undelete -->
+			<?php endif; ?>
+			<?php if($this->data['newtalk'] ): ?>
+			<!-- newtalk -->
+			<div class="usermessage"><?php $this->html( 'newtalk' )  ?></div>
+			<!-- /newtalk -->
+			<?php endif; ?>
 
-        <div class="page-header">
-          <h1><?php $this->html( 'title' ) ?> <small><?php $this->html('subtitle') ?></small></h1>
-        </div>	
+			<div class="pagetitle page-header">
+				<h1><?php $this->html( 'title' ) ?> <small><?php $this->html('subtitle') ?></small></h1>
+			</div>	
 
-        <!-- Main hero unit for a primary marketing message or call to action -->
-<!--
-        <div class="hero-unit">
-          <h1>Hello, world!</h1>
-          <p>Vestibulum id ligula porta felis euismod semper. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</p>
-          <p><a class="btn primary large">Learn more &raquo;</a></p>
-        </div>
--->
+			<div class="body">
+			<?php $this->html( 'bodytext' ) ?>
+			</div>
 
-		<?php $this->html( 'bodytext' ) ?>
-
+			<?php if ( $this->data['catlinks'] ): ?>
+			<div class="category-links">
+			<!-- catlinks -->
+			<?php $this->html( 'catlinks' ); ?>
+			<!-- /catlinks -->
+			</div>
+			<?php endif; ?>
+			<?php if ( $this->data['dataAfterContent'] ): ?>
+			<div class="data-after-content">
+			<!-- dataAfterContent -->
+			<?php $this->html( 'dataAfterContent' ); ?>
+			<!-- /dataAfterContent -->
+			</div>
+			<?php endif; ?>
     </div><!-- container -->
-
-
 
     <div class="bottom">
       <div class="container">
@@ -215,18 +217,24 @@ class BootstrapMW_Template extends QuickTemplate {
 	private function nav( $nav ) {
 		$output = '';
 		foreach($nav as $topItem) {
-			$pageTitle = Title::newFromText($topItem['title']);
+			$pageTitle = Title::newFromText($topItem['link'] ?: $topItem['title'] );
 			if(array_key_exists('sublinks', $topItem)) {
 				$output .= '<li class="dropdown">';
 				$output .= '<a href="#" class="dropdown-toggle" data-toggle="dropdown">' . $topItem['title'] . ' <b class="caret"></b></a>';
 				$output .= '<ul class="dropdown-menu">';
 				foreach($topItem['sublinks'] as $subLink) {
-					if( $subLink['local'] && $pageTitle = Title::newFromText($subLink['link']) ) {
-						$href = $pageTitle->getLocalURL();
+					if( 'divider' == $subLink ) {
+						$output .= "<li class='divider'></li>\n";
+					} elseif( $subLink['textonly'] ) {
+						$output .= "<li class='nav-header'>{$subLink['title']}</li>\n";
 					} else {
-						$href = $subLink['link'];
+						if( $subLink['local'] && $pageTitle = Title::newFromText($subLink['link']) ) {
+							$href = $pageTitle->getLocalURL();
+						} else {
+							$href = $subLink['link'];
+						}//end else
+						$output .= "<li {$subLink['attributes']}><a href='{$href}' class='{$subLink['class']}'>{$subLink['title']}</a>";
 					}//end else
-					$output .= "<li {$subLink['attributes']}><a href='{$href}' class='{$subLink['class']}'>{$subLink['title']}</a>";
 				}
 				$output .= '</ul>';
 				$output .= '</li>';
@@ -243,26 +251,52 @@ class BootstrapMW_Template extends QuickTemplate {
 		$nav = array();
 		foreach(explode("\n", $titleBar) as $line) {
 			if(trim($line) == '') continue;
-			
-			if(preg_match('/^\*\s*\[\[(.+)\]\]/', $line, $match)) {
-				$nav[] = array('title'=>$match[1], 'link'=>$match[1]);
-			}elseif(preg_match('/\*\*\s*(.*)\[\[(.+)\]\]/', $line, $match)) {
-				if( strpos( $match[2], '|' ) !== false ) {
-					$item = explode( '|', $match[2] );
-					$item = array(
-						'title' => $match[1] . $item[1],
-						'link' => $item[0],
-						'local' => true,
-					);
-				} else {
-					$item = $match[1] . $match[2];
-				}//end else
+			if( preg_match('/^\*\*\s*divider/', $line ) ) {
+				$nav[ count( $nav ) - 1]['sublinks'][] = 'divider';
+				continue;
+			}//end if
 
-				$nav[count($nav)-1]['sublinks'][] = $item;
+			$sub = false;
+			$link = false;
+			
+			if(preg_match('/^\*\s*([^\*]*)\[\[:?(.+)\]\]/', $line, $match)) {
+				$sub = false;
+				$link = true;
+			}elseif(preg_match('/\*\*\s*([^\*]*)\[\[:?(.+)\]\]/', $line, $match)) {
+				$sub = true;
+				$link = true;
+			}elseif(preg_match('/\*\*\s*([^\* ]*)(.+)/', $line, $match)) {
+				$sub = true;
+				$link = false;
 			}elseif(preg_match('/^\*\s*(.+)/', $line, $match)) {
-				$nav[] = array('title'=>$match[1]);
+				$sub = false;
+				$link = false;
 			}
+
+			if( strpos( $match[2], '|' ) !== false ) {
+				$item = explode( '|', $match[2] );
+				$item = array(
+					'title' => $match[1] . $item[1],
+					'link' => $item[0],
+					'local' => true,
+				);
+			} else {
+				$item = $match[1] . $match[2];
+
+				if( $link ) {
+					$item = array('title'=> $item, 'link' => $item, 'local' => true );
+				} else {
+					$item = array('title'=> $item, 'link' => $item, 'textonly' => true );
+				}//end else
+			}//end else
+
+			if( $sub ) {
+				$nav[count( $nav ) - 1]['sublinks'][] = $item;
+			} else {
+				$nav[] = $item;
+			}//end else
 		}
+
 		return $nav;	
 	}//end get_page_links
 
