@@ -45,11 +45,11 @@ $(function() {
 		$('.page-header #page-contents').find('.dropdown-menu').html( $links.html() );
 	});
 
-	var $intent = $('#page-contents, .navbar .dropdown');
+	var $intent = $('#page-contents, .navbar .dropdown, .subnav .dropdown');
 
 	$intent
 		.on('mouseenter', function(){
-			$(this).doTimeout( 'dropdown', 300, 'addClass', 'open' );
+			$(this).doTimeout( 'dropdown', 200, 'addClass', 'open' );
 		})
 		.on('mouseleave', function(){
 			$(this).doTimeout( 'dropdown', 500, 'removeClass', 'open' );
