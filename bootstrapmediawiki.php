@@ -38,7 +38,7 @@ class SkinBootstrapMediawiki extends SkinTemplate {
 		$out->addStyle( 'bootstrap-mediawiki/google-code-prettify/prettify.css' );
 		$out->addStyle( 'bootstrap-mediawiki/style.css' );
 		if( $wgSiteCSS ) {
-			$out->addStyle( 'bootstrap-mediawiki/' . $wgSiteCSS );
+			$out->addStyle( $wgSiteCSS );
 		}//end if
 	}
 }
@@ -63,7 +63,7 @@ class BootstrapMW_Template extends QuickTemplate {
    * @access private
    */
   function execute() {
-		global $wgRequest, $wgUser, $wgSitename, $wgSitenameshort, $wgCopyrightLink, $wgCopyright, $wgBootstrap, $wgArticlePath, $wgGoogleAnalyticsID, $wgSiteCSS;
+		global $wgRequest, $wgPsuBasePath, $wgUser, $wgSitename, $wgSitenameshort, $wgCopyrightLink, $wgCopyright, $wgBootstrap, $wgArticlePath, $wgGoogleAnalyticsID, $wgSiteCSS;
 
 		$this->skin = $this->data['skin'];
 		$action = $wgRequest->getText( 'action' );
@@ -87,7 +87,7 @@ class BootstrapMW_Template extends QuickTemplate {
 		<div class="nav-collapse">
 			<ul class="nav">
 				<li>
-					<a href="/webapp/mis/wiki/Main_Page">Home</a>
+				<a href="<?php echo $wgPsuBasePath; ?>">Home</a>
 				</li>
 				<?php
 					echo $this->nav( $this->get_page_links( 'Bootstrap:TitleBar' ) );
@@ -239,7 +239,9 @@ if( $subnav_links = $this->get_page_links('Bootstrap:Subnav') ) {
 				$output .= '</ul>';
 				$output .= '</li>';
 			} else {
-				$output .= '<li' . ($this->data['title'] == $topItem['title'] ? ' class="active"' : '') . '><a href="' . $pageTitle->getLocalURL() . '">' . $topItem['title'] . '</a></li>';
+				if( $pageTitle ) {
+					$output .= '<li' . ($this->data['title'] == $topItem['title'] ? ' class="active"' : '') . '><a href="' . $pageTitle->getLocalURL() . '">' . $topItem['title'] . '</a></li>';
+				}//end if
 			}
 		}
 
