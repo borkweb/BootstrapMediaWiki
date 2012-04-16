@@ -1,4 +1,8 @@
 $(function() {
+	$('#subnav-select').on('change', function() {
+		document.location = $(this).find('option:selected').val();
+	});
+
 	$('.dropdown-toggle').dropdown();
 	$('table')
 		.not('#toc')

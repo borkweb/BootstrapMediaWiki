@@ -141,6 +141,9 @@ class BootstrapMW_Template extends QuickTemplate {
 if( $subnav_links = $this->get_page_links('Bootstrap:Subnav') ) {
 ?>
 <div class="subnav subnav-fixed">
+	<select id="subnav-select">
+	<?php echo $this->nav_select( $subnav_links ); ?>
+	</select>
 	<ul class="nav nav-pills">
 	<?php echo $this->nav( $subnav_links ); ?>
 	</ul>
@@ -148,6 +151,7 @@ if( $subnav_links = $this->get_page_links('Bootstrap:Subnav') ) {
 <?php
 }//end if
 ?>
+<div id="wiki-outer-body">
     <div id="wiki-body" class="container">
       <?php if( $this->data['sitenotice'] ) { ?><div id="siteNotice" class="alert-message warning"><?php $this->html('sitenotice') ?></div><?php } ?>
 			<?php if ( $this->data['undelete'] ): ?>
@@ -184,7 +188,7 @@ if( $subnav_links = $this->get_page_links('Bootstrap:Subnav') ) {
 			</div>
 			<?php endif; ?>
     </div><!-- container -->
-
+</div>
     <div class="bottom">
       <div class="container">
         <?php
@@ -243,6 +247,41 @@ if( $subnav_links = $this->get_page_links('Bootstrap:Subnav') ) {
 					$output .= '<li' . ($this->data['title'] == $topItem['title'] ? ' class="active"' : '') . '><a href="' . $pageTitle->getLocalURL() . '">' . $topItem['title'] . '</a></li>';
 				}//end if
 			}
+		}
+
+		return $output;
+	}
+
+	/**
+	 * Render one or more navigations elements by name, automatically reveresed
+	 * when UI is in RTL mode
+	 */
+	private function nav_select( $nav ) {
+		$output = '';
+		foreach($nav as $topItem) {
+			$pageTitle = Title::newFromText($topItem['link'] ?: $topItem['title'] );
+			$output .= '<optgroup label="'.strip_tags($topItem['title']).'">';
+			if(array_key_exists('sublinks', $topItem)) {
+				foreach($topItem['sublinks'] as $subLink) {
+					if( 'divider' == $subLink ) {
+						$output .= "<option value='' disabled='disabled' class='unclickable'>----</option>\n";
+					} elseif( $subLink['textonly'] ) {
+						$output .= "<option value='' disabled='disabled' class='unclickable'>{$subLink['title']}</option>\n";
+					} else {
+						if( $subLink['local'] && $pageTitle = Title::newFromText($subLink['link']) ) {
+							$href = $pageTitle->getLocalURL();
+						} else {
+							$href = $subLink['link'];
+						}//end else
+						$output .= "<option value='{$href}'>{$subLink['title']}</option>";
+					}//end else
+				}
+			} else {
+				if( $pageTitle ) {
+					$output .= '<option value="' . $pageTitle->getLocalURL() . '">' . $topItem['title'] . '</option>';
+				}//end if
+			}
+			$output .= '</optgroup>';
 		}
 
 		return $output;
