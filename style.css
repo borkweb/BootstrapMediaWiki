@@ -25,6 +25,10 @@ p {
 	margin-bottom: 15px;
 }
 
+.mw-content-ltr ul, .mw-content-ltr ol {
+	margin-bottom: 9px;;
+}
+
 .brand img { margin-right: 0.5em; }
 .navbar input {
 	background-color: #555;
@@ -307,6 +311,10 @@ img.thumbborder {
 	color: white;
 	background-color: #497168;
 	border-color: #497168;
+}
+
+pre.linenums ol {
+	margin-bottom: 0;
 }
 
 #wiki-outer-body {
