@@ -113,7 +113,7 @@ class BootstrapMW_Template extends QuickTemplate {
 		if ( count( $this->data['content_actions']) > 0 ) {
 			$content_nav = $this->get_array_links( $this->data['content_actions'], 'Page', 'page' );
 		?>
-			<ul class="nav pull-right"><?php echo $content_nav; ?></ul>
+			<ul class="nav pull-right content-actions"><?php echo $content_nav; ?></ul>
 		<?php
 		}
 	} else {  // else if is logged in
@@ -237,7 +237,8 @@ if( $subnav_links = $this->get_page_links('Bootstrap:Subnav') ) {
 						} else {
 							$href = $subLink['link'];
 						}//end else
-						$output .= "<li {$subLink['attributes']}><a href='{$href}' class='{$subLink['class']}'>{$subLink['title']}</a>";
+						$slug = strtolower( str_replace(' ', '-', preg_replace('/[^a-zA-Z0-9 ]/', '', trim( strip_tags( $subLink['title'] ) ) ) ) );
+						$output .= "<li {$subLink['attributes']}><a href='{$href}' class='{$subLink['class']} {$slug}'>{$subLink['title']}</a>";
 					}//end else
 				}
 				$output .= '</ul>';
