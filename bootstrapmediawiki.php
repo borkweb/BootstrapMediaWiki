@@ -305,11 +305,11 @@ if( $subnav_links = $this->get_page_links('Bootstrap:Subnav') ) {
 			if(preg_match('/^\*\s*([^\*]*)\[\[:?(.+)\]\]/', $line, $match)) {
 				$sub = false;
 				$link = true;
-			}elseif(preg_match('/^\*\s*([^\*]*)\[([^ ]+) (.+)\]/', $line, $match)) {
+			}elseif(preg_match('/^\*\s*([^\*\[]*)\[([^\[ ]+) (.+)\]/', $line, $match)) {
 				$sub = false;
 				$link = true;
 				$external = true;
-			}elseif(preg_match('/^\*\*\s*([^\*]*)\[([^ ]+) (.+)\]/', $line, $match)) {
+			}elseif(preg_match('/^\*\*\s*([^\*\[]*)\[([^\[ ]+) (.+)\]/', $line, $match)) {
 				$sub = true;
 				$link = true;
 				$external = true;
