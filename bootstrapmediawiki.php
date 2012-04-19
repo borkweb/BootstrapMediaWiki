@@ -113,7 +113,7 @@ class BootstrapMW_Template extends QuickTemplate {
 		if ( count( $this->data['content_actions']) > 0 ) {
 			$content_nav = $this->get_array_links( $this->data['content_actions'], 'Page', 'page' );
 		?>
-			<ul class="nav pull-right"><?php echo $content_nav; ?></ul>
+			<ul class="nav pull-right content-actions"><?php echo $content_nav; ?></ul>
 		<?php
 		}
 	} else {  // else if is logged in
@@ -141,6 +141,9 @@ class BootstrapMW_Template extends QuickTemplate {
 if( $subnav_links = $this->get_page_links('Bootstrap:Subnav') ) {
 ?>
 <div class="subnav subnav-fixed">
+	<select id="subnav-select">
+	<?php echo $this->nav_select( $subnav_links ); ?>
+	</select>
 	<ul class="nav nav-pills">
 	<?php echo $this->nav( $subnav_links ); ?>
 	</ul>
@@ -148,6 +151,7 @@ if( $subnav_links = $this->get_page_links('Bootstrap:Subnav') ) {
 <?php
 }//end if
 ?>
+<div id="wiki-outer-body">
     <div id="wiki-body" class="container">
       <?php if( $this->data['sitenotice'] ) { ?><div id="siteNotice" class="alert-message warning"><?php $this->html('sitenotice') ?></div><?php } ?>
 			<?php if ( $this->data['undelete'] ): ?>
@@ -184,7 +188,7 @@ if( $subnav_links = $this->get_page_links('Bootstrap:Subnav') ) {
 			</div>
 			<?php endif; ?>
     </div><!-- container -->
-
+</div>
     <div class="bottom">
       <div class="container">
         <?php
@@ -233,16 +237,52 @@ if( $subnav_links = $this->get_page_links('Bootstrap:Subnav') ) {
 						} else {
 							$href = $subLink['link'];
 						}//end else
-						$output .= "<li {$subLink['attributes']}><a href='{$href}' class='{$subLink['class']}'>{$subLink['title']}</a>";
+						$slug = strtolower( str_replace(' ', '-', preg_replace('/[^a-zA-Z0-9 ]/', '', trim( strip_tags( $subLink['title'] ) ) ) ) );
+						$output .= "<li {$subLink['attributes']}><a href='{$href}' class='{$subLink['class']} {$slug}'>{$subLink['title']}</a>";
 					}//end else
 				}
 				$output .= '</ul>';
 				$output .= '</li>';
 			} else {
 				if( $pageTitle ) {
-					$output .= '<li' . ($this->data['title'] == $topItem['title'] ? ' class="active"' : '') . '><a href="' . $pageTitle->getLocalURL() . '">' . $topItem['title'] . '</a></li>';
+					$output .= '<li' . ($this->data['title'] == $topItem['title'] ? ' class="active"' : '') . '><a href="' . ( $topItem['external'] ? $topItem['link'] : $pageTitle->getLocalURL() ) . '">' . $topItem['title'] . '</a></li>';
 				}//end if
 			}
+		}
+
+		return $output;
+	}
+
+	/**
+	 * Render one or more navigations elements by name, automatically reveresed
+	 * when UI is in RTL mode
+	 */
+	private function nav_select( $nav ) {
+		$output = '';
+		foreach($nav as $topItem) {
+			$pageTitle = Title::newFromText($topItem['link'] ?: $topItem['title'] );
+			$output .= '<optgroup label="'.strip_tags($topItem['title']).'">';
+			if(array_key_exists('sublinks', $topItem)) {
+				foreach($topItem['sublinks'] as $subLink) {
+					if( 'divider' == $subLink ) {
+						$output .= "<option value='' disabled='disabled' class='unclickable'>----</option>\n";
+					} elseif( $subLink['textonly'] ) {
+						$output .= "<option value='' disabled='disabled' class='unclickable'>{$subLink['title']}</option>\n";
+					} else {
+						if( $subLink['local'] && $pageTitle = Title::newFromText($subLink['link']) ) {
+							$href = $pageTitle->getLocalURL();
+						} else {
+							$href = $subLink['link'];
+						}//end else
+						$output .= "<option value='{$href}'>{$subLink['title']}</option>";
+					}//end else
+				}
+			} else {
+				if( $pageTitle ) {
+					$output .= '<option value="' . $pageTitle->getLocalURL() . '">' . $topItem['title'] . '</option>';
+				}//end if
+			}
+			$output .= '</optgroup>';
 		}
 
 		return $output;
@@ -260,10 +300,19 @@ if( $subnav_links = $this->get_page_links('Bootstrap:Subnav') ) {
 
 			$sub = false;
 			$link = false;
+			$external = false;
 			
 			if(preg_match('/^\*\s*([^\*]*)\[\[:?(.+)\]\]/', $line, $match)) {
 				$sub = false;
 				$link = true;
+			}elseif(preg_match('/^\*\s*([^\*]*)\[([^ ]+) (.+)\]/', $line, $match)) {
+				$sub = false;
+				$link = true;
+				$external = true;
+			}elseif(preg_match('/^\*\*\s*([^\*]*)\[([^ ]+) (.+)\]/', $line, $match)) {
+				$sub = true;
+				$link = true;
+				$external = true;
 			}elseif(preg_match('/\*\*\s*([^\*]*)\[\[:?(.+)\]\]/', $line, $match)) {
 				$sub = true;
 				$link = true;
@@ -283,12 +332,18 @@ if( $subnav_links = $this->get_page_links('Bootstrap:Subnav') ) {
 					'local' => true,
 				);
 			} else {
-				$item = $match[1] . $match[2];
+				if( $external ) {
+					$item = $match[2];
+					$title = $match[1] . $match[3];
+				} else {
+					$item = $match[1] . $match[2];
+					$title = $item;
+				}//end else
 
 				if( $link ) {
-					$item = array('title'=> $item, 'link' => $item, 'local' => true );
+					$item = array('title'=> $title, 'link' => $item, 'local' => ! $external , 'external' => $external );
 				} else {
-					$item = array('title'=> $item, 'link' => $item, 'textonly' => true );
+					$item = array('title'=> $title, 'link' => $item, 'textonly' => true, 'external' => $external );
 				}//end else
 			}//end else
 
