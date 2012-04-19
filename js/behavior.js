@@ -1,4 +1,8 @@
 $(function() {
+	$('#subnav-select').on('change', function() {
+		document.location = $(this).find('option:selected').val();
+	});
+
 	$('.dropdown-toggle').dropdown();
 	$('table')
 		.not('#toc')
@@ -44,6 +48,25 @@ $(function() {
 
 		$('.page-header #page-contents').find('.dropdown-menu').html( $links.html() );
 	});
+
+	if( $('.page-header .nav').length === 0 ) {
+		$('.page-header').prepend('<ul class="nav nav-pills pull-right"></li></ul>');
+	}//end if
+
+	var $header = $('.page-header');
+	var $hero = $('.hero-unit');
+	var $edit = $('.navbar .content-actions .edit');
+	if( $edit.length > 0 ) {
+		if( $hero.length ) {
+			if( ! $hero.find('.nav-pills').length ) {
+				$hero.prepend('<ul class="nav nav-pills pull-right"></ul>');
+			}//end if
+
+			$edit.closest('li').clone().prependTo( $hero.find('.nav-pills') );
+		} else {
+			$edit.closest('li').clone().prependTo( $header.find('.nav-pills') );
+		}//end else
+	}//end if
 
 	var $intent = $('#page-contents, .navbar .dropdown, .subnav .dropdown');
 
