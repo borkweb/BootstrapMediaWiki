@@ -245,7 +245,7 @@ if( $subnav_links = $this->get_page_links('Bootstrap:Subnav') ) {
 				$output .= '</li>';
 			} else {
 				if( $pageTitle ) {
-					$output .= '<li' . ($this->data['title'] == $topItem['title'] ? ' class="active"' : '') . '><a href="' . $pageTitle->getLocalURL() . '">' . $topItem['title'] . '</a></li>';
+					$output .= '<li' . ($this->data['title'] == $topItem['title'] ? ' class="active"' : '') . '><a href="' . ( $topItem['external'] ? $topItem['link'] : $pageTitle->getLocalURL() ) . '">' . $topItem['title'] . '</a></li>';
 				}//end if
 			}
 		}
@@ -300,10 +300,19 @@ if( $subnav_links = $this->get_page_links('Bootstrap:Subnav') ) {
 
 			$sub = false;
 			$link = false;
+			$external = false;
 			
 			if(preg_match('/^\*\s*([^\*]*)\[\[:?(.+)\]\]/', $line, $match)) {
 				$sub = false;
 				$link = true;
+			}elseif(preg_match('/^\*\s*([^\*]*)\[([^ ]+) (.+)\]/', $line, $match)) {
+				$sub = false;
+				$link = true;
+				$external = true;
+			}elseif(preg_match('/^\*\*\s*([^\*]*)\[([^ ]+) (.+)\]/', $line, $match)) {
+				$sub = true;
+				$link = true;
+				$external = true;
 			}elseif(preg_match('/\*\*\s*([^\*]*)\[\[:?(.+)\]\]/', $line, $match)) {
 				$sub = true;
 				$link = true;
@@ -323,12 +332,18 @@ if( $subnav_links = $this->get_page_links('Bootstrap:Subnav') ) {
 					'local' => true,
 				);
 			} else {
-				$item = $match[1] . $match[2];
+				if( $external ) {
+					$item = $match[2];
+					$title = $match[1] . $match[3];
+				} else {
+					$item = $match[1] . $match[2];
+					$title = $item;
+				}//end else
 
 				if( $link ) {
-					$item = array('title'=> $item, 'link' => $item, 'local' => true );
+					$item = array('title'=> $title, 'link' => $item, 'local' => ! $external , 'external' => $external );
 				} else {
-					$item = array('title'=> $item, 'link' => $item, 'textonly' => true );
+					$item = array('title'=> $title, 'link' => $item, 'textonly' => true, 'external' => $external );
 				}//end else
 			}//end else
 
