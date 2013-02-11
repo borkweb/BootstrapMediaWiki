@@ -1,4 +1,11 @@
 $(function() {
+
+	$('#page-contents a').click(function(e){
+		e.preventDefault();
+		var $target = $(this).attr('href');
+		$(document).scrollTop( $($target).offset().top-100 );                                                                                                                                                                                                     
+	});
+
 	$('#subnav-select').on('change', function() {
 		document.location = $(this).find('option:selected').val();
 	});
