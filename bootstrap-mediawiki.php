@@ -21,18 +21,22 @@ $wgExtensionCredits['skin'][] = array(
 $wgValidSkinNames['bootstrapmediawiki'] = 'BootstrapMediaWiki';
 $wgAutoloadClasses['SkinBootstrapMediaWiki'] = __DIR__ . '/BootstrapMediaWiki.skin.php';
 
+
+$skinDirParts = explode( DIRECTORY_SEPARATOR, __DIR__ );
+$skinDir = array_pop( $skinDirParts );
+
 $wgResourceModules['skins.bootstrapmediawiki'] = array(
 	'styles' => array(
-		'bootstrap-mediawiki/bootstrap/css/bootstrap.min.css'            => array( 'media' => 'screen' ),
-		'bootstrap-mediawiki/bootstrap/css/bootstrap-responsive.min.css' => array( 'media' => 'screen' ),
-		'bootstrap-mediawiki/google-code-prettify/prettify.css'          => array( 'media' => 'screen' ),
-		'bootstrap-mediawiki/style.css'                                  => array( 'media' => 'screen' ),
+		$skinDir . '/bootstrap/css/bootstrap.min.css'            => array( 'media' => 'screen' ),
+		$skinDir . '/bootstrap/css/bootstrap-responsive.min.css' => array( 'media' => 'screen' ),
+		$skinDir . '/google-code-prettify/prettify.css'          => array( 'media' => 'screen' ),
+		$skinDir . '/style.css'                                  => array( 'media' => 'screen' ),
 	),
 	'scripts' => array(
-		'bootstrap-mediawiki/bootstrap/js/bootstrap.min.js',
-		'bootstrap-mediawiki/google-code-prettify/prettify.js',
-		'bootstrap-mediawiki/js/jquery.ba-dotimeout.min.js',
-		'bootstrap-mediawiki/js/behavior.js',
+		$skinDir . '/bootstrap/js/bootstrap.min.js',
+		$skinDir . '/google-code-prettify/prettify.js',
+		$skinDir . '/js/jquery.ba-dotimeout.min.js',
+		$skinDir . '/js/behavior.js',
 	),
 	'dependencies' => array(
 		'jquery',
@@ -43,3 +47,11 @@ $wgResourceModules['skins.bootstrapmediawiki'] = array(
 	'remoteBasePath' => &$GLOBALS['wgStylePath'],
 	'localBasePath'  => &$GLOBALS['wgStyleDirectory'],
 );
+
+if ( isset( $wgSiteJS ) ) {
+	$wgResourceModules['skins.bootstrapmediawiki']['scripts'][] = $skinDir . '/' . $wgSiteJS;
+}//end if
+
+if ( isset( $wgSiteCSS ) ) {
+	$wgResourceModules['skins.bootstrapmediawiki']['styles'][] = $skinDir . '/' . $wgSiteCSS;
+}//end if

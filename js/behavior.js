@@ -1,4 +1,5 @@
 $(function() {
+	$('html').removeClass('client-nojs');
 
 	$('#page-contents a').click(function(e){
 		e.preventDefault();
