@@ -33,6 +33,7 @@ class SkinBootstrapMediaWiki extends SkinTemplate {
 		global $wgSiteJS;
 		parent::initPage( $out );
 		$out->addModuleScripts( 'skins.bootstrapmediawiki' );
+		$out->addMeta( 'viewport', 'width=device-width, initial-scale=1.0' );
 
 		// if there is a custom JS declared, include it.
 		if( $wgSiteJS ) {
@@ -80,6 +81,7 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 	 */
 	public function execute() {
 		global $wgRequest, $wgPsuBasePath, $wgUser, $wgSitename, $wgSitenameshort, $wgCopyrightLink, $wgCopyright, $wgBootstrap, $wgArticlePath, $wgGoogleAnalyticsID, $wgSiteCSS;
+		global $wgEnableUploads;
 
 		$this->skin = $this->data['skin'];
 		$action = $wgRequest->getText( 'action' );
@@ -111,7 +113,9 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 						<ul class="dropdown-menu">
 							<li><a href="<?php echo $url_prefix; ?>Special:RecentChanges" class="recent-changes"><i class="icon-edit"></i> Recent Changes</a></li>
 							<li><a href="<?php echo $url_prefix; ?>Special:SpecialPages" class="special-pages"><i class="icon-star-empty"></i> Special Pages</a></li>
+							<?php if ( $wgEnableUploads ) { ?>
 							<li><a href="<?php echo $url_prefix; ?>Special:Upload" class="upload-a-file"><i class="icon-upload"></i> Upload a File</a></li>
+							<?php } ?>
 						</ul>
 					</li>
 					<?php echo $this->nav( $this->get_page_links( 'Bootstrap:TitleBar' ) ); ?>

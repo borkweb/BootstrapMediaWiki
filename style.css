@@ -290,7 +290,7 @@ img.thumbborder {
 	}
 }
 
-.subnav .nav {
+.subnav .container .nav {
   margin-bottom: 0;
 }
 
@@ -379,6 +379,7 @@ pre.linenums ol {
   .subnav-fixed .nav {
     width: 1170px;
     margin: 0 auto;
+		margin-left: -12px;
     padding: 0 1px;
   }
   .subnav .nav > li:first-child > a,
@@ -439,5 +440,9 @@ pre.linenums ol {
 
 	.hero-unit h1 {
 		font-size: 1.5em;
+	}
+
+	.hero-unit pre {
+		display: none;
 	}
 }
