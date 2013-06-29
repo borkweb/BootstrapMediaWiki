@@ -27,10 +27,9 @@ $skinDir = array_pop( $skinDirParts );
 
 $wgResourceModules['skins.bootstrapmediawiki'] = array(
 	'styles' => array(
-		$skinDir . '/bootstrap/css/bootstrap.min.css'            => array( 'media' => 'screen' ),
-		$skinDir . '/bootstrap/css/bootstrap-responsive.min.css' => array( 'media' => 'screen' ),
-		$skinDir . '/google-code-prettify/prettify.css'          => array( 'media' => 'screen' ),
-		$skinDir . '/style.css'                                  => array( 'media' => 'screen' ),
+		$skinDir . '/bootstrap/css/bootstrap.min.css'            => array( 'media' => 'all' ),
+		$skinDir . '/google-code-prettify/prettify.css'          => array( 'media' => 'all' ),
+		$skinDir . '/style.css'                                  => array( 'media' => 'all' ),
 	),
 	'scripts' => array(
 		$skinDir . '/bootstrap/js/bootstrap.min.js',

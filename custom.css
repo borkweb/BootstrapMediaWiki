@@ -5,7 +5,6 @@
 
 .hero-unit pre {
 	color: #eee;
-	width: 520px;
 }
 
 .hero-unit .new {
@@ -16,16 +15,9 @@
 	text-shadow: 1px 1px 0 #000;
 }
 
-@media (max-width: 767px) {
+@media (min-width: 520px) {
 	.hero-unit pre {
-		font-size: 8px;
-		width: 340px;
-	}
-}
-
-@media (max-width: 400px) {
-	.hero-unit pre {
-		display: none;
+		width: 520px;
 	}
 }
 
