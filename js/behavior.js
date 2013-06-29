@@ -10,7 +10,6 @@ $(function() {
 		window.location = $(this).val();
 	});
 
-	$('.dropdown-toggle').dropdown();
 	$('table')
 		.not('#toc')
 		.not('.mw-specialpages-table')
@@ -81,4 +80,5 @@ $(function() {
 	prettyPrint();
 
 	$('#wiki-body .body a[title="Special:UserLogin"]').click();
+	$('.dropdown-toggle').dropdown();
 });
