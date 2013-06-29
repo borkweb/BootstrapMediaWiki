@@ -78,18 +78,6 @@ $(function() {
 
 	var $intent = $('#page-contents, .navbar .dropdown, .subnav .dropdown');
 
-	$intent
-		.on('mouseenter', function(){
-			$(this).doTimeout( 'dropdown', 200, 'addClass', 'open' );
-		})
-		.on('mouseleave', function(){
-			$(this).doTimeout( 'dropdown', 500, 'removeClass', 'open' );
-		})
-		.find('.dropdown-toggle')
-		.on('click', function(e){ 
-			e.preventDefault(); 
-		});
-
 	prettyPrint();
 
 	$('#wiki-body .body a[title="Special:UserLogin"]').click();
