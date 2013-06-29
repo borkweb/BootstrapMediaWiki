@@ -19,6 +19,10 @@ textarea {
 	width: 95%;
 }
 
+.category-links {
+	clear: both;
+}
+
 .mw-headline {
 	text-shadow: 1px 1px 0 rgb(255,255,255);
 }

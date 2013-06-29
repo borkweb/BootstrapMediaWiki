@@ -6,8 +6,8 @@ $(function() {
 		$(document).scrollTop( $($target).offset().top-100 );                                                                                                                                                                                                     
 	});
 
-	$('#subnav-select').on('change', function() {
-		document.location = $(this).find('option:selected').val();
+	$( document ).on('change', '#subnav-select', function() {
+		window.location = $(this).val();
 	});
 
 	$('.dropdown-toggle').dropdown();
@@ -25,6 +25,7 @@ $(function() {
 		});
 
 	$('pre').addClass('prettyprint linenums');
+	$('.hero-unit pre').removeClass('prettyprint linenums');
 
 	$('.editButtons').addClass('well');
 	$('input[type=submit],input[type=button],input[type=reset]').addClass('btn');

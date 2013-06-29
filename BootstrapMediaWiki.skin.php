@@ -1,7 +1,6 @@
 <?php
 /**
  * Bootstrap - A basic MediaWiki skin based on Twitter's excellent Bootstrap CSS framework
- * Loosely based off of the skin by Aaron Parecki <aaron@parecki.com>
  *
  * @Version 1.0.0
  * @Author Matthew Batchelder <borkweb@gmail.com>
@@ -9,15 +8,14 @@
  * @License: GPLv2 (http://www.gnu.org/copyleft/gpl.html)
  */
 
-if( !defined( 'MEDIAWIKI' ) ) {
+if ( ! defined( 'MEDIAWIKI' ) ) {
 	die( -1 );
-}
+}//end if
 
 require_once('includes/SkinTemplate.php');
 
 /**
  * Inherit main code from SkinTemplate, set the CSS and template filter.
- * @todo document
  * @package MediaWiki
  * @subpackage Skins
  */
@@ -28,17 +26,24 @@ class SkinBootstrapMediaWiki extends SkinTemplate {
 	public $template = 'BootstrapMediaWikiTemplate';
 	public $useHeadElement = true;
 
+	/**
+	 * initialize the page
+	 */
 	public function initPage( OutputPage $out ) {
 		global $wgSiteJS;
 		parent::initPage( $out );
 		$out->addModuleScripts( 'skins.bootstrapmediawiki' );
 
+		// if there is a custom JS declared, include it.
 		if( $wgSiteJS ) {
 			$out->addScript( $wgSiteJS );
 		}//end if
 	}//end initPage
 
-	function setupSkinUserCss( OutputPage $out ) {
+	/**
+	 * prepares the skin's CSS
+	 */
+	public function setupSkinUserCss( OutputPage $out ) {
 		global $wgSiteCSS;
 
 		parent::setupSkinUserCss( $out );
@@ -48,14 +53,14 @@ class SkinBootstrapMediaWiki extends SkinTemplate {
 		// we need to include this here so the file pathing is right
 		$out->addStyle( 'bootstrap-mediawiki/font-awesome/css/font-awesome.min.css' );
 
+		// if there is a custom CSS declared, include it.
 		if( $wgSiteCSS ) {
 			$out->addStyle( $wgSiteCSS );
 		}//end if
-	}
+	}//end setupSkinUserCss
 }
 
 /**
- * @todo document
  * @package MediaWiki
  * @subpackage Skins
  */
@@ -63,7 +68,7 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 	/**
 	 * @var Cached skin object
 	 */
-	var $skin;
+	public $skin;
 
 	/**
 	 * Template filter callback for Bootstrap skin.
@@ -73,11 +78,12 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 	 *
 	 * @access private
 	 */
-	function execute() {
+	public function execute() {
 		global $wgRequest, $wgPsuBasePath, $wgUser, $wgSitename, $wgSitenameshort, $wgCopyrightLink, $wgCopyright, $wgBootstrap, $wgArticlePath, $wgGoogleAnalyticsID, $wgSiteCSS;
 
 		$this->skin = $this->data['skin'];
 		$action = $wgRequest->getText( 'action' );
+		$url_prefix = str_replace( '$1', '', $wgArticlePath );
 
 		// Suppress warnings to prevent notices about missing indexes in $this->data
 		wfSuppressWarnings();
@@ -100,10 +106,18 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 					<li>
 					<a href="<?php echo $this->data['nav_urls']['mainpage']['href'] ?>">Home</a>
 					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="<?php echo $url_prefix; ?>Special:RecentChanges" class="recent-changes"><i class="icon-edit"></i> Recent Changes</a></li>
+							<li><a href="<?php echo $url_prefix; ?>Special:SpecialPages" class="special-pages"><i class="icon-star-empty"></i> Special Pages</a></li>
+							<li><a href="<?php echo $url_prefix; ?>Special:Upload" class="upload-a-file"><i class="icon-upload"></i> Upload a File</a></li>
+						</ul>
+					</li>
 					<?php echo $this->nav( $this->get_page_links( 'Bootstrap:TitleBar' ) ); ?>
 				</ul>
 			<?php
-			if($wgUser->isLoggedIn()) {
+			if ( $wgUser->isLoggedIn() ) {
 				if ( count( $this->data['personal_urls'] ) > 0 ) {
 					$user_icon = '<span class="user-icon"><img src="https://secure.gravatar.com/avatar/'.md5(strtolower( $wgUser->getName()) . '@plymouth.edu').'.jpg?s=20&r=g"/></span>';
 					$name = strtolower( $wgUser->getName() );
@@ -113,14 +127,14 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 						<?php echo $user_nav; ?>
 					</ul>
 					<?php
-				}
+				}//end if
 
 				if ( count( $this->data['content_actions']) > 0 ) {
 					$content_nav = $this->get_array_links( $this->data['content_actions'], 'Page', 'page' );
 					?>
 					<ul class="nav pull-right content-actions"><?php echo $content_nav; ?></ul>
 					<?php
-				}
+				}//end if
 			} else {  // else if is logged in
 				?>
 				<ul class="nav pull-right">
@@ -134,7 +148,7 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 			</div>
 			<form class="navbar-search pull-right" action="<?php $this->text( 'wgScript' ) ?>" id="searchform">
 				<div>
-					<input type="search" name="search" placeholder="Search" title="Search EotL - End of the Line MUD [ctrl-option-f]" accesskey="f" id="searchInput" autocomplete="off">
+					<input type="search" name="search" placeholder="Search" title="Search <?php echo $wgSitename; ?> [ctrl-option-f]" accesskey="f" id="searchInput" autocomplete="off">
 					<input type="hidden" name="title" value="Special:Search">
 				</div>
 			</form>
@@ -145,12 +159,14 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 		if( $subnav_links = $this->get_page_links('Bootstrap:Subnav') ) {
 ?>
 <div class="subnav subnav-fixed">
-	<select id="subnav-select">
-	<?php echo $this->nav_select( $subnav_links ); ?>
-	</select>
-	<ul class="nav nav-pills">
-	<?php echo $this->nav( $subnav_links ); ?>
-	</ul>
+	<div class="container">
+		<select id="subnav-select">
+		<?php echo $this->nav_select( $subnav_links ); ?>
+		</select>
+		<ul class="nav nav-pills">
+		<?php echo $this->nav( $subnav_links ); ?>
+		</ul>
+	</div>
 </div>
 <?php
 		}//end if
@@ -195,10 +211,7 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 </div>
 		<div class="bottom">
 			<div class="container">
-<?php
-		$this->includePage('Bootstrap:Footer');
-?>
-
+				<?php $this->includePage('Bootstrap:Footer'); ?>
 				<footer>
 					<p>&copy; <?php echo date('Y'); ?> by <a href="<?php echo (isset($wgCopyrightLink) ? $wgCopyrightLink : 'http://borkweb.com'); ?>"><?php echo (isset($wgCopyright) ? $wgCopyright : 'BorkWeb'); ?></a> 
 						&bull; Powered by <a href="http://mediawiki.org">MediaWiki</a> 
@@ -212,7 +225,6 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 		<?php if ( $this->data['debug'] ): ?>
 		<!-- Debug output:
 		<?php $this->text( 'debug' ); ?>
-
 		-->
 		<?php endif; ?>
 </body>
@@ -226,24 +238,26 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 	 */
 	private function nav( $nav ) {
 		$output = '';
-		foreach($nav as $topItem) {
-			$pageTitle = Title::newFromText($topItem['link'] ?: $topItem['title'] );
-			if(array_key_exists('sublinks', $topItem)) {
+		foreach ( $nav as $topItem ) {
+			$pageTitle = Title::newFromText( $topItem['link'] ?: $topItem['title'] );
+			if ( array_key_exists( 'sublinks', $topItem ) ) {
 				$output .= '<li class="dropdown">';
 				$output .= '<a href="#" class="dropdown-toggle" data-toggle="dropdown">' . $topItem['title'] . ' <b class="caret"></b></a>';
 				$output .= '<ul class="dropdown-menu">';
-				foreach($topItem['sublinks'] as $subLink) {
-					if( 'divider' == $subLink ) {
+
+				foreach ( $topItem['sublinks'] as $subLink ) {
+					if ( 'divider' == $subLink ) {
 						$output .= "<li class='divider'></li>\n";
-					} elseif( $subLink['textonly'] ) {
+					} elseif ( $subLink['textonly'] ) {
 						$output .= "<li class='nav-header'>{$subLink['title']}</li>\n";
 					} else {
-						if( $subLink['local'] && $pageTitle = Title::newFromText($subLink['link']) ) {
+						if( $subLink['local'] && $pageTitle = Title::newFromText( $subLink['link'] ) ) {
 							$href = $pageTitle->getLocalURL();
 						} else {
 							$href = $subLink['link'];
 						}//end else
-						$slug = strtolower( str_replace(' ', '-', preg_replace('/[^a-zA-Z0-9 ]/', '', trim( strip_tags( $subLink['title'] ) ) ) ) );
+
+						$slug = strtolower( str_replace(' ', '-', preg_replace( '/[^a-zA-Z0-9 ]/', '', trim( strip_tags( $subLink['title'] ) ) ) ) );
 						$output .= "<li {$subLink['attributes']}><a href='{$href}' class='{$subLink['class']} {$slug}'>{$subLink['title']}</a>";
 					}//end else
 				}
@@ -253,11 +267,10 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 				if( $pageTitle ) {
 					$output .= '<li' . ($this->data['title'] == $topItem['title'] ? ' class="active"' : '') . '><a href="' . ( $topItem['external'] ? $topItem['link'] : $pageTitle->getLocalURL() ) . '">' . $topItem['title'] . '</a></li>';
 				}//end if
-			}
-		}
-
+			}//end else
+		}//end foreach
 		return $output;
-	}
+	}//end nav
 
 	/**
 	 * Render one or more navigations elements by name, automatically reveresed
@@ -265,34 +278,33 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 	 */
 	private function nav_select( $nav ) {
 		$output = '';
-		foreach($nav as $topItem) {
-			$pageTitle = Title::newFromText($topItem['link'] ?: $topItem['title'] );
-			$output .= '<optgroup label="'.strip_tags($topItem['title']).'">';
-			if(array_key_exists('sublinks', $topItem)) {
-				foreach($topItem['sublinks'] as $subLink) {
-					if( 'divider' == $subLink ) {
+		foreach ( $nav as $topItem ) {
+			$pageTitle = Title::newFromText( $topItem['link'] ?: $topItem['title'] );
+			$output .= '<optgroup label="'.strip_tags( $topItem['title'] ).'">';
+			if ( array_key_exists( 'sublinks', $topItem ) ) {
+				foreach ( $topItem['sublinks'] as $subLink ) {
+					if ( 'divider' == $subLink ) {
 						$output .= "<option value='' disabled='disabled' class='unclickable'>----</option>\n";
-					} elseif( $subLink['textonly'] ) {
+					} elseif ( $subLink['textonly'] ) {
 						$output .= "<option value='' disabled='disabled' class='unclickable'>{$subLink['title']}</option>\n";
 					} else {
-						if( $subLink['local'] && $pageTitle = Title::newFromText($subLink['link']) ) {
+						if( $subLink['local'] && $pageTitle = Title::newFromText( $subLink['link'] ) ) {
 							$href = $pageTitle->getLocalURL();
 						} else {
 							$href = $subLink['link'];
 						}//end else
+
 						$output .= "<option value='{$href}'>{$subLink['title']}</option>";
 					}//end else
-				}
-			} else {
-				if( $pageTitle ) {
-					$output .= '<option value="' . $pageTitle->getLocalURL() . '">' . $topItem['title'] . '</option>';
-				}//end if
-			}
+				}//end foreach
+			} elseif ( $pageTitle ) {
+				$output .= '<option value="' . $pageTitle->getLocalURL() . '">' . $topItem['title'] . '</option>';
+			}//end else
 			$output .= '</optgroup>';
-		}
+		}//end foreach
 
 		return $output;
-	}
+	}//end nav_select
 
 	private function get_page_links( $source ) {
 		$titleBar = $this->getPageRawText( $source );
