@@ -67,3 +67,11 @@ Usage:
 
 ### Short Title
 If you want a shorter title to appear in your navbar, you can add <code>$wgSitenameshort = 'Short Name';</code> to your LocalSettings.php file.
+
+### Custom CSS
+If you want a custom CSS file for overrides or site-specific features,
+you can declare <code>$wgSiteCSS = 'bootstrap-mediawiki/custom.css'</code>
+
+### Custom JS
+If you want a custom JS file for overrides or site-specific features,
+you can declare <code>$wgSiteJS = 'bootstrap-mediawiki/custom.js'</code>
