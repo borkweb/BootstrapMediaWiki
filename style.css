@@ -1,6 +1,10 @@
 body {
+	background-color: #fff;
+	background-image: url(images/wiki-bg.jpg);
+	background-repeat: repeat-x;
+	background-position: center 80px;
+	color: #222;
 	padding-top: 100px;
-	background-position: left 80px !important;
 }
 
 body.page-Main_Page .page-header,
@@ -13,6 +17,10 @@ body.page-Category_CSS .page-header { display: none; }
 
 textarea {
 	width: 95%;
+}
+
+.mw-headline {
+	text-shadow: 1px 1px 0 rgb(255,255,255);
 }
 
 h2 .mw-headline { font-size: 18px; }
@@ -34,6 +42,11 @@ p {
 	background-color: #555;
 	border-color: #111;
 	color: #aaa;
+	margin-bottom: 10px;
+}
+
+.navbar .navbar-inner .btn {
+	margin-top: 0;
 }
 
 .editsection {
@@ -213,21 +226,16 @@ img.thumbborder {
 	border: 1px solid #dddddd;
 }
 
-.navbar .navbar-inner {
-	background: #fff;
-	-moz-box-shadow: none;
-	-webkit-box-shadow: none;
-	box-shadow: none;
-}
-
-.navbar .brand {
-	color: #00654d;
-}
-
 .brand img {
 	margin-top: -5px;
 	display: inline-block;
 	vertical-align: middle;
+}
+
+.navbar-fixed-top .navbar-inner {
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
 }
 
 .navbar input {
@@ -236,42 +244,56 @@ img.thumbborder {
 	color: #333;
 }
 
-.navbar .nav > li > a {
-	color: #333;
-	text-shadow: none;
-}
-
-.navbar .nav > .active > a,
-.navbar .nav > .active > a:hover,
-.navbar .nav > li > a:hover {
-	color: #333;
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
-}
-
-.navbar .nav .dropdown-toggle .caret, 
-.navbar .nav .open.dropdown .caret {
-	border-top-color: #333;
-}
-
 /* Subnav */
 .subnav {
-	background: url(images/nav-bg.png) top center no-repeat;
+	background: #eee;
+	border-bottom: 1px solid #f5f5f5;
   width: 100%;
-  height: 36px;
-  height: 63px;
+  height: 45px;
 	margin-top: 2px;
-  -webkit-border-radius: 4px;
-     -moz-border-radius: 4px;
-          border-radius: 4px;
+	-webkit-box-shadow: 0 1px 10px rgba(0,0,0,0.1);
+	   -moz-box-shadow: 0 1px 10px rgba(0,0,0,0.1);
+	        box-shadow: 0 1px 10px rgba(0,0,0,0.1);
+	border-color: #d5d5d5;
+	border-width: 0 0 1px;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
 }
+
+@media (max-width: 767px) {
+	body {
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+	.bottom,
+	#wiki-outer-body {
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+
+	.navbar {
+		margin-left: 0;
+		margin-right: 0;
+	}
+}
+
+@media (max-width: 979px) {
+	#wiki-outer-body {
+		margin-top: 10px;
+	}
+}
+
 .subnav .nav {
   margin-bottom: 0;
 }
 
 .subnav .nav > li > a {
-	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.1);
 	text-decoration: none;
-	color: #fff;
+	color: #333;
   margin: 0;
   padding-top:    16px;
   padding-bottom: 16px;
@@ -286,8 +308,8 @@ img.thumbborder {
 .subnav .nav > .active > a,
 .subnav .nav > .active > a:hover {
   padding-left: 13px;
-  color: #fff;
-  background-color: #497168;
+  color: #333;
+  background-color: #ddd;
   border-right-color: transparent;
   border-left: 0;
   -webkit-box-shadow: inset 0 3px 5px rgba(0,0,0,.05);
@@ -323,9 +345,9 @@ img.thumbborder {
 .subnav .nav-tabs .open .dropdown-toggle, 
 .subnav .nav-pills .open .dropdown-toggle, 
 .subnav .nav > .open.active > a:hover {
-	color: white;
-	background-color: #497168;
-	border-color: #497168;
+	color: #333;
+	background-color: #ddd;
+	border-color: #ddd;
 }
 
 pre.linenums ol {

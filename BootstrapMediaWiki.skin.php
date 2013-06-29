@@ -21,22 +21,33 @@ require_once('includes/SkinTemplate.php');
  * @package MediaWiki
  * @subpackage Skins
  */
-class SkinBootstrapMediawiki extends SkinTemplate {
-    /** Using Bootstrap */
+class SkinBootstrapMediaWiki extends SkinTemplate {
+	/** Using Bootstrap */
 	public $skinname = 'bootstrap-mediawiki';
 	public $stylename = 'bootstrap-mediawiki';
-	public $template = 'BootstrapMW_Template';
+	public $template = 'BootstrapMediaWikiTemplate';
 	public $useHeadElement = true;
 
+	public function initPage( OutputPage $out ) {
+		global $wgSiteJS;
+		parent::initPage( $out );
+		$out->addModuleScripts( 'skins.bootstrapmediawiki' );
+
+		if( $wgSiteJS ) {
+			$out->addScript( $wgSiteJS );
+		}//end if
+	}//end initPage
+
 	function setupSkinUserCss( OutputPage $out ) {
-		global $wgHandheldStyle, $wgSiteCSS;
+		global $wgSiteCSS;
 
 		parent::setupSkinUserCss( $out );
 
-		$out->addStyle( 'bootstrap-mediawiki/bootstrap/css/bootstrap.min.css' );
-		$out->addStyle( 'bootstrap-mediawiki/bootstrap/css/bootstrap-responsive.min.css' );
-		$out->addStyle( 'bootstrap-mediawiki/google-code-prettify/prettify.css' );
-		$out->addStyle( 'bootstrap-mediawiki/style.css' );
+		$out->addModuleStyles( 'skins.bootstrapmediawiki' );
+
+		// we need to include this here so the file pathing is right
+		$out->addStyle( 'bootstrap-mediawiki/font-awesome/css/font-awesome.min.css' );
+
 		if( $wgSiteCSS ) {
 			$out->addStyle( $wgSiteCSS );
 		}//end if
@@ -48,28 +59,28 @@ class SkinBootstrapMediawiki extends SkinTemplate {
  * @package MediaWiki
  * @subpackage Skins
  */
-class BootstrapMW_Template extends QuickTemplate {
+class BootstrapMediaWikiTemplate extends QuickTemplate {
 	/**
 	 * @var Cached skin object
 	 */
 	var $skin;
 
-  /**
-   * Template filter callback for Bootstrap skin.
-   * Takes an associative array of data set from a SkinTemplate-based
-   * class, and a wrapper for MediaWiki's localization database, and
-   * outputs a formatted page.
-   *
-   * @access private
-   */
-  function execute() {
+	/**
+	 * Template filter callback for Bootstrap skin.
+	 * Takes an associative array of data set from a SkinTemplate-based
+	 * class, and a wrapper for MediaWiki's localization database, and
+	 * outputs a formatted page.
+	 *
+	 * @access private
+	 */
+	function execute() {
 		global $wgRequest, $wgPsuBasePath, $wgUser, $wgSitename, $wgSitenameshort, $wgCopyrightLink, $wgCopyright, $wgBootstrap, $wgArticlePath, $wgGoogleAnalyticsID, $wgSiteCSS;
 
 		$this->skin = $this->data['skin'];
 		$action = $wgRequest->getText( 'action' );
 
-    // Suppress warnings to prevent notices about missing indexes in $this->data
-    wfSuppressWarnings();
+		// Suppress warnings to prevent notices about missing indexes in $this->data
+		wfSuppressWarnings();
 
 		$this->html('headelement');
 ?>
@@ -82,63 +93,56 @@ class BootstrapMW_Template extends QuickTemplate {
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</a>
-		<a class="brand" href="<?php echo $this->data['nav_urls']['mainpage']['href'] ?>" title="<?php echo $wgSitename ?>"><img src="<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/images/logo.png"/><?php echo $wgSitenameshort ?: $wgSitename; ?></a>
+			<a class="brand" href="<?php echo $this->data['nav_urls']['mainpage']['href'] ?>" title="<?php echo $wgSitename ?>"><?php echo $wgSitenameshort ?: $wgSitename; ?></a>
 
-		<div class="nav-collapse">
-			<ul class="nav">
-				<li>
-				<a href="<?php echo $wgPsuBasePath; ?>">Home</a>
-				</li>
-				<?php
-					echo $this->nav( $this->get_page_links( 'Bootstrap:TitleBar' ) );
+			<div class="nav-collapse">
+				<ul class="nav">
+					<li>
+					<a href="<?php echo $this->data['nav_urls']['mainpage']['href'] ?>">Home</a>
+					</li>
+					<?php echo $this->nav( $this->get_page_links( 'Bootstrap:TitleBar' ) ); ?>
+				</ul>
+			<?php
+			if($wgUser->isLoggedIn()) {
+				if ( count( $this->data['personal_urls'] ) > 0 ) {
+					$user_icon = '<span class="user-icon"><img src="https://secure.gravatar.com/avatar/'.md5(strtolower( $wgUser->getName()) . '@plymouth.edu').'.jpg?s=20&r=g"/></span>';
+					$name = strtolower( $wgUser->getName() );
+					$user_nav = $this->get_array_links( $this->data['personal_urls'], $user_icon . $name, 'user' );
+					?>
+					<ul<?php $this->html('userlangattributes') ?> class="nav pull-right">
+						<?php echo $user_nav; ?>
+					</ul>
+					<?php
+				}
+
+				if ( count( $this->data['content_actions']) > 0 ) {
+					$content_nav = $this->get_array_links( $this->data['content_actions'], 'Page', 'page' );
+					?>
+					<ul class="nav pull-right content-actions"><?php echo $content_nav; ?></ul>
+					<?php
+				}
+			} else {  // else if is logged in
 				?>
-			</ul>
-			
-	<?php
-
-	if($wgUser->isLoggedIn()) {
-		if ( count( $this->data['personal_urls'] ) > 0 ) {
-			$user_icon = '<span class="user-icon"><img src="https://secure.gravatar.com/avatar/'.md5(strtolower( $wgUser->getName()) . '@plymouth.edu').'.jpg?s=20&r=g"/></span>';
-			$name = strtolower( $wgUser->getName() );
-			$user_nav = $this->get_array_links( $this->data['personal_urls'], $user_icon . $name, 'user' );
-		?>
-		<ul<?php $this->html('userlangattributes') ?> class="nav pull-right">
-			<?php echo $user_nav; ?>
-		</ul>
-		<?php
-		}
-		?>
-
-		<?php
-		if ( count( $this->data['content_actions']) > 0 ) {
-			$content_nav = $this->get_array_links( $this->data['content_actions'], 'Page', 'page' );
-		?>
-			<ul class="nav pull-right content-actions"><?php echo $content_nav; ?></ul>
-		<?php
-		}
-	} else {  // else if is logged in
-		?>
-			<ul class="pull-right">
-				<li>
-					<?php echo Linker::linkKnown(
-						SpecialPage::getTitleFor( 'Userlogin' ),
-						wfMsg( 'login' )
-					) ?>
-				</li>
-			</ul>
-		<?php
-	}
-	?>
+				<ul class="nav pull-right">
+					<li>
+					<?php echo Linker::linkKnown( SpecialPage::getTitleFor( 'Userlogin' ), wfMsg( 'login' ) ); ?>
+					</li>
+				</ul>
+				<?php
+			}
+			?>
 			</div>
-			<form class="navbar-search pull-right" action="<?php $this->text( 'wgScript' ) ?>" id="search-form">
-				<input type="text" placeholder="Search" name="search" onchange="$('#search-form').submit()" />
+			<form class="navbar-search pull-right" action="<?php $this->text( 'wgScript' ) ?>" id="searchform">
+				<div>
+					<input type="search" name="search" placeholder="Search" title="Search EotL - End of the Line MUD [ctrl-option-f]" accesskey="f" id="searchInput" autocomplete="off">
+					<input type="hidden" name="title" value="Special:Search">
+				</div>
 			</form>
-			
 		</div>
 	</div>
 </div><!-- topbar -->
 <?php
-if( $subnav_links = $this->get_page_links('Bootstrap:Subnav') ) {
+		if( $subnav_links = $this->get_page_links('Bootstrap:Subnav') ) {
 ?>
 <div class="subnav subnav-fixed">
 	<select id="subnav-select">
@@ -149,11 +153,11 @@ if( $subnav_links = $this->get_page_links('Bootstrap:Subnav') ) {
 	</ul>
 </div>
 <?php
-}//end if
+		}//end if
 ?>
 <div id="wiki-outer-body">
-    <div id="wiki-body" class="container">
-      <?php if( $this->data['sitenotice'] ) { ?><div id="siteNotice" class="alert-message warning"><?php $this->html('sitenotice') ?></div><?php } ?>
+		<div id="wiki-body" class="container">
+			<?php if( $this->data['sitenotice'] ) { ?><div id="siteNotice" class="alert-message warning"><?php $this->html('sitenotice') ?></div><?php } ?>
 			<?php if ( $this->data['undelete'] ): ?>
 			<!-- undelete -->
 			<div id="contentSub2"><?php $this->html( 'undelete' ) ?></div>
@@ -187,32 +191,34 @@ if( $subnav_links = $this->get_page_links('Bootstrap:Subnav') ) {
 			<!-- /dataAfterContent -->
 			</div>
 			<?php endif; ?>
-    </div><!-- container -->
+		</div><!-- container -->
 </div>
-    <div class="bottom">
-      <div class="container">
-        <?php
-        $this->includePage('Bootstrap:Footer');
-        ?>
-      
-        <footer>
-          <p>&copy; <?php echo date('Y'); ?> by <a href="<?php echo (isset($wgCopyrightLink) ? $wgCopyrightLink : 'http://www.plymouth.edu'); ?>"><?php echo (isset($wgCopyright) ? $wgCopyright : 'Plymouth State University'); ?></a> 
-          	&bull; Powered by <a href="http://mediawiki.org">MediaWiki</a> 
-          </p>
-        </footer>
-      </div><!-- container -->
-    </div><!-- bottom -->
+		<div class="bottom">
+			<div class="container">
+<?php
+		$this->includePage('Bootstrap:Footer');
+?>
 
-		<?php $js_file = dirname( $_SERVER['SCRIPT_FILENAME'] ) . '/skins/' . $this->skin->skinname . '/js/site.min.js'; ?>
-  	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
-		<script type="text/javascript" src="<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/js/site.min.js?v=<?php echo filemtime( $js_file ); ?>"></script>
-  	<script type="text/javascript" src="<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/google-code-prettify/prettify.js"></script>
+				<footer>
+					<p>&copy; <?php echo date('Y'); ?> by <a href="<?php echo (isset($wgCopyrightLink) ? $wgCopyrightLink : 'http://borkweb.com'); ?>"><?php echo (isset($wgCopyright) ? $wgCopyright : 'BorkWeb'); ?></a> 
+						&bull; Powered by <a href="http://mediawiki.org">MediaWiki</a> 
+					</p>
+				</footer>
+			</div><!-- container -->
+		</div><!-- bottom -->
+
+		<?php $this->html('bottomscripts'); /* JS call to runBodyOnloadHook */ ?>
+		<?php $this->html('reporttime') ?>
+		<?php if ( $this->data['debug'] ): ?>
+		<!-- Debug output:
+		<?php $this->text( 'debug' ); ?>
+
+		-->
+		<?php endif; ?>
 </body>
 </html>
 <?php
 	}
-	
 
 	/**
 	 * Render one or more navigations elements by name, automatically reveresed
@@ -301,7 +307,7 @@ if( $subnav_links = $this->get_page_links('Bootstrap:Subnav') ) {
 			$sub = false;
 			$link = false;
 			$external = false;
-			
+
 			if(preg_match('/^\*\s*([^\*]*)\[\[:?(.+)\]\]/', $line, $match)) {
 				$sub = false;
 				$link = true;
@@ -372,25 +378,25 @@ if( $subnav_links = $this->get_page_links('Bootstrap:Subnav') ) {
 
 			if( 'page' == $which ) {
 				switch( $link['title'] ) {
-					case 'Page': $icon = 'file'; break;
-					case 'Discussion': $icon = 'comment'; break;
-					case 'Edit': $icon = 'pencil'; break;
-					case 'History': $icon = 'time'; break;
-					case 'Delete': $icon = 'remove'; break;
-					case 'Move': $icon = 'move'; break;
-					case 'Protect': $icon = 'lock'; break;
-					case 'Watch': $icon = 'eye-open'; break;
+				case 'Page': $icon = 'file'; break;
+				case 'Discussion': $icon = 'comment'; break;
+				case 'Edit': $icon = 'pencil'; break;
+				case 'History': $icon = 'time'; break;
+				case 'Delete': $icon = 'remove'; break;
+				case 'Move': $icon = 'move'; break;
+				case 'Protect': $icon = 'lock'; break;
+				case 'Watch': $icon = 'eye-open'; break;
 				}//end switch
 
 				$link['title'] = '<i class="icon-' . $icon . '"></i> ' . $link['title'];
 			} elseif( 'user' == $which ) {
 				switch( $link['title'] ) {
-					case 'My talk': $icon = 'comment'; break;
-					case 'My preferences': $icon = 'cog'; break;
-					case 'My watchlist': $icon = 'eye-close'; break;
-					case 'My contributions': $icon = 'list-alt'; break;
-					case 'Log out': $icon = 'off'; break;
-					default: $icon = 'user'; break;
+				case 'My talk': $icon = 'comment'; break;
+				case 'My preferences': $icon = 'cog'; break;
+				case 'My watchlist': $icon = 'eye-close'; break;
+				case 'My contributions': $icon = 'list-alt'; break;
+				case 'Log out': $icon = 'off'; break;
+				default: $icon = 'user'; break;
 				}//end switch
 
 				$link['title'] = '<i class="icon-' . $icon . '"></i> ' . $link['title'];
@@ -401,28 +407,28 @@ if( $subnav_links = $this->get_page_links('Bootstrap:Subnav') ) {
 
 		return $this->nav( $nav );
 	}//end get_array_links
-	
+
 	function getPageRawText($title) {
-    $pageTitle = Title::newFromText($title);
-    if(!$pageTitle->exists()) {
-      return 'Create the page [[Bootstrap:TitleBar]]';
-    } else {
-      $article = new Article($pageTitle);
-      return $article->getRawText();
-    }
+		$pageTitle = Title::newFromText($title);
+		if(!$pageTitle->exists()) {
+			return 'Create the page [[Bootstrap:TitleBar]]';
+		} else {
+			$article = new Article($pageTitle);
+			return $article->getRawText();
+		}
 	}
-	
+
 	function includePage($title) {
-    global $wgParser, $wgUser;
-    $pageTitle = Title::newFromText($title);
-    if(!$pageTitle->exists()) {
-      echo 'The page [[' . $title . ']] was not found.';
-    } else {
-      $article = new Article($pageTitle);
-      $wgParserOptions = new ParserOptions($wgUser);
-      $parserOutput = $wgParser->parse($article->getRawText(), $pageTitle, $wgParserOptions);
-      echo $parserOutput->getText();
-    }
+		global $wgParser, $wgUser;
+		$pageTitle = Title::newFromText($title);
+		if(!$pageTitle->exists()) {
+			echo 'The page [[' . $title . ']] was not found.';
+		} else {
+			$article = new Article($pageTitle);
+			$wgParserOptions = new ParserOptions($wgUser);
+			$parserOutput = $wgParser->parse($article->getRawText(), $pageTitle, $wgParserOptions);
+			echo $parserOutput->getText();
+		}
 	}
 
 	public static function link() { }
