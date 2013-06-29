@@ -31,6 +31,7 @@ $wgResourceModules['skins.bootstrapmediawiki'] = array(
 	'scripts' => array(
 		'bootstrap-mediawiki/bootstrap/js/bootstrap.min.js',
 		'bootstrap-mediawiki/google-code-prettify/prettify.js',
+		'bootstrap-mediawiki/js/jquery.ba-dotimeout.min.js',
 		'bootstrap-mediawiki/js/behavior.js',
 	),
 	'dependencies' => array(
