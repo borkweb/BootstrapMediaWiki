@@ -41,7 +41,11 @@ p {
 	margin-bottom: 9px;;
 }
 
-.brand img { margin-right: 0.5em; }
+.brand img {
+	margin-right: 0.5em;
+	max-height: 30px;
+}
+
 .navbar input {
 	background-color: #555;
 	border-color: #111;
@@ -456,20 +460,33 @@ table.list th {
 	color: #000;
 	background-color: #ccc;
 	border-spacing: 0;
-	border: 2px solid #999;
-	-webkit-border-bottom-right-radius: .8em;
-	-webkit-border-bottom-left-radius: .8em;
-	-moz-border-radius-bottomright: .8em;
-	-moz-border-radius-bottomleft: .8em;
-	border-bottom-right-radius: .8em;
-	border-bottom-left-radius: .8em;
+	border: 1px solid #999;
+	-webkit-border-top-left-radius: 4px;
+	   -moz-border-radius-topleft: 4px;
+	        border-top-left-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+	   -moz-border-radius-topright: 4px;
+	        border-top-right-radius: 4px;
+	box-shadow: 0 0 5px rgba( 0, 0, 0, 0.2 );
+	font-size: 14px;
 	margin-top: -1.4em;
 	margin: 0 0 1em 1em;
 	padding: 3px;
+	padding: 0;
 	position: relative;
-	font-size: 12px;
 	width: 250px;
 	z-index: 100;
+}
+
+.info-box td {
+	line-height: normal;
+	padding: 5px;
+	vertical-align: middle;
+}
+
+.info-box td p {
+	display: table-cell;
+	vertical-align: middle;
 }
 
 .info-box .info-image {
@@ -508,6 +525,7 @@ table.list th {
 	border-right: 1px solid #999;
 	color: #000;
 	font-size: smaller;
+	line-height: normal;
 }
 
 .info-box .info-value {
@@ -519,64 +537,13 @@ table.list th {
 	font-size: smaller;
 }
 
-.info-box.quest {
-	background-color: #A4A639;
-	border-color: #8A895F;
-}
-
-.info-box.quest .info-image {
-	background-color: #A4A639;
-	border-color: #8A895F;
-}
-
 .info-box.quest .info-name {
 	background-color: #CECF86;
 	border-color: #8A895F;
 }
 
-.info-box.quest .info {
-	background-color: #A4A639;
-	border-color: #8A895F;
-}
-
-.info-box.quest .info-label {
-	background-color: #CECF86;
-	border-color: #8A895F;
-}
-
-.info-box.quest .info-value {
-	background-color: #fff;
-	border-color: #8A895F;
-}
-
-.info-box.weapon {
-	background-color: #D4726F;
-	border-color: #9C5452;
-}
-
-.info-box.weapon .info-image {
-	background-color: #D4726F;
-	border-color: #9C5452;
-}
-
 .info-box.weapon .info-name {
-	background-color: #DBB7B6;
-	border-color: #9C5452;
-}
-
-.info-box.weapon .info {
-	background-color: #D4726F;
-	border-color: #9C5452;
-}
-
-.info-box.weapon .info-label {
-	background-color: #DBB7B6;
-	border-color: #9C5452;
-}
-
-.info-box.weapon .info-value {
-	background-color: #fff;
-	border-color: #9C5452;
+	background-color: #e8c5c5;
 }
 
 .list {

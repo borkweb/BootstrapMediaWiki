@@ -18,9 +18,14 @@ $(function() {
 			var $el = $(this);
 
 			if( $el.closest('form').length == 0 ) {
-				$el.addClass('table')
-					 .addClass('table-striped')
-					 .addClass('table-bordered');
+				if ( $el.hasClass('info-box') ) {
+					$el.addClass('table')
+						 .addClass('table-bordered');
+				} else {
+					$el.addClass('table')
+						 .addClass('table-striped')
+						 .addClass('table-bordered');
+				}//end else
 			}//end if
 		});
 
@@ -75,8 +80,6 @@ $(function() {
 			$edit.closest('li').clone().prependTo( $header.find('.nav-pills') );
 		}//end else
 	}//end if
-
-	var $intent = $('#page-contents, .navbar .dropdown, .subnav .dropdown');
 
 	prettyPrint();
 
