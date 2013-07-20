@@ -2,6 +2,25 @@
 
 This is a MediaWiki skin that uses Bootstrap 2 from Twitter!  The framework gives a boatload of features that play really nicely with a MediaWiki installation.  To get up and rolling, there's a few things that should be done.
 
+## Installation
+First, clone the repository into your `skins/` directory.
+
+````
+git clone https://github.com/borkweb/bootstrap-mediawiki.git
+````
+
+Next, in `LocalSettings.php` set:
+
+````php
+$wgDefaultSkin = 'bootstrapmediawiki';
+````
+
+Then add at the bottom:
+
+````php
+require_once( "$IP/skins/bootstrap-mediawiki/bootstrap-mediawiki.php" );
+````
+
 ## Setup
 Once you've enabled the skin, you'll want to create a few pages.
 
