@@ -122,8 +122,13 @@ option.unclickable {
 
 #page-contents ul li { list-style: none; }
 #page-contents .dropdown-menu {
-	right: 0;
 	left: auto;
+	max-height: 400px;
+	overflow: scroll;
+	overflow-y: scroll;
+	right: 0;
+}
+#page-contents .dropdown-menu {
 }
 
 .page-header .nav i {
