@@ -155,9 +155,19 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 			?>
 			<div class="subnav subnav-fixed">
 				<div class="container">
-					<select id="subnav-select">
-					<?php echo $this->nav_select( $subnav_links ); ?>
-					</select>
+					<?php
+
+					$subnav_select = $this->nav_select( $subnav_links );
+
+					if ( trim( $subnav_select ) ) {
+
+						?>
+						<select id="subnav-select">
+						<?php echo $subnav_select; ?>
+						</select>
+						<?php
+					}//end if
+					?>
 					<ul class="nav nav-pills">
 					<?php echo $this->nav( $subnav_links ); ?>
 					</ul>

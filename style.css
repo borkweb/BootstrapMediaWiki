@@ -135,6 +135,10 @@ option.unclickable {
 	opacity: 0.3;
 }
 
+.nav-collapse.in {
+	height: auto !important;
+}
+
 #toc {
 	display: none;
 	float: right;
