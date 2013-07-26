@@ -24,6 +24,10 @@ require_once( "$IP/skins/bootstrap-mediawiki/bootstrap-mediawiki.php" );
 ## Setup
 Once you've enabled the skin, you'll want to create a few pages.
 
+### Customization Vars
+
+`$wgTOCLocation = 'sidebar';` - moves the TOC to a sidebar.
+
 ### Create: Bootstrap:Footer
 This MediaWiki page will contain what appears in your footer.  I've set mine to the following:
 
