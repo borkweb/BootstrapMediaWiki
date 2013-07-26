@@ -157,6 +157,37 @@ option.unclickable {
 	box-shadow: 0 0 5px 0 rgba( 0, 0, 0, 0.2 );
 }
 
+#toc.toc-sidebar {
+	display: block;
+	float: left;
+	margin-left: 20px;
+}
+
+#toc.toc-sidebar td {
+	background: transparent;
+	border: none;
+	box-shadow: none;
+	display: table-cell;
+	padding: 0;
+}
+
+#toc.toc-sidebar li {
+	line-height: 20px;
+	list-style-type: none;
+}
+
+#toc.toc-sidebar li li {
+	margin-left: 20px;
+}
+
+#toc.toc-sidebar h3 {
+	font-size: 1em;
+}
+
+.toc-sidebar .toctoggle {
+	display: none;
+}
+
 #toctitle h2 {
 	font-size: 16px;
 }

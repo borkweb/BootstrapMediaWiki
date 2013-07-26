@@ -52,33 +52,48 @@ $(function() {
 	$('.tip').tooltip();
 	$('.pop').popover();
 
-	$('#toc').each(function() {
-		var $toc = $(this);
-		var $title = $toc.find('#toctitle');
-		var $links = $title.siblings('ul');
-
-		$('.page-header').prepend('<ul class="nav nav-pills pull-right"><li class="dropdown" id="page-contents"><a class="dropdown-toggle" href="#"><i class="icon-list"></i> Contents <b class="caret"></b></a> <ul class="dropdown-menu"></ul></li></ul>');
-
-		$('.page-header #page-contents').find('.dropdown-menu').html( $links.html() );
-	});
-
-	if( $('.page-header .nav').length === 0 ) {
-		$('.page-header').prepend('<ul class="nav nav-pills pull-right"></li></ul>');
-	}//end if
-
-	var $header = $('.page-header');
-	var $hero = $('.hero-unit');
-	var $edit = $('.navbar .content-actions .edit');
-	if( $edit.length > 0 ) {
-		if( $hero.length ) {
-			if( ! $hero.find('.nav-pills').length ) {
-				$hero.prepend('<ul class="nav nav-pills pull-right"></ul>');
-			}//end if
-
-			$edit.closest('li').clone().prependTo( $hero.find('.nav-pills') );
+	if ( $('.toc-sidebar').length > 0 ) {
+		if ( 0 === $('#toc').length ) {
+			$('.toc-sidebar').remove();
+			$('.wiki-body-section').removeClass('span9').addClass('span12');
 		} else {
-			$edit.closest('li').clone().prependTo( $header.find('.nav-pills') );
+			$('.toc-sidebar').append('<h3>Contents</h3>');
+			$('#toc').each(function() {
+				$(this).find('ul:first').appendTo( '.toc-sidebar' );
+				$(this).remove();
+			});
+
+			$('.toc-sidebar').attr('id', 'toc');
 		}//end else
+	} else {
+		$('#toc').each(function() {
+			var $toc = $(this);
+			var $title = $toc.find('#toctitle');
+			var $links = $title.siblings('ul');
+
+			$('.page-header').prepend('<ul class="nav nav-pills pull-right"><li class="dropdown" id="page-contents"><a class="dropdown-toggle" href="#"><i class="icon-list"></i> Contents <b class="caret"></b></a> <ul class="dropdown-menu"></ul></li></ul>');
+
+			$('.page-header #page-contents').find('.dropdown-menu').html( $links.html() );
+		});
+
+		if( $('.page-header .nav').length === 0 ) {
+			$('.page-header').prepend('<ul class="nav nav-pills pull-right"></li></ul>');
+		}//end if
+
+		var $header = $('.page-header');
+		var $hero = $('.hero-unit');
+		var $edit = $('.navbar .content-actions .edit');
+		if( $edit.length > 0 ) {
+			if( $hero.length ) {
+				if( ! $hero.find('.nav-pills').length ) {
+					$hero.prepend('<ul class="nav nav-pills pull-right"></ul>');
+				}//end if
+
+				$edit.closest('li').clone().prependTo( $hero.find('.nav-pills') );
+			} else {
+				$edit.closest('li').clone().prependTo( $header.find('.nav-pills') );
+			}//end else
+		}//end if
 	}//end if
 
 	prettyPrint();

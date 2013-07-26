@@ -73,6 +73,7 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 		global $wgRequest, $wgUser, $wgSitename, $wgSitenameshort, $wgCopyrightLink, $wgCopyright, $wgBootstrap, $wgArticlePath, $wgGoogleAnalyticsID, $wgSiteCSS;
 		global $wgEnableUploads;
 		global $wgLogo;
+		global $wgTOCLocation;
 
 		$this->skin = $this->data['skin'];
 		$action = $wgRequest->getText( 'action' );
@@ -178,6 +179,15 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 		?>
 		<div id="wiki-outer-body">
 			<div id="wiki-body" class="container">
+				<?php
+					if ( 'sidebar' == $wgTOCLocation ) {
+						?>
+						<div class="row">
+							<section class="span3 toc-sidebar"></section>
+							<section class="span9 wiki-body-section">
+						<?php
+					}//end if
+				?>
 				<?php if( $this->data['sitenotice'] ) { ?><div id="siteNotice" class="alert-message warning"><?php $this->html('sitenotice') ?></div><?php } ?>
 				<?php if ( $this->data['undelete'] ): ?>
 				<!-- undelete -->
@@ -212,6 +222,13 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 				<!-- /dataAfterContent -->
 				</div>
 				<?php endif; ?>
+				<?php
+					if ( 'sidebar' == $wgTOCLocation ) {
+						?>
+						</section></section>
+						<?php
+					}//end if
+				?>
 			</div><!-- container -->
 		</div>
 		<div class="bottom">
