@@ -115,7 +115,7 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 					<?php
 					if ( $wgUser->isLoggedIn() ) {
 						if ( count( $this->data['personal_urls'] ) > 0 ) {
-							$user_icon = '<span class="user-icon"><img src="https://secure.gravatar.com/avatar/'.md5(strtolower( $wgUser->getName()) . '@plymouth.edu').'.jpg?s=20&r=g"/></span>';
+							$user_icon = '<span class="user-icon"><img src="https://secure.gravatar.com/avatar/'.md5(strtolower( $wgUser->getEmail())).'.jpg?s=20&r=g"/></span>';
 							$name = strtolower( $wgUser->getName() );
 							$user_nav = $this->get_array_links( $this->data['personal_urls'], $user_icon . $name, 'user' );
 							?>
