@@ -63,6 +63,10 @@ p {
 	opacity: 0.2;
 }
 
+.editOptions .checkbox input:first-child {
+	margin-left: -20px;
+}
+
 .hero-unit {
 	position: relative;
 }
@@ -429,7 +433,7 @@ pre.linenums ol {
 @media (min-width: 980px) {
   .subnav-fixed {
     position: fixed;
-    top: 50px;
+    top: 49px;
     left: 0;
     right: 0;
     z-index: 1020; /* 10 less than .navbar-fixed to prevent any overlap */

@@ -45,7 +45,10 @@ $(function() {
 			if( $.trim( $label.text() ) != '' ) {
 				$el.prependTo( $label );
 			}//end if
+
+			$label.wrap( '<div class="checkbox"/>' );
 		});
+
 		$el.closest('label').addClass($el.attr('type'));
 	});
 
