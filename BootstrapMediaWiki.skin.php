@@ -84,24 +84,26 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 
 		$this->html('headelement');
 		?>
-		<div class="navbar navbar-fixed-top">
-			<div class="navbar-inner">
+		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
 				<div class="container">
 					<!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</a>
-					<a class="brand" href="<?php echo $this->data['nav_urls']['mainpage']['href'] ?>" title="<?php echo $wgSitename ?>"><?php echo isset( $wgLogo ) && $wgLogo ? "<img src='{$wgLogo}' alt='Logo'/> " : ''; echo $wgSitenameshort ?: $wgSitename; ?></a>
+					<div class="navbar-header">
+						<button class="navbar-toggle collapsed" data-toggle="collapse" data-target=".nav-collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="<?php echo $this->data['nav_urls']['mainpage']['href'] ?>" title="<?php echo $wgSitename ?>"><?php echo isset( $wgLogo ) && $wgLogo ? "<img src='{$wgLogo}' alt='Logo'/> " : ''; echo $wgSitenameshort ?: $wgSitename; ?></a>
+					</div>
 
-					<div class="nav-collapse">
-						<ul class="nav">
+					<div class="collapse navbar-collapse">
+						<ul class="nav navbar-nav">
 							<li>
 							<a href="<?php echo $this->data['nav_urls']['mainpage']['href'] ?>">Home</a>
 							</li>
 							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools <b class="caret"></b></a>
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools <span class="caret"></span></a>
 								<ul class="dropdown-menu">
 									<li><a href="<?php echo $url_prefix; ?>Special:RecentChanges" class="recent-changes"><i class="icon-edit"></i> Recent Changes</a></li>
 									<li><a href="<?php echo $url_prefix; ?>Special:SpecialPages" class="special-pages"><i class="icon-star-empty"></i> Special Pages</a></li>
@@ -128,12 +130,12 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 						if ( count( $this->data['content_actions']) > 0 ) {
 							$content_nav = $this->get_array_links( $this->data['content_actions'], 'Page', 'page' );
 							?>
-							<ul class="nav pull-right content-actions"><?php echo $content_nav; ?></ul>
+							<ul class="nav navbar-right content-actions"><?php echo $content_nav; ?></ul>
 							<?php
 						}//end if
 					} else {  // else if is logged in
 						?>
-						<ul class="nav pull-right">
+						<ul class="nav navbar-right">
 							<li>
 							<?php echo Linker::linkKnown( SpecialPage::getTitleFor( 'Userlogin' ), wfMsg( 'login' ) ); ?>
 							</li>
@@ -141,15 +143,14 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 						<?php
 					}
 					?>
-					</div>
-					<form class="navbar-search pull-right" action="<?php $this->text( 'wgScript' ) ?>" id="searchform">
+					<form class="navbar-search navbar-form navbar-right" action="<?php $this->text( 'wgScript' ) ?>" id="searchform" role="search">
 						<div>
-							<input type="search" name="search" placeholder="Search" title="Search <?php echo $wgSitename; ?> [ctrl-option-f]" accesskey="f" id="searchInput" autocomplete="off">
+							<input class="form-control" type="search" name="search" placeholder="Search" title="Search <?php echo $wgSitename; ?> [ctrl-option-f]" accesskey="f" id="searchInput" autocomplete="off">
 							<input type="hidden" name="title" value="Special:Search">
 						</div>
 					</form>
+					</div>
 				</div>
-			</div>
 		</div><!-- topbar -->
 		<?php
 		if( $subnav_links = $this->get_page_links('Bootstrap:Subnav') ) {
