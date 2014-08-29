@@ -50,7 +50,7 @@ $(function() {
 	});
 
 	$('.tip').tooltip();
-	$('.pop').popover();
+	$('[data-toggle="popover"]').popover();
 
 	if ( $('.toc-sidebar').length > 0 ) {
 		if ( 0 === $('#toc').length ) {

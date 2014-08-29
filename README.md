@@ -32,12 +32,12 @@ Once you've enabled the skin, you'll want to create a few pages.
 This MediaWiki page will contain what appears in your footer.  I've set mine to the following:
 
 	<div class="row">
-		<div class="span6">
+		<div class="col-md-6">
 			=== Stuff ===
 			* [[Link to some place]]
 			* [[Another link]]
 		</div>
-		<div class="span6">
+		<div class="col-md-6">
 			=== More Stuff ===
 			* [http://external.resource.org Go here]
 		</div>
@@ -82,7 +82,7 @@ Usage:
 ### Create: Template:Pop
 This template is used to do Bootstrap popovers!
 
-	<span data-original-title="{{{2}}}" data-content="{{{3}}}" class="pop">{{{1}}}</span>
+	<span title="{{{2}}}" data-content="{{{3}}}" data-toggle="popover">{{{1}}}</span>
 
 Usage:
 
