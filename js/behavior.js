@@ -58,7 +58,7 @@ $(function() {
 	if ( $('.toc-sidebar').length > 0 ) {
 		if ( 0 === $('#toc').length ) {
 			$('.toc-sidebar').remove();
-			$('.wiki-body-section').removeClass('span9').addClass('span12');
+			$('.wiki-body-section').removeClass('col-md-9').addClass('col-md-12');
 		} else {
 			$('.toc-sidebar').append('<h3>Contents</h3>');
 			$('#toc').each(function() {

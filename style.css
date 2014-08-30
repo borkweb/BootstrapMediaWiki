@@ -162,7 +162,7 @@ option.unclickable {
 	height: auto !important;
 }
 
-#toc {
+#toc:not(.toc-sidebar) {
 	display: none;
 	float: right;
 	margin: 0 0 1em 1em;
@@ -178,12 +178,6 @@ option.unclickable {
 	padding: 0 1em 1em 1em;
 
 	box-shadow: 0 0 5px 0 rgba( 0, 0, 0, 0.2 );
-}
-
-#toc.toc-sidebar {
-	display: block;
-	float: left;
-	margin-left: 20px;
 }
 
 #toc.toc-sidebar td {
