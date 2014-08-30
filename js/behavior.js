@@ -45,12 +45,15 @@ $(function() {
 			if( $.trim( $label.text() ) != '' ) {
 				$el.prependTo( $label );
 			}//end if
+
+			$label.wrap( '<div class="checkbox"/>' );
 		});
+
 		$el.closest('label').addClass($el.attr('type'));
 	});
 
 	$('.tip').tooltip();
-	$('.pop').popover();
+	$('[data-toggle="popover"]').popover();
 
 	if ( $('.toc-sidebar').length > 0 ) {
 		if ( 0 === $('#toc').length ) {
