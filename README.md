@@ -4,7 +4,7 @@ This is a MediaWiki skin that uses Bootstrap 3 from Twitter!  The framework give
 
 If you'd like to see one of these in the wild, check out the [EotL Wiki](http://eotl.borkweb.com).
 
-![Screenshot](/images/boostrap-mediawiki-screenshot.png?raw=true)
+![Screenshot](https://raw.githubusercontent.com/borkweb/bootstrap-mediawiki/master/images/bootstrap-mediawiki-screenshot.png)
 
 ## Installation
 First, clone the repository into your `skins/` directory.
