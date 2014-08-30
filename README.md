@@ -28,11 +28,13 @@ Once you've enabled the skin, you'll want to create a few pages.
 
 There are some customizations you can do to the theme by placing some variables in your `LocalSettings.php` file
 
-* `$wgNavBarClasses = 'something';` &mdash; Add additional classes to the navbar (example: `navbar-inverse` to get the black navbar)
-* `$wgSitenameShort = 'Short name';` &mdash; Use this if you wish for your nav title to use a shorter name than your wiki's name.
-* `$wgTOCLocation = 'sidebar';` - moves the Table of Contents into a sidebar
-* `$wgSiteCSS  = 'custom.css';` - adds a custom CSS file so you can run your own CSS without customizing the base theme styles
-* `$wgSiteJS  = 'custom.js';` - adds a custom JS file so you can run your own JS
+Variable | Description
+---------|------------
+`$wgNavBarClasses` | Add additional classes to the navbar (example: `navbar-inverse` to get the black navbar). Example: `$wgNavBarClasses = 'navbar-inverse';`
+`$wgSitenameShort` | Use this if you wish for your nav title to use a shorter name than your wiki's name. Example: `$wgSitenameShort = 'Short name';`
+`$wgTOCLocation` | Moves the Table of Contents (when one exists) into a sidebar. Usage: `$wgTOCLocation = 'sidebar';`
+`$wgSiteCSS` | Adds a custom CSS file so you can run your own CSS without customizing the base theme styles. Example: `$wgSiteCSS  = 'custom.css';`
+`$wgSiteJS` | Adds a custom JS file so you can run your own JS. Example: `$wgSiteJS  = 'custom.js';`
 
 ### Useful templates for your wiki
 
