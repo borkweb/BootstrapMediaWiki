@@ -74,7 +74,7 @@ $(function() {
 			var $title = $toc.find('#toctitle');
 			var $links = $title.siblings('ul');
 
-			$('.page-header').prepend('<ul class="nav nav-pills pull-right"><li class="dropdown" id="page-contents"><a class="dropdown-toggle" href="#"><i class="icon-list"></i> Contents <b class="caret"></b></a> <ul class="dropdown-menu"></ul></li></ul>');
+			$('.page-header').prepend('<ul class="nav nav-pills pull-right"><li class="dropdown" id="page-contents"><a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list"></i> Contents <span class="caret"></span></a> <ul class="dropdown-menu"></ul></li></ul>');
 
 			$('.page-header #page-contents').find('.dropdown-menu').html( $links.html() );
 		});
