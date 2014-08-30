@@ -90,7 +90,7 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 				<div class="container">
 					<!-- .btn-navbar is used as the toggle for collapsed navbar content -->
 					<div class="navbar-header">
-						<button class="navbar-toggle collapsed" data-toggle="collapse" data-target=".nav-collapse">
+						<button class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
 							<span class="sr-only">Toggle navigation</span>
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
@@ -123,7 +123,7 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 							$name = strtolower( $wgUser->getName() );
 							$user_nav = $this->get_array_links( $this->data['personal_urls'], $user_icon . $name, 'user' );
 							?>
-							<ul<?php $this->html('userlangattributes') ?> class="nav pull-right">
+							<ul<?php $this->html('userlangattributes') ?> class="nav navbar-nav navbar-right">
 								<?php echo $user_nav; ?>
 							</ul>
 							<?php
@@ -132,12 +132,12 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 						if ( count( $this->data['content_actions']) > 0 ) {
 							$content_nav = $this->get_array_links( $this->data['content_actions'], 'Page', 'page' );
 							?>
-							<ul class="nav navbar-right content-actions"><?php echo $content_nav; ?></ul>
+							<ul class="nav navbar-nav navbar-right content-actions"><?php echo $content_nav; ?></ul>
 							<?php
 						}//end if
 					} else {  // else if is logged in
 						?>
-						<ul class="nav navbar-right">
+						<ul class="nav navbar-nav navbar-right">
 							<li>
 							<?php echo Linker::linkKnown( SpecialPage::getTitleFor( 'Userlogin' ), wfMsg( 'login' ) ); ?>
 							</li>

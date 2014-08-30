@@ -339,6 +339,7 @@ img.thumbborder {
 	body {
 		padding-left: 0;
 		padding-right: 0;
+		padding-top: 59px;
 	}
 
 	.bottom,
@@ -354,6 +355,10 @@ img.thumbborder {
 }
 
 @media (max-width: 979px) {
+	body {
+		padding-top: 59px;
+	}
+
 	#wiki-outer-body {
 		margin-top: 10px;
 	}
@@ -430,38 +435,35 @@ pre.linenums ol {
 }
 
 /* Fixed subnav on scroll, but only for 980px and up (sorry IE!) */
-@media (min-width: 980px) {
-  .subnav-fixed {
-    position: fixed;
-    top: 49px;
-    left: 0;
-    right: 0;
-    z-index: 1020; /* 10 less than .navbar-fixed to prevent any overlap */
-    border-color: #d5d5d5;
-    border-width: 0 0 1px; /* drop the border on the fixed edges */
-    -webkit-border-radius: 0;
-       -moz-border-radius: 0;
-            border-radius: 0;
-  }
-  .subnav-fixed .nav {
-    width: 1170px;
-    margin: 0 auto;
-		margin-left: -12px;
-    padding: 0 1px;
-  }
-  .subnav .nav > li:first-child > a,
-  .subnav .nav > li:first-child > a:hover {
-    -webkit-border-radius: 0;
-       -moz-border-radius: 0;
-            border-radius: 0;
-  }
+.subnav-fixed {
+	position: fixed;
+	top: 49px;
+	left: 0;
+	right: 0;
+	z-index: 1020; /* 10 less than .navbar-fixed to prevent any overlap */
+	border-color: #d5d5d5;
+	border-width: 0 0 1px; /* drop the border on the fixed edges */
+	-webkit-border-radius: 0;
+		 -moz-border-radius: 0;
+					border-radius: 0;
+}
+.subnav-fixed .nav {
+	width: 1170px;
+	margin: 0 auto;
+	margin-left: -12px;
+	padding: 0 1px;
+}
+.subnav .nav > li:first-child > a,
+.subnav .nav > li:first-child > a:hover {
+	-webkit-border-radius: 0;
+		 -moz-border-radius: 0;
+					border-radius: 0;
 }
 
 @media (max-width: 979px) {
 	body { padding-top: 0px; }
 
 	.subnav #subnav-select {
-		margin-top: 9px;
 		margin-left: 20px;
 		display: inline-block;
 	}
@@ -484,6 +486,11 @@ pre.linenums ol {
 
 	.navbar-inner {
 		padding-bottom: 0;
+	}
+
+	.subnav .container {
+		padding-bottom: 1rem;
+		padding-top: 1rem;
 	}
 }
 
