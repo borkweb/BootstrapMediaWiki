@@ -1,6 +1,6 @@
 # Bootstrap Mediawiki
 
-This is a MediaWiki skin that uses Bootstrap 2 from Twitter!  The framework gives a boatload of features that play really nicely with a MediaWiki installation.  To get up and rolling, there's a few things that should be done.
+This is a MediaWiki skin that uses Bootstrap 3 from Twitter!  The framework gives a boatload of features that play really nicely with a MediaWiki installation.  To get up and rolling, there's a few things that should be done.
 
 ## Installation
 First, clone the repository into your `skins/` directory.
@@ -93,8 +93,8 @@ If you want a shorter title to appear in your navbar, you can add <code>$wgSiten
 
 ### Custom CSS
 If you want a custom CSS file for overrides or site-specific features,
-you can declare <code>$wgSiteCSS = 'bootstrap-mediawiki/custom.css'</code>
+you can declare <code>$wgSiteCSS = 'custom.css'</code>
 
 ### Custom JS
 If you want a custom JS file for overrides or site-specific features,
-you can declare <code>$wgSiteJS = 'bootstrap-mediawiki/custom.js'</code>
+you can declare <code>$wgSiteJS = 'custom.js'</code>

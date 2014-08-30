@@ -29,8 +29,8 @@ $(function() {
 			}//end if
 		});
 
-	$('pre').addClass('prettyprint linenums');
-	$('.hero-unit pre').removeClass('prettyprint linenums');
+	$('pre:not([data-raw="true"])').addClass('prettyprint linenums');
+	$('.jumbotron pre').removeClass('prettyprint linenums');
 
 	$('.editButtons').addClass('well');
 	$('input[type=submit],input[type=button],input[type=reset]').addClass('btn');

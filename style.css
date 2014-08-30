@@ -24,6 +24,8 @@ textarea {
 }
 
 .mw-headline {
+	margin-top: -128px;
+	padding-top: 128px;
 	text-shadow: 1px 1px 0 rgb(255,255,255);
 }
 
@@ -57,6 +59,10 @@ p {
 	margin-top: 0;
 }
 
+.nav > li > a {
+	padding: 15px;
+}
+
 .editsection {
 	float: right;
 	font-size: 0.8rem;
@@ -67,11 +73,11 @@ p {
 	margin-left: -20px;
 }
 
-.hero-unit {
+.jumbotron {
 	position: relative;
 }
 
-.hero-unit h1 img {
+.jumbotron h1 img {
 	border: 1px solid #eee;
 	-webkit-box-shadow: 0 0 5px rgba( 0, 0, 0, 0.3 );
 	-moz-box-shadow: 0 0 5px rgba( 0, 0, 0, 0.3 );
@@ -80,14 +86,14 @@ p {
 	top: -6px;
 }
 
-.hero-unit .nav-pills {
+.jumbotron .nav-pills {
 	opacity: 0.2;
 	position: absolute;
 	top: 10px;
 	right: 10px;
 }
 
-.hero-unit .nav-pills:hover {
+.jumbotron .nav-pills:hover {
 	opacity: 0.8;
 }
 
@@ -496,20 +502,20 @@ pre.linenums ol {
 		margin-left: 0;
 	}
 
-	.hero-unit {
+	.jumbotron {
 		padding: 2em;
 	}
 
-	.hero-unit p {
+	.jumbotron p {
 		font-size: 1em;
 		line-height: 1.5em;
 	}
 
-	.hero-unit h1 {
+	.jumbotron h1 {
 		font-size: 1.5em;
 	}
 
-	.hero-unit pre {
+	.jumbotron pre {
 		display: none;
 	}
 }

@@ -1,23 +1,23 @@
-.hero-unit {
+.jumbotron {
 	background-color: #333;
 	color: #eee;
 }
 
-.hero-unit pre {
+.jumbotron pre {
 	color: #eee;
 }
 
-.hero-unit .new {
+.jumbotron .new {
 	color: red;
 }
 
-.hero-unit h1 .mw-headline {
+.jumbotron h1 .mw-headline {
 	text-shadow: 1px 1px 0 #000;
 }
 
 @media (min-width: 520px) {
-	.hero-unit pre {
-		width: 520px;
+	.jumbotron pre {
+		width: 523px;
 	}
 }
 
