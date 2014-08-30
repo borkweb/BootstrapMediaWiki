@@ -74,6 +74,8 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 		global $wgEnableUploads;
 		global $wgLogo;
 		global $wgTOCLocation;
+		global $wgNavBarClasses;
+		global $wgSubnavBarClasses;
 
 		$this->skin = $this->data['skin'];
 		$action = $wgRequest->getText( 'action' );
@@ -84,7 +86,7 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 
 		$this->html('headelement');
 		?>
-		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="navbar navbar-default navbar-fixed-top <?php echo $wgNavBarClasses; ?>" role="navigation">
 				<div class="container">
 					<!-- .btn-navbar is used as the toggle for collapsed navbar content -->
 					<div class="navbar-header">
@@ -105,10 +107,10 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools <span class="caret"></span></a>
 								<ul class="dropdown-menu">
-									<li><a href="<?php echo $url_prefix; ?>Special:RecentChanges" class="recent-changes"><i class="icon-edit"></i> Recent Changes</a></li>
-									<li><a href="<?php echo $url_prefix; ?>Special:SpecialPages" class="special-pages"><i class="icon-star-empty"></i> Special Pages</a></li>
+									<li><a href="<?php echo $url_prefix; ?>Special:RecentChanges" class="recent-changes"><i class="fa fa-edit"></i> Recent Changes</a></li>
+									<li><a href="<?php echo $url_prefix; ?>Special:SpecialPages" class="special-pages"><i class="fa fa-star-o"></i> Special Pages</a></li>
 									<?php if ( $wgEnableUploads ) { ?>
-									<li><a href="<?php echo $url_prefix; ?>Special:Upload" class="upload-a-file"><i class="icon-upload"></i> Upload a File</a></li>
+									<li><a href="<?php echo $url_prefix; ?>Special:Upload" class="upload-a-file"><i class="fa fa-upload"></i> Upload a File</a></li>
 									<?php } ?>
 								</ul>
 							</li>
@@ -184,8 +186,8 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 					if ( 'sidebar' == $wgTOCLocation ) {
 						?>
 						<div class="row">
-							<section class="span3 toc-sidebar"></section>
-							<section class="span9 wiki-body-section">
+							<section class="col-md-3 toc-sidebar"></section>
+							<section class="col-md-9 wiki-body-section">
 						<?php
 					}//end if
 				?>
@@ -421,14 +423,15 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 				case 'Page': $icon = 'file'; break;
 				case 'Discussion': $icon = 'comment'; break;
 				case 'Edit': $icon = 'pencil'; break;
-				case 'History': $icon = 'time'; break;
+				case 'History': $icon = 'clock-o'; break;
 				case 'Delete': $icon = 'remove'; break;
-				case 'Move': $icon = 'move'; break;
+				case 'Move': $icon = 'arrows'; break;
 				case 'Protect': $icon = 'lock'; break;
 				case 'Watch': $icon = 'eye-open'; break;
+				case 'Unwatch': $icon = 'eye-slash'; break;
 				}//end switch
 
-				$link['title'] = '<i class="icon-' . $icon . '"></i> ' . $link['title'];
+				$link['title'] = '<i class="fa fa-' . $icon . '"></i> ' . $link['title'];
 			} elseif( 'user' == $which ) {
 				switch( $link['title'] ) {
 				case 'My talk': $icon = 'comment'; break;
@@ -439,7 +442,7 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 				default: $icon = 'user'; break;
 				}//end switch
 
-				$link['title'] = '<i class="icon-' . $icon . '"></i> ' . $link['title'];
+				$link['title'] = '<i class="fa fa-' . $icon . '"></i> ' . $link['title'];
 			}//end elseif
 
 			$nav[0]['sublinks'][] = $link;
