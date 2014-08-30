@@ -74,6 +74,8 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 		global $wgEnableUploads;
 		global $wgLogo;
 		global $wgTOCLocation;
+		global $wgNavBarClasses;
+		global $wgSubnavBarClasses;
 
 		$this->skin = $this->data['skin'];
 		$action = $wgRequest->getText( 'action' );
@@ -84,7 +86,7 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 
 		$this->html('headelement');
 		?>
-		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="navbar navbar-default navbar-fixed-top <?php echo $wgNavBarClasses; ?>" role="navigation">
 				<div class="container">
 					<!-- .btn-navbar is used as the toggle for collapsed navbar content -->
 					<div class="navbar-header">
@@ -184,8 +186,8 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 					if ( 'sidebar' == $wgTOCLocation ) {
 						?>
 						<div class="row">
-							<section class="span3 toc-sidebar"></section>
-							<section class="span9 wiki-body-section">
+							<section class="col-md-3 toc-sidebar"></section>
+							<section class="col-md-9 wiki-body-section">
 						<?php
 					}//end if
 				?>
@@ -426,6 +428,7 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 				case 'Move': $icon = 'arrows'; break;
 				case 'Protect': $icon = 'lock'; break;
 				case 'Watch': $icon = 'eye-open'; break;
+				case 'Unwatch': $icon = 'eye-slash'; break;
 				}//end switch
 
 				$link['title'] = '<i class="fa fa-' . $icon . '"></i> ' . $link['title'];
