@@ -461,7 +461,12 @@ pre.linenums ol {
 }
 
 @media (max-width: 979px) {
-	body { padding-top: 0px; }
+	body { padding-top: 103px; }
+
+	.mw-headline {
+		margin-top: -103px;
+		padding-top: 103px;
+	}
 
 	.subnav #subnav-select {
 		margin-left: 20px;
