@@ -2,6 +2,8 @@
 
 This is a MediaWiki skin that uses Bootstrap 3 from Twitter!  The framework gives a boatload of features that play really nicely with a MediaWiki installation.  To get up and rolling, there's a few things that should be done.
 
+If you'd like to see one of these in the wild, check out the [EotL Wiki](http://eotl.borkweb.com).
+
 ## Installation
 First, clone the repository into your `skins/` directory.
 
