@@ -35,6 +35,19 @@ h4 .mw-headline { font-size: 14px; }
 h5 .mw-headline { font-size: 12px; }
 h6 .mw-headline { font-size: 12px; }
 
+#mw-content-text > * {
+	position: relative;
+	z-index: 2;
+}
+#mw-content-text > h1,
+#mw-content-text > h2,
+#mw-content-text > h3,
+#mw-content-text > h4,
+#mw-content-text > h5,
+#mw-content-text > h6 {
+	z-index: 1;
+}
+
 p {
 	margin-bottom: 15px;
 }
