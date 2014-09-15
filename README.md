@@ -60,7 +60,7 @@ This MediaWiki page will contain what appears in your footer.  I've set mine to 
 ```
 
 
-#### Create: Bootstrap:TitleBar
+#### Create: Bootstrap:TitleBar / Bootstrap:Subnav
 This MediaWiki page will control the links that appear in the Bootstrap navbar after the logo/site title.  The format that this page is expecting is as follows:
 
 ```
@@ -73,6 +73,8 @@ This MediaWiki page will control the links that appear in the Bootstrap navbar a
 ** [[OMG hai]]
 * [[A Link Menu]]
 ```
+
+The Bootstrap:Subnav page follow the same syntax as does the Bootstrap:TitleBar page. As the name already suggests, it will create a sub-navigation bar under the title bar.
 
 
 #### Create: Template:Alert
