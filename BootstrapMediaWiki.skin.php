@@ -452,12 +452,17 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 	}//end get_array_links
 
 	function getPageRawText($title) {
+		global $wgParser, $wgUser;
 		$pageTitle = Title::newFromText($title);
 		if(!$pageTitle->exists()) {
 			return 'Create the page [[Bootstrap:TitleBar]]';
 		} else {
 			$article = new Article($pageTitle);
-			return $article->getRawText();
+			$wgParserOptions = new ParserOptions($wgUser);
+			// get the text as static wiki text, but with already expanded templates,
+			// which also e.g. to use {{#dpl}} (DPL third party extension) for dynamic menus.
+			$parserOutput = $wgParser->preprocess($article->getRawText(), $pageTitle, $wgParserOptions );
+			return $parserOutput;
 		}
 	}
 
