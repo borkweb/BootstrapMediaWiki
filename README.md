@@ -60,7 +60,7 @@ This MediaWiki page will contain what appears in your footer.  I've set mine to 
 ```
 
 
-#### Create: Bootstrap:TitleBar
+#### Create: Bootstrap:TitleBar / Bootstrap:Subnav
 This MediaWiki page will control the links that appear in the Bootstrap navbar after the logo/site title.  The format that this page is expecting is as follows:
 
 ```
@@ -83,6 +83,8 @@ An interesting example is the usage of the [DynamicPageList third-party Extensio
 ```
 
 You can name the category whatever you want, of course. Do not change the format string, as it will be needed as is by the template functions! But of course every other params for this function are possible...
+
+The Bootstrap:Subnav page follow the same syntax as does the Bootstrap:TitleBar page. As the name already suggests, it will create a sub-navigation bar under the title bar.
 
 #### Create: Template:Alert
 This template is used to leverage Bootstrap's alert box:
