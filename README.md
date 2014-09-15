@@ -74,6 +74,15 @@ This MediaWiki page will control the links that appear in the Bootstrap navbar a
 * [[A Link Menu]]
 ```
 
+You can use this page to create dynamic menus, too! If you have an extension providing a parser function, this will get evaluated before the menu is displayed.
+An interesting example is the usage of the [DynamicPageList third-party Extension](http://www.mediawiki.org/wiki/Extension:DynamicPageList_%28third-party%29) (BEWARE: not the MediaWiki one; maybe this works when you wrap this inside a {{#tag:}} to create a parser function on demand):
+
+```
+* Menu Item Title
+{{#dpl:category=Dynamic Menu Pages|format=,** [[%PAGE%|%TITLE%]],\n,}}
+```
+
+You can name the category whatever you want, of course. Do not change the format string, as it will be needed as is by the template functions! But of course every other params for this function are possible...
 
 #### Create: Template:Alert
 This template is used to leverage Bootstrap's alert box:
