@@ -141,6 +141,20 @@ option.unclickable {
 	margin-bottom: 5px;
 }
 
+#mw-content-text .center {
+	text-align: center;
+}
+
+#mw-content-text .floatright {
+	margin-left: 1.5rem;
+	margin-bottom: 1.5rem;
+}
+
+#mw-content-text .floatleft {
+	margin-right: 1.5rem;
+	margin-bottom: 1.5rem;
+}
+
 #page-contents ul li { list-style: none; }
 #page-contents .dropdown-menu {
 	left: auto;
