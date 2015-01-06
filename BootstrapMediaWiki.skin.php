@@ -12,7 +12,12 @@ if ( ! defined( 'MEDIAWIKI' ) ) {
 	die( -1 );
 }//end if
 
-require_once('includes/SkinTemplate.php');
+//File removed on new mediawiki versions (1.24.1 at least).
+//require_once('includes/SkinTemplate.php');
+
+if(file_exists('includes/SkinTemplate.php')){
+    require_once('includes/SkinTemplate.php');
+}
 
 /**
  * Inherit main code from SkinTemplate, set the CSS and template filter.
