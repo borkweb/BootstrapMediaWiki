@@ -1,0 +1,311 @@
+/*
+ * ******************************************************************************
+ *  jquery.mb.components
+ *  file: mbExtruder.less
+ *
+ *  Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);
+ *  Open lab srl, Firenze - Italy
+ *  email: matteo@open-lab.com
+ *  site: 	http://pupunzi.com
+ *  blog:	http://pupunzi.open-lab.com
+ * 	http://open-lab.com
+ *
+ *  Licences: MIT, GPL
+ *  http://www.opensource.org/licenses/mit-license.php
+ *  http://www.gnu.org/licenses/gpl.html
+ *
+ *  last modified: 07/01/14 22.50
+ *  *****************************************************************************
+ */
+
+@mainColor:#000;
+@flapTextColor:#fff;
+@borderBottom:1px solid #333;
+@borderBottomPanels:1px solid #000;
+
+.roundedCorners (@tl:0, @tr: 0, @bl: 8px, @br: 8px) {
+  -moz-border-radius: @tl @tr @bl @br;
+  -webkit-border-top-left-radius: @tl;
+  -webkit-border-top-right-radius: @tr;
+  -webkit-border-bottom-left-radius: @bl;
+  -webkit-border-bottom-right-radius: @br;
+  border-top-left-radius: @tl;
+  border-top-right-radius: @tr;
+  border-bottom-left-radius: @bl;
+  border-bottom-right-radius: @br;
+}
+.shadow (@hor: 2px, @vert: 0, @blur: 5px, @shadow: #999 ){
+  -moz-box-shadow:@hor @vert @blur @shadow;
+  -webkit-box-shadow:@hor @vert @blur @shadow;
+  box-shadow:@hor @vert @blur @shadow;
+}
+
+.textShadow (@hor: 2px, @vert: 2px, @blur: 2px, @shadow: #333 ){
+  text-shadow:@hor @vert @blur @shadow;
+}
+
+.extruder{
+  position:fixed;
+  cursor:default;
+  background: url("../elements/extruder_blank.png");
+}
+
+.extruder .header{
+  height:27px;
+}
+
+.extruder .extruder-content{
+  display:none;
+  background:@mainColor;
+}
+
+.extruder.open .extruder-content{
+  .shadow();
+}
+
+.extruder .footer{
+  display:none;
+  height:10px;
+  background:@mainColor;
+  .roundedCorners(0, 0, 8px, 8px);
+  .shadow();
+
+}
+
+/*extruder TOP*/
+.extruder.top .flap{
+  color:@flapTextColor;
+  font:18px/28px Arial, Helvetica, sans-serif;
+  text-align:center;
+  display:block;
+  margin:auto;
+  padding:0 5px 5px 5px;
+  height:30px;
+  width:180px;
+  background:@mainColor;
+  cursor:pointer;
+  .roundedCorners(0, 0, 8px, 8px);
+  .shadow();
+  .textShadow();
+}
+.extruder.top .extruder-content{
+  .roundedCorners(0, 0, 8px, 8px);
+}
+
+/*extruder BOTTOM*/
+.extruder.bottom .flap{
+  position:relative;
+  color:white;
+  font:18px/28px Arial, Helvetica, sans-serif;
+  text-align:center;
+  display:block;
+  margin:auto;
+  margin-top:1px;
+  padding:0 5px 5px 5px;
+  height:30px;
+  width:180px;
+  background:@mainColor;
+  cursor:pointer;
+  .roundedCorners(8px, 8px, 0, 0);
+  .textShadow();
+  .shadow();
+}
+
+.extruder.bottom .footer{
+  .roundedCorners(8px, 8px, 0, 0);
+  position:relative;
+  margin-top:-5px;
+}
+
+.extruder.bottom .extruder-content{
+  .roundedCorners(8px, 8px, 0, 0);
+}
+
+.extruder.bottom .ext_wrapper{
+  bottom:0;
+}
+
+/*extruder LEFT*/
+
+.extruder.left{
+  height:100%;
+  background:url("../elements/extruder_blank.png");
+}
+
+.extruder.left.open .extruder-content{
+  .shadow();
+}
+
+.extruder.left .extruder-content{
+  border-right:3px solid @mainColor;
+}
+
+.extruder.left .ext_wrapper{
+  height:100%;
+}
+
+.extruder.left .footer{
+  display:none;
+}
+
+.extruder.left .flap{
+  font-size:18px;
+  color:white;
+  top:0;
+  padding:10px 0 10px 10px;
+  margin-right:-37px;
+  background:@mainColor;
+  width:30px;
+  position:absolute;
+  right:0;
+  .roundedCorners(0, 8px, 0,8px);
+  .shadow();
+}
+
+.extruder.left .flap .flapLabel{
+  background:@mainColor;
+}
+
+/*extruder RIGHT*/
+
+.extruder.right{
+  height:100%;
+  background:url("../elements/extruder_blank.png");
+}
+
+.extruder.right .extruder-content{
+  border-left:3px solid @mainColor;
+}
+
+.extruder.right.open .extruder-content{
+  .shadow(-2px);
+}
+
+.extruder.right .ext_wrapper{
+  height:100%;
+  right:0;
+}
+
+.extruder.right .footer{
+  display:none;
+}
+
+.extruder.right .flap{
+  font-size:18px;
+  color:white;
+  top:0;
+  padding:10px 0 10px 10px;
+  background:@mainColor;
+  width:30px;
+  position:absolute;
+  left:-37px;
+  .roundedCorners(8px, 0, 8px, 0);
+  .shadow(-2px);
+}
+
+.extruder.right .flap .flapLabel{
+  background:@mainColor;
+}
+
+/*Extruder CONTENT*/
+
+  .extruder .voice{
+    font:18px/24px Arial, Helvetica, sans-serif;
+    color:white;
+    padding:5px;
+    padding-left:10px;
+    height:27px;
+    border-bottom:@borderBottom;
+    .textShadow();
+  }
+  .extruder .voice:last-child{
+    border-bottom:none;
+  }
+
+ .extruder .voice .disabled{
+   cursor:default;
+  }
+.extruder .text{
+    background:#222;
+    font:14px/16px Arial, Helvetica, sans-serif;
+    color:gray;
+    padding:10px;
+    border-bottom:@borderBottom;
+    .textShadow();
+  }
+
+  .extruder .voice.hover{
+    background:url("../elements/extruder_voiceHover.png") no-repeat top;
+  }
+
+  .extruder .voice.sel{
+    background:url("../elements/extruder_voiceHover.png") no-repeat top;
+  }
+
+  .extruder .voice img{
+    float:left;
+    margin-right:15px;
+  }
+
+  .extruder .voice a.label{
+    display:block;
+    height:30px;
+    color:white;
+    padding-top:0;
+    text-decoration:none;
+  }
+
+  .extruder .voice span.label{
+    display:block;
+    height:30px;
+    color: #d0cfcf;
+    padding-top:0;
+    text-decoration:none;
+  }
+
+  .extruder .voice{
+    position:relative;
+  }
+
+  .extruder .settingsBtn{
+    display:block;
+    position:absolute;
+    width:36px;
+    height:36px;
+    background: url("../elements/settingsBtn.png") no-repeat bottom;
+    cursor:pointer;
+    right:-3px;
+    top:-4px;
+  }
+
+  .extruder .optionsPanel{
+    background: url("../elements/fuzz.gif");
+    display:none;
+    border-bottom:@borderBottom;
+  }
+
+  .extruder .voice.sel{
+    background: url("../elements/extruder_voiceHover.png") no-repeat top;
+  }
+
+  /*Extruder Panel*/
+
+  .optionsPanel .panelVoice a{
+    text-decoration:none;
+    display:block;
+    color:#cccccc;
+    padding:8px;
+    padding-left:20px;
+    font-size:16px;
+    .textShadow();
+    border-bottom:@borderBottomPanels;
+    cursor:pointer;
+  }
+  .optionsPanel .panelVoice a:hover{
+    color:#fff;
+    background: url("../elements/red_op_50.png");
+  }
+
+:focus {
+  outline: 0;
+}

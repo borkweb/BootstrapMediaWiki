@@ -2086,7 +2086,7 @@ $(function() {
 			e.preventDefault(); 
 		});
 
-	prettyPrint();
+	//prettyPrint();
 
 	$('#wiki-body .body a[title="Special:UserLogin"]').click();
 });
