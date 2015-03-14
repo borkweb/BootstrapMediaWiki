@@ -4,7 +4,7 @@ body {
 	background-repeat: repeat-x;
 	background-position: center 80px;
 	color: #222;
-	padding-top: 128px;
+	padding-top: 100px;
 }
 
 body.page-Main_Page .page-header,
@@ -61,7 +61,7 @@ p {
 	padding: 15px;
 }
 
-.editsection {
+.edit	section {
 	float: right;
 	font-size: 0.8rem;
 	opacity: 0.2;
@@ -205,8 +205,14 @@ option.unclickable {
 	list-style-type: none;
 }
 
+#toc.toc-sidebar ul {
+        line-height: 20px;
+	padding-left: 5px;
+}
+
+
 #toc.toc-sidebar li li {
-	margin-left: 20px;
+	margin-left: 10px;
 }
 
 #toc.toc-sidebar h3 {

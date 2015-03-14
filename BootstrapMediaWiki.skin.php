@@ -126,6 +126,12 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 									<?php } ?>
 								</ul>
 							</li>
+							<?php //var_export ($this->data['content_actions']);?>
+							
+							 <?php  if ( $wgUser->isLoggedIn() ) : ?>
+								<li><a href="<?php echo $this->data['content_actions']['nstab-main']['href'];?>"><i class="fa fa-file"></i> <?php echo wfMessage('mypage')->text();?></a></li>
+	                                                        <li><a href="<?php echo $this->data['content_actions']['edit']['href'];?>"><i class="fa fa-pencil"></i> <?php echo wfMessage( 'edit')->text();?></a></li>							 							 
+							 <?php endif; ?>
 							<?php echo $this->nav( $this->get_page_links( 'Bootstrap:TitleBar' ) ); ?>
 						</ul>
 					<?php
@@ -142,6 +148,7 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 						}//end if
 
 						if ( count( $this->data['content_actions']) > 0 ) {
+							//var_export( $this->data['content_actions']);
 							$content_nav = $this->get_array_links( $this->data['content_actions'], wfMessage('nstab-main')->text() , 'page' );
 							?>
 							<ul class="nav navbar-nav navbar-right content-actions"><?php echo $content_nav; ?></ul>
@@ -598,28 +605,32 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 				'class' => htmlspecialchars( $item['class'] ),
 				'title' => htmlspecialchars( $item['text'] ),
 			);
+			
+			//DEBUG
+			//echo $key . " | " . $link['title'] . " # ";
 
 			if( 'page' == $which ) {
-				switch( $link['title'] ) {
-				case 'Page': $icon = 'file'; break;
-				case 'Discussion': $icon = 'comment'; break;
-				case 'Edit': $icon = 'pencil'; break;
-				case 'History': $icon = 'clock-o'; break;
-				case 'Delete': $icon = 'remove'; break;
-				case 'Move': $icon = 'arrows'; break;
-				case 'Protect': $icon = 'lock'; break;
-				case 'Watch': $icon = 'eye-open'; break;
-				case 'Unwatch': $icon = 'eye-slash'; break;
+				switch( $key ) {
+				case 'nstab-main': $icon = 'file'; break;
+				case 'talk': $icon = 'comment'; break;
+				case 'edit': $icon = 'pencil'; break;
+				case 'history': $icon = 'clock-o'; break;
+				case 'delete': $icon = 'remove'; break;
+				case 'move': $icon = 'arrows'; break;
+				case 'protect': $icon = 'lock'; break;
+				case 'unprotect': $icon = 'unlock'; break;
+				case 'watch': $icon = 'eye-open'; break;
+				case 'unwatch': $icon = 'eye-slash'; break;
 				}//end switch
 
 				$link['title'] = '<i class="fa fa-' . $icon . '"></i> ' . $link['title'];
 			} elseif( 'user' == $which ) {
-				switch( $link['title'] ) {
-				case 'My talk': $icon = 'comment'; break;
-				case 'My preferences': $icon = 'cog'; break;
-				case 'My watchlist': $icon = 'eye-close'; break;
-				case 'My contributions': $icon = 'list-alt'; break;
-				case 'Log out': $icon = 'off'; break;
+				switch( $key ) {
+				case 'mytalk': $icon = 'comment'; break;
+				case 'preferences': $icon = 'cog'; break;
+				case 'watchlist': $icon = 'eye-slash'; break;
+				case 'mycontris': $icon = 'list-alt'; break;
+				case 'logout': $icon = 'power-off'; break;
 				default: $icon = 'user'; break;
 				}//end switch
 

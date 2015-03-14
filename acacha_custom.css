@@ -492,3 +492,14 @@
 .main-color-5-bg, .main-color-5-bg-hover:hover{
 	background-color:#c8385e;
 }
+
+.page-header {
+	margin-top: 0px;
+	margin-bottom: 5px;
+}
+
+ul#SelectCategoryList li input, #SelectCategoryList ul li input {
+    display: inline !important;
+}
+
+

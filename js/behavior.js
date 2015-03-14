@@ -36,6 +36,7 @@ $(function() {
 	$('input[type=submit],input[type=button],input[type=reset]').addClass('btn');
 	$('input[type=submit]').addClass('btn-primary');
 
+	/*
 	$('input[type=checkbox],input[type=radio]').each(function() {
 		var $el = $(this);
 
@@ -50,7 +51,7 @@ $(function() {
 		});
 
 		$el.closest('label').addClass($el.attr('type'));
-	});
+	});*/
 
 	$('.tip').tooltip();
 	$('[data-toggle="popover"]').popover();
