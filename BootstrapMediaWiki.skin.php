@@ -270,7 +270,7 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
                 	<div class="container">
                     	<div class="row normal-sidebar">
 			<div id="text-2" class="   col-md-3 widget widget_text">
-			<div class=" widget-inner"><h2 class="widget-title maincolor1">Sobre nosaltres</h2>			<div class="textwidget"><img src="/mediawiki/resources/assets/poweredby_mediawiki_88x31.png" alt="logo">
+			<div class=" widget-inner"><h2 class="widget-title maincolor1">Sobre nosaltres</h2>			<div class="textwidget"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="logo">
 <br><br>
 <p style="font-family: Raleway,sans-serif;">Acacha Wiki és un lloc web col·laboratiu d' informàtica i telecomunicacions creat per experts en administració de sistemes, xarxes, desenvolupament multiplataforma, disseny web i altres àrees de coneixement.</p>
 <a class="btn btn-default footerbutton" style="margin-top:4px;" href="/mediawiki/index.php/Acacha_Wiki._Informàtica_i_telecomunicacions:Quant_a">Quant a</a>
@@ -279,7 +279,7 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 
 		</div></div><div id="app-recent-posts-2" class="   col-md-3 widget app_recent_posts"><div class=" widget-inner"><div class="app-lastest"><h2 class="widget-title maincolor1">Blog</h2><div class="item"><div class="thumb item-thumbnail">
 							<a href="#" title="Android Apps on Applay">
-								<div class="item-thumbnail"><img width="80" height="80" src="/mediawiki/resources/assets/IMG_3212-1300x866-80x80.jpg" class="attachment-thumb_80x80 wp-post-image" alt="TODO" />
+								<div class="item-thumbnail"><img width="80" height="80" src="/resources/assets/IMG_3212-1300x866-80x80.jpg" class="attachment-thumb_80x80 wp-post-image" alt="TODO" />
 									<div class="thumbnail-hoverlay main-color-5-bg"></div>
 									<div class="thumbnail-hoverlay-icon"><i class="fa fa-search"></i></div>
 								</div>
@@ -292,7 +292,7 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 					
 					<div class="item"><div class="thumb item-thumbnail">
 							<a href="#" title="Apps For Work‎">
-								<div class="item-thumbnail"><img width="80" height="80" src="/mediawiki/resources/assets/IMG_5956-1300x866-80x80.jpg" class="attachment-thumb_80x80 wp-post-image" alt="pendent" />
+								<div class="item-thumbnail"><img width="80" height="80" src="/resources/assets/IMG_5956-1300x866-80x80.jpg" class="attachment-thumb_80x80 wp-post-image" alt="pendent" />
 									<div class="thumbnail-hoverlay main-color-5-bg"></div>
 									<div class="thumbnail-hoverlay-icon"><i class="fa fa-search"></i></div>
 								</div>
