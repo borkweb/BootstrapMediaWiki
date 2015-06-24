@@ -4,7 +4,9 @@
  *
  * @Version 1.0.0
  * @Author Matthew Batchelder <borkweb@gmail.com>
+ * @Author Creative Commons Corporation <info@creativecommons.org>
  * @Copyright Matthew Batchelder 2012 - http://borkweb.com/
+ * @Copyright Creative Commons Corporation 2015 - https://github.com/creativecommons/bootstrap-mediawiki
  * @License: GPLv2 (http://www.gnu.org/copyleft/gpl.html)
  */
 
@@ -64,7 +66,7 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 	/**
 	 * @var Cached skin object
 	 */
-	public $skin;
+	//public $skin;
 
 	/**
 	 * Template filter callback for Bootstrap skin.
@@ -82,7 +84,7 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 		global $wgNavBarClasses;
 		global $wgSubnavBarClasses;
 
-		$this->skin = $this->data['skin'];
+		//$this->skin = $this->data['skin'];
 		$action = $wgRequest->getText( 'action' );
 		$url_prefix = str_replace( '$1', '', $wgArticlePath );
 
@@ -241,12 +243,10 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 		</div>
 		<div class="bottom">
 			<div class="container">
-				<?php $this->includePage('Bootstrap:Footer'); ?>
-				<footer>
-					<p>&copy; <?php echo date('Y'); ?> by <a href="<?php echo (isset($wgCopyrightLink) ? $wgCopyrightLink : 'http://borkweb.com'); ?>"><?php echo (isset($wgCopyright) ? $wgCopyright : 'BorkWeb'); ?></a> 
-						&bull; Powered by <a href="http://mediawiki.org">MediaWiki</a> 
-					</p>
-				</footer>
+			  <footer>
+                <div class="row"><div class="col-md-6">This wiki is licensed to the public under a <a class="external" rel="nofollow" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0</a> license.<br> Your use of this wiki is governed by the <a href="/CcWiki:Terms_of_Use">Terms of Use</a>.<br><a href="/wiki/CCWiki:Privacy_policy" title="CCWiki:Privacy policy">Privacy policy</a><br><a href="/wiki/CCWiki:About" title="CCWiki:About">About Creative Commons</a><br><a href="/wiki/CCWiki:General_disclaimer" title="CCWiki:General disclaimer">Disclaimers</a></div>
+                  <div class="col-md-6"><?php echo $this->data['lastmod']; ?><br>Theme based on <a href="https://github.com/creativecommons/bootstrap-mediawiki">bootstrap-mediawiki</a> by BorkWeb.<br><br><a href="https://creativecommons.org/licenses/by/4.0/"><img src="https://licensebuttons.net/l/by/4.0/88x31.png" alt="Creative Commons Attribution 4.0" width="88" height="31"></a>&nbsp;<a href="//www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31"></div></div>
+			  </footer>
 			</div><!-- container -->
 		</div><!-- bottom -->
 
