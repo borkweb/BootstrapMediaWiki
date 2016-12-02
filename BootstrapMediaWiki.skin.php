@@ -145,7 +145,7 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 						?>
 						<ul class="nav navbar-nav navbar-right">
 							<li>
-							<?php echo Linker::linkKnown( SpecialPage::getTitleFor( 'Userlogin' ), wfMsg( 'login' ), array(/*"title" => wfMsg( 'login' )*/), array("returnto" => trim($_GET['title']))); ?>
+							<?php echo Linker::linkKnown( SpecialPage::getTitleFor( 'Userlogin' ), wfMessage( 'login' ), array(/*"title" => wfMessage( 'login' )*/), array("returnto" => trim($_GET['title']))); ?>
 							</li>
 						</ul>
 						<?php
