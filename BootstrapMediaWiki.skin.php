@@ -144,7 +144,7 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 						?>
 						<ul class="nav navbar-nav navbar-right">
 							<li>
-							<?php echo Linker::linkKnown( SpecialPage::getTitleFor( 'Userlogin' ), wfMsg( 'login' ) ); ?>
+							<?php echo Linker::linkKnown( SpecialPage::getTitleFor( 'Userlogin' ), wfMessage( 'login' ) ); ?>
 							</li>
 						</ul>
 						<?php
@@ -466,7 +466,8 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 			$wgParserOptions = new ParserOptions($wgUser);
 			// get the text as static wiki text, but with already expanded templates,
 			// which also e.g. to use {{#dpl}} (DPL third party extension) for dynamic menus.
-			$parserOutput = $wgParser->preprocess($article->getRawText(), $pageTitle, $wgParserOptions );
+			$content = $article->getContent(Revision::RAW);
+			$parserOutput = $wgParser->preprocess($content, $pageTitle, $wgParserOptions);
 			return $parserOutput;
 		}
 	}
@@ -479,7 +480,8 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 		} else {
 			$article = new Article($pageTitle);
 			$wgParserOptions = new ParserOptions($wgUser);
-			$parserOutput = $wgParser->parse($article->getRawText(), $pageTitle, $wgParserOptions);
+			$content = $article->getContent(Revision::RAW);
+			$parserOutput = $wgParser->parse($content, $pageTitle, $wgParserOptions);
 			echo $parserOutput->getText();
 		}
 	}
