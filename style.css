@@ -174,51 +174,22 @@ option.unclickable {
 	height: auto !important;
 }
 
-#toc:not(.toc-sidebar) {
-	display: none;
-	float: right;
-	margin: 0 0 1em 1em;
+#toc {
+    display: inline-block;
+    padding: 12px;
 }
 
-#toc td {
-	background: #eee;
-	border: 1px solid #ddd;
-	border-radius: 0.5em;
-	display: block;
-	-moz-border-radius: 0.5em;
-	-webkit-border-radius: 0.5em;
-	padding: 0 1em 1em 1em;
-
-	box-shadow: 0 0 5px 0 rgba( 0, 0, 0, 0.2 );
+@media (min-width: 481px) {
+    #toc {
+        min-width: 390px; /* Rough hack based on 480px */
+    }
 }
 
-#toc.toc-sidebar td {
-	background: transparent;
-	border: none;
-	box-shadow: none;
-	display: table-cell;
-	padding: 0;
-}
-
-#toc.toc-sidebar li {
-	line-height: 20px;
-	list-style-type: none;
-}
-
-#toc.toc-sidebar li li {
-	margin-left: 20px;
-}
-
-#toc.toc-sidebar h3 {
-	font-size: 1em;
-}
-
-.toc-sidebar .toctoggle {
-	display: none;
-}
-
-#toctitle h2 {
-	font-size: 16px;
+#toc ul {
+  list-style-type: none;
+  list-style-image: none;
+  margin-left: 0;
+  padding: 0;
 }
 
 a.new {
@@ -475,11 +446,6 @@ pre.linenums ol {
 @media (max-width: 979px) {
 	body { padding-top: 103px; }
 
-	.mw-headline {
-		margin-top: -103px;
-		padding-top: 103px;
-	}
-
 	.subnav #subnav-select {
 		margin-left: 20px;
 		display: inline-block;
@@ -511,9 +477,7 @@ pre.linenums ol {
 
 /* responsive */
 @media (max-width: 480px) {
-
 	#toc {
-		float: none;
 		width: 100%;
 		margin-left: 0;
 	}

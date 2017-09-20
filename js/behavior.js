@@ -4,7 +4,7 @@ $(function() {
 	$('#page-contents a').click(function(e){
 		e.preventDefault();
 		var $target = $(this).attr('href');
-		$(document).scrollTop( $($target).offset().top-100 );                                                                                                                                                                                                     
+		$(document).scrollTop( $($target).offset().top-100 );
 	});
 
 	$( document ).on('change', '#subnav-select', function() {
@@ -53,53 +53,39 @@ $(function() {
 	});
 
 	$('.tip').tooltip();
-	$('[data-toggle="popover"]').popover();
+    //$('[data-toggle="popover"]').popover();
 
-	if ( $('.toc-sidebar').length > 0 ) {
-		if ( 0 === $('#toc').length ) {
-			$('.toc-sidebar').remove();
-			$('.wiki-body-section').removeClass('col-md-9').addClass('col-md-12');
-		} else {
-			$('.toc-sidebar').append('<h3>Contents</h3>');
-			$('#toc').each(function() {
-				$(this).find('ul:first').appendTo( '.toc-sidebar' );
-				$(this).remove();
-			});
+    $('.toc-sidebar').remove();
+    $('.wiki-body-section').removeClass('col-md-9').addClass('col-md-12');
 
-			$('.toc-sidebar').attr('id', 'toc');
-		}//end else
-	} else {
-		$('#toc').each(function() {
-			var $toc = $(this);
-			var $title = $toc.find('#toctitle');
-			var $links = $title.siblings('ul');
+    //$('.page-header').prepend('<ul class="nav nav-pills pull-right"></ul>');
 
-			$('.page-header').prepend('<ul class="nav nav-pills pull-right"><li class="dropdown" id="page-contents"><a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list"></i> Contents <span class="caret"></span></a> <ul class="dropdown-menu"></ul></li></ul>');
-
-			$('.page-header #page-contents').find('.dropdown-menu').html( $links.html() );
-		});
-
-		if( $('.page-header .nav').length === 0 ) {
-			$('.page-header').prepend('<ul class="nav nav-pills pull-right"></li></ul>');
-		}//end if
-
-		var $header = $('.page-header');
-		var $hero = $('.hero-unit');
-		var $edit = $('.navbar .content-actions .edit');
-		if( $edit.length > 0 ) {
-			if( $hero.length ) {
-				if( ! $hero.find('.nav-pills').length ) {
-					$hero.prepend('<ul class="nav nav-pills pull-right"></ul>');
-				}//end if
-
-				$edit.closest('li').clone().prependTo( $hero.find('.nav-pills') );
-			} else {
-				$edit.closest('li').clone().prependTo( $header.find('.nav-pills') );
-			}//end else
-		}//end if
+    if( $('.page-header .nav').length === 0 ) {
+	    $('.page-header').prepend('<ul class="nav nav-pills pull-right"></ul>');
 	}//end if
 
-	prettyPrint();
+    var $header = $('.page-header');
+    var $hero = $('.hero-unit');
+    var $edit = $('.navbar .content-actions .edit');
+    if( $edit.length > 0 ) {
+	    if( $hero.length ) {
+		    if( ! $hero.find('.nav-pills').length ) {
+			    $hero.prepend('<ul class="nav nav-pills pull-right"></ul>');
+			}//end if
+
+		    $edit.closest('li').clone().prependTo( $hero.find('.nav-pills') );
+		} else {
+		    $edit.closest('li').clone().prependTo( $header.find('.nav-pills') );
+		}//end else
+	}//end if
+//	}//end if
+
+    prettyPrint();
+
+    $('#toc').addClass('panel panel-default');
+    //$('#toc #toctitle').addClass('panel-heading');
+    $('#toc #toctitle h2').addClass('panel-title');
+    //$('#toc ul').addClass('panel-body');
 
 	$('#wiki-body .body a[title="Special:UserLogin"]').click();
 	$('.dropdown-toggle').dropdown();
