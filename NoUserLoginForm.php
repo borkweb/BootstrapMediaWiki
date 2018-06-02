@@ -29,6 +29,10 @@ class NoUserLoginFormTemplate extends BaseTemplate {
         // A link to log in/out would be confusing, text would require i18n
         echo '<span style="font-size:24pt">&#10004;</span>';
     }
+
+    function getExtraInputDefinitions() {
+        return [];
+    }
 }
 
 function noUserLoginForm( &$template ) {
