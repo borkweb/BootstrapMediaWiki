@@ -11,7 +11,7 @@ WATCHR ?= `which watchr`
 #
 
 mediawiki: bootstrap
-	cat bootstrap/js/bootstrap.js js/jquery-dotimeout/jquery.ba-dotimeout.js js/behavior.js > js/site.js
+	cat bootstrap/js/bootstrap.js js/jquery.ba-dotimeout.min.js js/behavior.js > js/site.js
 	uglifyjs -nc js/site.js > js/site.min.js
 
 bootstrap: 
