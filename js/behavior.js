@@ -36,6 +36,7 @@ $(function() {
 	$('input[type=submit],input[type=button],input[type=reset]').addClass('btn');
 	$('input[type=submit]').addClass('btn-primary');
 
+	/*
 	$('input[type=checkbox],input[type=radio]').each(function() {
 		var $el = $(this);
 
@@ -50,7 +51,7 @@ $(function() {
 		});
 
 		$el.closest('label').addClass($el.attr('type'));
-	});
+	});*/
 
 	$('.tip').tooltip();
 	$('[data-toggle="popover"]').popover();
@@ -60,7 +61,7 @@ $(function() {
 			$('.toc-sidebar').remove();
 			$('.wiki-body-section').removeClass('col-md-9').addClass('col-md-12');
 		} else {
-			$('.toc-sidebar').append('<h3>Contents</h3>');
+			$('.toc-sidebar').append('<h3>' + toc_sidebar_title + ' [<a id="toc_sidebar_toogle" href="#">' + toc_sidebar_hide  + '</a>]</h3>');
 			$('#toc').each(function() {
 				$(this).find('ul:first').appendTo( '.toc-sidebar' );
 				$(this).remove();
@@ -99,7 +100,7 @@ $(function() {
 		}//end if
 	}//end if
 
-	prettyPrint();
+	//prettyPrint();
 
 	$('#wiki-body .body a[title="Special:UserLogin"]').click();
 	$('.dropdown-toggle').dropdown();

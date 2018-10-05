@@ -2,6 +2,9 @@
 /**
  * Bootstrap - A basic MediaWiki skin based on Twitter's excellent Bootstrap CSS framework
  *
+ * @Author Sergi Tur Badenas <sergiturbadenas@gmail.com>
+ *
+ * Based On:
  * @Version 1.0.0
  * @Author Matthew Batchelder <borkweb@gmail.com>
  * @Copyright Matthew Batchelder 2012 - http://borkweb.com/
@@ -39,6 +42,7 @@ class SkinBootstrapMediaWiki extends SkinTemplate {
 		parent::initPage( $out );
 		$out->addModuleScripts( 'skins.bootstrapmediawiki' );
 		$out->addMeta( 'viewport', 'width=device-width, initial-scale=1, maximum-scale=1' );
+		$out->addStyle('http://fonts.googleapis.com/css?family=Raleway%7COswald%3A400&#038;ver=4.0.1', 'all');
 	}//end initPage
 
 	/**
@@ -81,6 +85,7 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 		global $wgTOCLocation;
 		global $wgNavBarClasses;
 		global $wgSubnavBarClasses;
+		global $wgDisableCounters;
 
 		$this->skin = $this->data['skin'];
 		$action = $wgRequest->getText( 'action' );
@@ -91,8 +96,9 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 
 		$this->html('headelement');
 		?>
+		<div id="extruderTop" class="{title:'Contingut'}"></div>
 		<div class="navbar navbar-default navbar-fixed-top <?php echo $wgNavBarClasses; ?>" role="navigation">
-				<div class="container">
+				<div class="container-fluid">
 					<!-- .btn-navbar is used as the toggle for collapsed navbar content -->
 					<div class="navbar-header">
 						<button class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
@@ -106,19 +112,26 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 
 					<div class="collapse navbar-collapse">
 						<ul class="nav navbar-nav">
-							<li>
+							<!--<li>
 							<a href="<?php echo $this->data['nav_urls']['mainpage']['href'] ?>">Home</a>
 							</li>
+							-->
 							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools <span class="caret"></span></a>
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo wfMessage( 'toolbox')->text();?> <span class="caret"></span></a>
 								<ul class="dropdown-menu">
-									<li><a href="<?php echo $url_prefix; ?>Special:RecentChanges" class="recent-changes"><i class="fa fa-edit"></i> Recent Changes</a></li>
-									<li><a href="<?php echo $url_prefix; ?>Special:SpecialPages" class="special-pages"><i class="fa fa-star-o"></i> Special Pages</a></li>
+									<li><a href="<?php echo $url_prefix; ?>Special:RecentChanges" class="recent-changes"><i class="fa fa-edit"></i> <?php echo wfMessage('recentchanges')->text();?></a></li>
+									<li><a href="<?php echo $url_prefix; ?>Special:SpecialPages" class="special-pages"><i class="fa fa-star-o"></i> <?php echo wfMessage('specialpages')->text();?></a></li>
 									<?php if ( $wgEnableUploads ) { ?>
-									<li><a href="<?php echo $url_prefix; ?>Special:Upload" class="upload-a-file"><i class="fa fa-upload"></i> Upload a File</a></li>
+									<li><a href="<?php echo $url_prefix; ?>Special:Upload" class="upload-a-file"><i class="fa fa-upload"></i> <?php echo wfMessage('uploadbtn')->text();?></a></li>
 									<?php } ?>
 								</ul>
 							</li>
+							<?php //var_export ($this->data['content_actions']);?>
+							
+							 <?php  if ( $wgUser->isLoggedIn() ) : ?>
+								<li><a href="<?php echo $this->data['content_actions']['nstab-main']['href'];?>"><i class="fa fa-file"></i> <?php echo wfMessage('mypage')->text();?></a></li>
+	                                                        <li><a href="<?php echo $this->data['content_actions']['edit']['href'];?>"><i class="fa fa-pencil"></i> <?php echo wfMessage( 'edit')->text();?></a></li>							 							 
+							 <?php endif; ?>
 							<?php echo $this->nav( $this->get_page_links( 'Bootstrap:TitleBar' ) ); ?>
 						</ul>
 					<?php
@@ -135,7 +148,8 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 						}//end if
 
 						if ( count( $this->data['content_actions']) > 0 ) {
-							$content_nav = $this->get_array_links( $this->data['content_actions'], 'Page', 'page' );
+							//var_export( $this->data['content_actions']);
+							$content_nav = $this->get_array_links( $this->data['content_actions'], wfMessage('nstab-main')->text() , 'page' );
 							?>
 							<ul class="nav navbar-nav navbar-right content-actions"><?php echo $content_nav; ?></ul>
 							<?php
@@ -152,7 +166,7 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 					?>
 					<form class="navbar-search navbar-form navbar-right" action="<?php $this->text( 'wgScript' ) ?>" id="searchform" role="search">
 						<div>
-							<input class="form-control" type="search" name="search" placeholder="Search" title="Search <?php echo $wgSitename; ?> [ctrl-option-f]" accesskey="f" id="searchInput" autocomplete="off">
+							<input class="form-control" type="search" name="search" placeholder="<?php echo $this->msg( 'search' );?>" title="Search <?php echo $wgSitename; ?> [ctrl-option-f]" accesskey="f" id="searchInput" autocomplete="off">
 							<input type="hidden" name="title" value="Special:Search">
 						</div>
 					</form>
@@ -163,7 +177,7 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 		if( $subnav_links = $this->get_page_links('Bootstrap:Subnav') ) {
 			?>
 			<div class="subnav subnav-fixed">
-				<div class="container">
+				<div class="container-fluid">
 					<?php
 
 					$subnav_select = $this->nav_select( $subnav_links );
@@ -186,10 +200,15 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 		}//end if
 		?>
 		<div id="wiki-outer-body">
-			<div id="wiki-body" class="container">
+			<div id="wiki-body" class="container-fluid">
 				<?php
 					if ( 'sidebar' == $wgTOCLocation ) {
 						?>
+						<script type="text/javascript">
+							var toc_sidebar_title = "<?php echo wfMessage('toc')->text(); ?>";
+							var toc_sidebar_hide = "<?php echo wfMessage('hidetoc')->text();?>";
+							var toc_sidebar_show = "<?php echo wfMessage('showtoc')->text();?>";
+						</script>
 						<div class="row">
 							<section class="col-md-3 toc-sidebar"></section>
 							<section class="col-md-9 wiki-body-section">
@@ -240,15 +259,179 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 			</div><!-- container -->
 		</div>
 		<div class="bottom">
-			<div class="container">
-				<?php $this->includePage('Bootstrap:Footer'); ?>
-				<footer>
-					<p>&copy; <?php echo date('Y'); ?> by <a href="<?php echo (isset($wgCopyrightLink) ? $wgCopyrightLink : 'http://borkweb.com'); ?>"><?php echo (isset($wgCopyright) ? $wgCopyright : 'BorkWeb'); ?></a> 
-						&bull; Powered by <a href="http://mediawiki.org">MediaWiki</a> 
-					</p>
-				</footer>
+			<div class="container-fluid" style="padding-left: 0px;padding-right:0px;">
+				<!--<?php //$this->includePage('Bootstrap:Footer'); ?>-->
+
+<footer class="dark-div main-color-2-bg fixed-effect">
+                                                                                        
+        	<div class="footer-inner fixed-effect-inner">
+        	<section id="bottom">
+            	<div class="section-inner">
+                	<div class="container">
+                    	<div class="row normal-sidebar">
+			<div id="text-2" class="   col-md-3 widget widget_text">
+			<div class=" widget-inner"><h2 class="widget-title maincolor1">Sobre nosaltres</h2>			<div class="textwidget"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="logo">
+<br><br>
+<p style="font-family: Raleway,sans-serif;">Acacha Wiki és un lloc web col·laboratiu d' informàtica i telecomunicacions creat per experts en administració de sistemes, xarxes, desenvolupament multiplataforma, disseny web i altres àrees de coneixement.</p>
+<a class="btn btn-default footerbutton" style="margin-top:4px;" href="/mediawiki/index.php/Acacha_Wiki._Informàtica_i_telecomunicacions:Quant_a">Quant a</a>
+<a class="btn btn-default footerbutton" style="margin-top:5px;" href="/mediawiki/index.php/Acacha_Wiki._Informàtica_i_telecomunicacions:Política de privadesa">Política de privadesa</a>
+<a class="btn btn-default footerbutton" style="margin-top:5px;" href="/mediawiki/index.php/Acacha_Wiki._Informàtica_i_telecomunicacions:Avís general">Avís general</a></div>
+
+		</div></div><div id="app-recent-posts-2" class="   col-md-3 widget app_recent_posts"><div class=" widget-inner"><div class="app-lastest"><h2 class="widget-title maincolor1">Blog</h2><div class="item"><div class="thumb item-thumbnail">
+							<a href="#" title="Android Apps on Applay">
+								<div class="item-thumbnail"><img width="80" height="80" src="/resources/assets/IMG_3212-1300x866-80x80.jpg" class="attachment-thumb_80x80 wp-post-image" alt="TODO" />
+									<div class="thumbnail-hoverlay main-color-5-bg"></div>
+									<div class="thumbnail-hoverlay-icon"><i class="fa fa-search"></i></div>
+								</div>
+							</a>
+						</div><div class="app-details item-content">
+						<h5><a href="#" title="Android Apps on Applay" class="main-color-5-hover">Entrada blog 1</a></h5>
+						<span>October 9, 2014</span>
+					</div>
+					<div class="clearfix"></div></div>
+					
+					<div class="item"><div class="thumb item-thumbnail">
+							<a href="#" title="Apps For Work‎">
+								<div class="item-thumbnail"><img width="80" height="80" src="/resources/assets/IMG_5956-1300x866-80x80.jpg" class="attachment-thumb_80x80 wp-post-image" alt="pendent" />
+									<div class="thumbnail-hoverlay main-color-5-bg"></div>
+									<div class="thumbnail-hoverlay-icon"><i class="fa fa-search"></i></div>
+								</div>
+							</a>
+						</div><div class="app-details item-content">
+						<h5><a href="#" title="Apps For Work‎" class="main-color-1-hover">Entrada blog 2</a></h5>
+						<span>October 9, 2014</span>
+					</div>
+					<div class="clearfix"></div></div>
+					
+					</div></div></div>
+<div id="tag_cloud-5" class="   col-md-3 widget widget_tag_cloud"><div class=" widget-inner"><h2 class="widget-title maincolor1">Pàgines populars</h2>
+
+<div>
+ <a href='/mediawiki/index.php/Creació_de_paquets_Debian' class='btn btn-default footerbutton' style="margin-top:4px;">Creació Paquets Debian</a>
+ <a href='/mediawiki/index.php/Apache' class='btn btn-default footerbutton' style="margin-top:4px;">Apache</a>
+ <a href='/mediawiki/index.php/APT_i_DPKG' class='btn btn-default footerbutton' style="margin-top:4px;">APT i DPKG</a>
+ <a href='/mediawiki/index.php/DNS' class='btn btn-default footerbutton' style="margin-top:4px;">DNS</a>    
+ <a href='/mediawiki/index.php/Ldap' class='btn btn-default footerbutton' style="margin-top:4px;">Ldap</a>  
+ <a href='/mediawiki/index.php/Android UI development' class='btn btn-default footerbutton' style="margin-top:4px;">Android UI development</a>    
+ <a href='/mediawiki/index.php/DHCP' class='btn btn-default footerbutton' style="margin-top:4px;">DHCP</a>    
+ <a href='/mediawiki/index.php/SQL' class='btn btn-default footerbutton' style="margin-top:4px;">SQL</a>   
+ <a href='/mediawiki/index.php/Especial:Pàgines_populars' class='btn btn-default footerbutton' style="margin-top:4px;">Llista completa</a>
+ <a href='/mediawiki/index.php/AirOS' class='btn btn-default footerbutton' style="margin-top:4px;">AirOS</a>
+    
+  
+</div></div></div>
+<div id="zflickr-2" class="col-md-3 widget widget_flickr"><div class=" widget-inner"><h2 class="widget-title maincolor1">Segueix-nos</h2>
+ <div class='flickr-badge-wrapper zframe-flickr-wrap-ltr'>
+  <a class="twitter-follow-button" href="https://twitter.com/acachawiki"
+    data-show-count="false"
+      data-lang="en">
+      Follow @acachawiki
+      </a>
+      <script type="text/javascript">
+       window.twttr = (function (d, s, id) {
+       var t, js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) return;
+       js = d.createElement(s); js.id = id;
+       js.src= "https://platform.twitter.com/widgets.js";
+       fjs.parentNode.insertBefore(js, fjs);
+       return window.twttr || (t = { _e: [], ready: function (f) { t._e.push(f) } });
+       }(document, "script", "twitter-wjs"));
+      </script>
+ </div>
+ <div id="fb-root"></div>
+ <div class="fb-like" data-href="http://acacha.org" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+ <script>(function(d, s, id) {
+   var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) return;
+       js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/ca_ES/sdk.js#xfbml=1&appId=779450832121140&version=v2.0";
+           fjs.parentNode.insertBefore(js, fjs);
+           }(document, 'script', 'facebook-jssdk'));
+ </script>
+ <br/><br/>
+ 
+ <!-- Inserta esta etiqueta en la sección "head" o justo antes de la etiqueta "body" de cierre. -->
+ <script src="https://apis.google.com/js/platform.js" async defer>
+   {lang: 'ca'}
+   </script>
+   
+   <!-- Inserta esta etiqueta donde quieras que aparezca Botón +1. -->
+   <div class="g-plusone" data-annotation="inline" data-width="300"></div>
+ <br/>
+ <h2 class="widget-title maincolor1">Pàgines Germanes</h2>
+ <p><a href="http://acacha.org/mediawiki/index.php/Ebre-escool">Ebre-escool</a></p>
+</div>
+</div>                		
+</div>
+                    </div>
+                </div>
+            </section>
+            <div id="bottom-nav">
+                <div class="container">
+                    <div class="text-center back-to-top-wrap">
+                        <a class="back-to-top main-color-10-bg" href="#top" title="Pujar" style="text-decoration:none;"><i class="fa fa-angle-double-up"></i></a>
+                    </div>
+                    <div class="row footer" style="padding-bottom: 0px;padding-top: 10px;">
+                     <div class="col-md-12" style="font-family: Raleway,sans-serif;text-align:center;padding-bottom: 0px;padding-top: 0px;font-size:10px;">
+                         <?php 
+                         
+                         $title = RequestContext::getMain()->getTitle();
+                         $skin = RequestContext::getMain()->getSkin();
+                         if ( RequestContext::getMain()->getOutput()->isArticle() && $title->exists() ) {
+                         	if ( $skin->isRevisionCurrent() ) {
+                         		if ( !$wgDisableCounters ) {
+						 $viewcount = RequestContext::getMain()->getWikiPage()->getCount();
+						if ( $viewcount ) {
+							echo wfMessage( 'viewcount', $viewcount)->parse();						
+						}
+					}
+				}
+			 }	
+			 
+			 ?>
+                         <br/>
+                         <?php
+
+			 $timestamp = RequestContext::getMain()->getOutput()->getRevisionTimestamp();
+                         # No cached timestamp, load it from the database
+                         if ( $timestamp === null ) {
+	                    $timestamp = Revision::getTimestampFromId( $title, $skin->getRevisionId() );
+                         }
+                         $d ="";
+                         $t="";
+                         if ( $timestamp ) {
+			    $d = RequestContext::getMain()->getLanguage()->userDate( $timestamp, RequestContext::getMain()->getUser() );				
+			    $t = RequestContext::getMain()->getLanguage()->userTime( $timestamp, RequestContext::getMain()->getUser() );
+			    $s = ' ' . wfMessage( 'lastmodifiedat', $d,$t)->text();
+			 }
+			 echo $s;?></div>    
+                    </div>                                                                                    
+                    <div class="row footer-content" style="padding-top: 0px;">
+                        <div class="copyright col-md-7" style="font-family: Raleway,sans-serif;">
+							&copy; <?php echo date('Y'); ?> by <a href="<?php echo (isset($wgCopyrightLink) ? $wgCopyrightLink : 'http://acacha.org'); ?>" style="text-decoration:none;font-family: Raleway,sans-serif;"><?php echo (isset($wgCopyright) ? $wgCopyright : 'Sergi Tur Badenas i altres contribuïdors'); ?></a>
+							&bull; Powered by <a href="http://mediawiki.org" style="text-decoration:none;">MediaWiki</a> 
+							& <a href="http://getbootstrap.com" style="text-decoration:none;">Bootstrap</a> 
+							                        </div>
+                        <nav class="col-md-5 footer-social">
+                        	                            <ul class="list-inline pull-right social-list">
+                            	                                            <li><a href="https://www.facebook.com/pages/Acacha-Wiki/121532428620" target="_blank"  class="btn btn-default social-icon"><i class="fa fa-facebook"></i></a></li>
+				                                            <li><a href="https://twitter.com/acachawiki"  class="btn btn-default social-icon" target="_blank"><i class="fa fa-twitter"></i></a></li>
+				                                            <li><a href="https://www.linkedin.com/company/acacha-wiki?trk=company_logo"  class="btn btn-default social-icon" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+				                                            <li><a href="https://plus.google.com/b/116791959261119875735/"  class="btn btn-default social-icon" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+				                            </ul>
+                        </nav>
+                    </div><!--/row-->
+                                                                                                      
+                </div><!--/container-->
+            </div>
+            </div>
+            
+        </footer><!--/footer-inner-->
+
+
 			</div><!-- container -->
 		</div><!-- bottom -->
+		
 
 		<?php
 		$this->html('bottomscripts'); /* JS call to runBodyOnloadHook */
@@ -422,28 +605,32 @@ class BootstrapMediaWikiTemplate extends QuickTemplate {
 				'class' => htmlspecialchars( $item['class'] ),
 				'title' => htmlspecialchars( $item['text'] ),
 			);
+			
+			//DEBUG
+			//echo $key . " | " . $link['title'] . " # ";
 
 			if( 'page' == $which ) {
-				switch( $link['title'] ) {
-				case 'Page': $icon = 'file'; break;
-				case 'Discussion': $icon = 'comment'; break;
-				case 'Edit': $icon = 'pencil'; break;
-				case 'History': $icon = 'clock-o'; break;
-				case 'Delete': $icon = 'remove'; break;
-				case 'Move': $icon = 'arrows'; break;
-				case 'Protect': $icon = 'lock'; break;
-				case 'Watch': $icon = 'eye-open'; break;
-				case 'Unwatch': $icon = 'eye-slash'; break;
+				switch( $key ) {
+				case 'nstab-main': $icon = 'file'; break;
+				case 'talk': $icon = 'comment'; break;
+				case 'edit': $icon = 'pencil'; break;
+				case 'history': $icon = 'clock-o'; break;
+				case 'delete': $icon = 'remove'; break;
+				case 'move': $icon = 'arrows'; break;
+				case 'protect': $icon = 'lock'; break;
+				case 'unprotect': $icon = 'unlock'; break;
+				case 'watch': $icon = 'eye-open'; break;
+				case 'unwatch': $icon = 'eye-slash'; break;
 				}//end switch
 
 				$link['title'] = '<i class="fa fa-' . $icon . '"></i> ' . $link['title'];
 			} elseif( 'user' == $which ) {
-				switch( $link['title'] ) {
-				case 'My talk': $icon = 'comment'; break;
-				case 'My preferences': $icon = 'cog'; break;
-				case 'My watchlist': $icon = 'eye-close'; break;
-				case 'My contributions': $icon = 'list-alt'; break;
-				case 'Log out': $icon = 'off'; break;
+				switch( $key ) {
+				case 'mytalk': $icon = 'comment'; break;
+				case 'preferences': $icon = 'cog'; break;
+				case 'watchlist': $icon = 'eye-slash'; break;
+				case 'mycontris': $icon = 'list-alt'; break;
+				case 'logout': $icon = 'power-off'; break;
 				default: $icon = 'user'; break;
 				}//end switch
 
