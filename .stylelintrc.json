@@ -1,0 +1,6 @@
+{
+	"extends": "stylelint-config-wikimedia",
+	"rules": {
+		"selector-max-id": null
+	}
+}
