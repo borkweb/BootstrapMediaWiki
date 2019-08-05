@@ -45,7 +45,7 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 							<a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tools</a>
 							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 								<a class="dropdown-item recent-changes" href="<?php echo $url_prefix; ?>Special:RecentChanges"><i class="fa fa-edit"></i> Recent Changes</a>
-								<a class="dropdown-item special-pages" href="<?php echo $url_prefix; ?>Special:SpecialPages"><i class="fa fa-star-o"></i> Special Pages</a>
+								<a class="dropdown-item special-pages" href="<?php echo $url_prefix; ?>Special:SpecialPages"><i class="fa fa-star"></i> Special Pages</a>
 								<?php if ( $wgEnableUploads ) { ?>
 									<a class="dropdown-item upload-a-file" href="<?php echo $url_prefix; ?>Special:Upload"><i class="fa fa-upload"></i> Upload a File</a>
 								<?php } ?>
@@ -53,6 +53,12 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 						</li>
 						<?php echo $this->nav( $this->getPageLinks( 'Bootstrap:TitleBar' ) ); ?>
 					</ul>
+					<form class="form-inline my-2 my-lg-0" action="<?php $this->text( 'wgScript' ) ?>" id="searchform" role="search">
+						<div>
+							<input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" title="Search <?php echo $this->get( 'sitename' ); ?> [ctrl-option-f]" accesskey="f" id="searchInput" autocomplete="off">
+							<input type="hidden" name="title" value="Special:Search">
+						</div>
+					</form>
 					<?php
 					if ( $wgUser->isLoggedIn() ) {
 						$personal_urls = $this->get( 'personal_urls' );
@@ -71,7 +77,7 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 						if ( count( $content_actions ) > 0 ) {
 							$content_nav = $this->getArrayLinks( $content_actions, 'Page', 'page' );
 							?>
-							<ul class="nav navbar-nav navbar-right content-actions mr-4"><?php echo $content_nav; ?></ul>
+							<ul class="nav navbar-nav navbar-right content-actions"><?php echo $content_nav; ?></ul>
 							<?php
 						}//end if
 					} else {  // else if is logged in
@@ -84,12 +90,6 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 						<?php
 					}
 					?>
-					<form class="form-inline my-2 my-lg-0" action="<?php $this->text( 'wgScript' ) ?>" id="searchform" role="search">
-						<div>
-							<input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" title="Search <?php echo $this->get( 'sitename' ); ?> [ctrl-option-f]" accesskey="f" id="searchInput" autocomplete="off">
-							<input type="hidden" name="title" value="Special:Search">
-						</div>
-					</form>
 				</div>
 			</div>
 		</nav><!-- topbar -->
@@ -216,14 +216,28 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 						}
 
 						$href = urldecode( $href );
-
 						$slug = strtolower( str_replace(' ', '-', preg_replace( '/[^a-zA-Z0-9 ]/', '', trim( strip_tags( $subLink['title'] ) ) ) ) );
-						$output .= "<a href='{$href}' class='dropdown-item {$subLink['class']} {$slug}' {$subLink['attributes']}>{$subLink['title']}</a>\n";
+
+						$output .= sprintf(
+							'<a href="%1$s" class="dropdown-item %2$s %3$s" %4$s>%5$s</a>' . "\n",
+							$href,
+							$subLink['class'] ?? null,
+							$slug,
+							$subLink['attributes'] ?? null,
+							$subLink['title'] ?? null
+						);
 					}
 				}
 				$output .= '</div>';
 			} elseif ( $pageTitle ) {
-				$output .= '<li class="nav-item ' . ($this->data['title'] == $topItem['title'] ? 'active' : '') . '"><a class="nav-link" href="' . ( $topItem['external'] ? $topItem['link'] : $pageTitle->getLocalURL() ) . '">' . $topItem['title'] . '</a></li>';
+				$active_class = $this->data['title'] == $topItem['title'] ? 'active' : '';
+
+				$output .= sprintf(
+					'<li class="nav-item %1$s"><a class="nav-link" href="%2$s">%3$s</a></li>',
+					$active_class,
+					! empty( $topItem['external'] ) ? $topItem['link'] : $pageTitle->getLocalURL(),
+					$topItem['title'] ?? null
+				);
 			}
 		}
 
@@ -243,10 +257,10 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 				foreach ( $topItem['sublinks'] as $subLink ) {
 					if ( 'divider' == $subLink ) {
 						$output .= "<option value='' disabled='disabled' class='unclickable'>----</option>\n";
-					} elseif ( $subLink['textonly'] ) {
+					} elseif ( ! empty( $subLink['textonly'] ) ) {
 						$output .= "<option value='' disabled='disabled' class='unclickable'>{$subLink['title']}</option>\n";
 					} else {
-						if( $subLink['local'] && $pageTitle = Title::newFromText( $subLink['link'] ) ) {
+						if( ! empty( $subLink['local'] ) && $pageTitle = Title::newFromText( $subLink['link'] ) ) {
 							$href = $pageTitle->getLocalURL();
 						} else {
 							$href = $subLink['link'];
@@ -432,24 +446,29 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 			$link = false;
 			$external = false;
 
-			if ( preg_match( '/^\*\s*([^\*]*)\[\[:?(.+)\]\]/', $line, $match ) ) {
+			$non_sub_prefix = '\*\s*';
+			$sub_prefix     = '\*\*\s*';
+
+			$page_link = '\[\[:?(.+)\]\]';
+
+			if ( preg_match( "/^{$non_sub_prefix}([^\*]*){$page_link}/", $line, $match ) ) {
 				$sub = false;
 				$link = true;
-			} elseif ( preg_match( '/^\*\s*([^\*\[]*)\[([^\[ ]+) (.+)\]/', $line, $match ) ) {
+			} elseif ( preg_match( "/^{$non_sub_prefix}([^\*\[]*)\[([^\[ ]+) (.+)\]/", $line, $match ) ) {
 				$sub = false;
 				$link = true;
 				$external = true;
-			} elseif ( preg_match( '/^\*\*\s*([^\*\[]*)\[([^\[ ]+) (.+)\]/', $line, $match ) ) {
+			} elseif ( preg_match( "/^{$sub_prefix}([^\*\[]*)\[([^\[ ]+) (.+)\]/", $line, $match ) ) {
 				$sub = true;
 				$link = true;
 				$external = true;
-			} elseif ( preg_match( '/\*\*\s*([^\*]*)\[\[:?(.+)\]\]/', $line, $match ) ) {
+			} elseif ( preg_match( "/{$sub_prefix}([^\*]*){$page_link}/", $line, $match ) ) {
 				$sub = true;
 				$link = true;
-			} elseif ( preg_match( '/\*\*\s*([^\* ]*)(.+)/', $line, $match ) ) {
+			} elseif ( preg_match( "/{$sub_prefix}([^\* ]*)(.+)/", $line, $match ) ) {
 				$sub = true;
 				$link = false;
-			} elseif ( preg_match( '/^\*\s*(.+)/', $line, $match ) ) {
+			} elseif ( preg_match( "/^{$non_sub_prefix}(.+)/", $line, $match ) ) {
 				$sub = false;
 				$link = false;
 			}
@@ -466,7 +485,12 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 					$item = $match[2];
 					$title = $match[1] . $match[3];
 				} elseif ( isset( $match[1] ) ) {
-					$item = $match[1] . $match[2];
+					$item = $match[1];
+
+					if ( ! empty( $match[2] ) ) {
+						$item .= $match[2];
+					}
+
 					$title = $item;
 				} else {
 					continue;
@@ -856,10 +880,10 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 				switch( $link['title'] ) {
 					case 'Page': $icon = 'file'; break;
 					case 'Discussion': $icon = 'comment'; break;
-					case 'Edit': $icon = 'pencil'; break;
-					case 'History': $icon = 'clock-o'; break;
-					case 'Delete': $icon = 'remove'; break;
-					case 'Move': $icon = 'arrows'; break;
+					case 'Edit': $icon = 'edit'; break;
+					case 'History': $icon = 'history'; break;
+					case 'Delete': $icon = 'trash-alt'; break;
+					case 'Move': $icon = 'arrows-alt'; break;
 					case 'Protect': $icon = 'lock'; break;
 					case 'Watch': $icon = 'eye'; break;
 					case 'Unwatch': $icon = 'eye-slash'; break;

@@ -30,6 +30,9 @@
 				"vendor/twbs/bootstrap/dist/css/bootstrap.min.css": {
 					"media": "screen"
 				},
+				"font-awesome/css/all.css": {
+					"media": "screen"
+				},
 				"style.css": {
 					"media": "screen"
 				}

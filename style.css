@@ -249,9 +249,9 @@ a.new {
 
 .bottom {
 	background: #f5f5f5;
-	margin-top: 1em;
-	padding-bottom: 2em;
-	padding-top: 2em;
+	margin-top: 3rem;
+	padding-bottom: 2rem;
+	padding-top: 2rem;
 }
 
 .bottom .mw-editsection {
@@ -355,7 +355,6 @@ img.thumbborder {
 	body {
 		padding-left: 0;
 		padding-right: 0;
-		padding-top: 59px;
 	}
 
 	.bottom,
@@ -371,10 +370,6 @@ img.thumbborder {
 }
 
 @media (max-width: 979px) {
-	body {
-		padding-top: 59px;
-	}
-
 	#wiki-outer-body {
 		margin-top: 10px;
 	}
@@ -477,8 +472,6 @@ pre.linenums ol {
 }
 
 @media (max-width: 979px) {
-	body { padding-top: 103px; }
-
 	.mw-headline {
 		margin-top: -103px;
 		padding-top: 103px;

@@ -27,7 +27,7 @@ class SkinBootstrapMediaWiki extends SkinTemplate {
 				'skins.bootstrapmediawiki',
 		];
 
-		if ( file_exists( __DIR__ . '/../resources/custom.css' ) ) {
+		if ( file_exists( dirname( __DIR__ ) . '/resources/custom.css' ) ) {
 			$styles[] = 'skins.boostrapmediawiki.custom';
 		}
 
@@ -35,21 +35,11 @@ class SkinBootstrapMediaWiki extends SkinTemplate {
 			'skins.bootstrapmediawiki.js',
 		];
 
-		if ( file_exists( __DIR__ . '/../resources/custom.js' ) ) {
+		if ( file_exists( dirname( __DIR__ ) . '/resources/custom.js' ) ) {
 			$styles[] = 'skins.boostrapmediawiki.custom.js';
 		}
 
 		$out->addModuleStyles( $styles );
 		$out->addModules( $scripts );
-	}
-
-	/**
-	 * @param $out OutputPage
-	 */
-	function setupSkinUserCss( OutputPage $out ) {
-		parent::setupSkinUserCss( $out );
-
-		// we need to include this here so the file pathing is right
-		$out->addStyle( 'BootstrapMediaWiki/font-awesome/css/font-awesome.min.css' );
 	}
 }
