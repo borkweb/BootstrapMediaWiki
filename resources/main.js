@@ -71,35 +71,60 @@ $(function() {
 	} else {
 		$('#toc').each(function() {
 			var $toc = $(this);
-			var $title = $toc.find('#toctitle');
-			var $links = $title.siblings('ul');
+			var $title = $toc.find('.toctitle');
+			var $links = $title.siblings('ul').find( 'a' );
 
-			$('.page-header').prepend('<ul class="nav nav-pills pull-right"><li class="dropdown" id="page-contents"><a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list"></i> Contents <span class="caret"></span></a> <ul class="dropdown-menu"></ul></li></ul>');
+			$.each( $links.find( '.tocnumber' ), function() {
+				var $el = $( this );
+				var numDots = ( $el.text().match( /\./g ) || [] ).length;
+				var prefix = '';
+				for ( var i = 0; i < numDots; i++ ) {
+					prefix += '&nbsp;&nbsp;';
+				}
 
-			$('.page-header #page-contents').find('.dropdown-menu').html( $links.html() );
+				$el.prepend( prefix );
+			} );
+
+			$links.addClass( 'dropdown-item' );
+
+			var toc_html = [
+				'<ul class="nav nav-pills float-right bootstrap-toc mt-3">',
+					'<li class="nav-item dropdown" id="page-contents">',
+						'<a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">',
+							'<i class="icon-list"></i> Contents <span class="caret"></span>',
+						'</a>',
+						'<ul class="dropdown-menu" aria-labelledby="contentsDropdownButton" style="min-width: ' + $toc.width() + 'px"></ul>',
+					'</li>',
+				'</ul>'
+			];
+
+			$('.page-header').prepend( toc_html.join( ' ' ) );
+
+			$('.page-header #page-contents').find('.dropdown-menu').html( $links );
 		});
 
 		if( $('.page-header .nav').length === 0 ) {
-			$('.page-header').prepend('<ul class="nav nav-pills pull-right"></li></ul>');
+			$('.page-header').prepend('<ul class="nav nav-pills float-right"></li></ul>');
 		}//end if
 
 		var $header = $('.page-header');
-		var $hero = $('.hero-unit');
+		var $hero = $('.jumbotron');
 		var $edit = $('.navbar .content-actions .edit');
 		if( $edit.length > 0 ) {
+			var $editListItem = $( '<li class="nav-item"/>' );
+			$edit.clone().removeClass( 'dropdown-item' ).addClass( 'nav-link' ).prependTo( $editListItem );
+
 			if( $hero.length ) {
 				if( ! $hero.find('.nav-pills').length ) {
-					$hero.prepend('<ul class="nav nav-pills pull-right"></ul>');
+					$hero.prepend('<ul class="nav nav-pills float-right"></ul>');
 				}//end if
 
-				$edit.closest('li').clone().prependTo( $hero.find('.nav-pills') );
+				$editListItem.prependTo( $hero.find('.nav-pills') );
 			} else {
-				$edit.closest('li').clone().prependTo( $header.find('.nav-pills') );
+				$editListItem.prependTo( $header.find('.nav-pills') );
 			}//end else
 		}//end if
 	}//end if
-
-	prettyPrint();
 
 	$('#wiki-body .body a[title="Special:UserLogin"]').click();
 	$('.dropdown-toggle').dropdown();

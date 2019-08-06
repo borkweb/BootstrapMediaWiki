@@ -167,8 +167,6 @@ option.unclickable {
 	overflow-y: scroll;
 	right: 0;
 }
-#page-contents .dropdown-menu {
-}
 
 .page-header .nav i {
 	opacity: 0.3;
@@ -213,6 +211,12 @@ option.unclickable {
 	margin-left: 20px;
 }
 
+#toc.toc-sidebar li li,
+.mw-content-ltr .toc ul ul {
+	margin-left: 0;
+	padding-left: 0;
+}
+
 #toc.toc-sidebar h3 {
 	font-size: 1em;
 }
@@ -230,9 +234,10 @@ a.new {
 }
 
 #catlinks {
-	border-top: 1px dotted #eee;
-	margin-top: 2em;
-	padding: 1em 0;
+	background: #fafafa;
+	border: 1px dotted #eee;
+	margin-top: 2rem;
+	padding: 1rem;
 }
 
 #catlinks #mw-normal-catlinks > a {
@@ -439,7 +444,6 @@ img.thumbborder {
 
 pre.linenums ol {
 	margin-bottom: 0;
-	margin-left: 0;
 }
 
 #wiki-outer-body {
@@ -812,6 +816,7 @@ table.list th {
 
 /* Specify class=linenums on a pre to get line numbering */
 .mediawiki ol.linenums { margin-top: 0; margin-bottom: 0 } /* IE indents via margin-left */
+.mediawiki ol.linenums li::marker { color: #aaa; } /* IE indents via margin-left */
 .mediawiki li.L0,
 .mediawiki li.L1,
 .mediawiki li.L2,
@@ -819,7 +824,7 @@ table.list th {
 .mediawiki li.L5,
 .mediawiki li.L6,
 .mediawiki li.L7,
-.mediawiki li.L8 { list-style-type: none }
+.mediawiki li.L8 { list-style-type: decimal !important; }
 /* Alternate shading for lines */
 .mediawiki li.L1,
 .mediawiki li.L3,
