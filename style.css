@@ -439,6 +439,7 @@ img.thumbborder {
 
 pre.linenums ol {
 	margin-bottom: 0;
+	margin-left: 0;
 }
 
 #wiki-outer-body {
@@ -767,3 +768,61 @@ table.list th {
 .list tbody > tr:nth-child(odd) > td {
   background-color: #f9f9f9;
 }
+
+/* Pretty printing styles. Used with prettify.js. */
+
+
+/* SPAN elements with the classes below are added by prettyprint. */
+.mediawiki .pln { color: #000 }  /* plain text */
+
+@media screen {
+	.mediawiki .str { color: #080 }  /* string content */
+	.mediawiki .kwd { color: #008 }  /* a keyword */
+	.mediawiki .com { color: #800 }  /* a comment */
+	.mediawiki .typ { color: #606 }  /* a type name */
+	.mediawiki .lit { color: #066 }  /* a literal value */
+	/* punctuation, lisp open bracket, lisp close bracket */
+	.mediawiki .pun, .mediawiki .opn, .mediawiki .clo { color: #660 }
+	.mediawiki .tag { color: #008 }  /* a markup tag name */
+	.mediawiki .atn { color: #606 }  /* a markup attribute name */
+	.mediawiki .atv { color: #080 }  /* a markup attribute value */
+	.mediawiki .dec, .mediawiki .var { color: #606 }  /* a declaration; a variable name */
+	.mediawiki .fun { color: red }  /* a function name */
+}
+
+/* Use higher contrast and text-weight for printable form. */
+@media print, projection {
+	.mediawiki .str { color: #060 }
+	.mediawiki .kwd { color: #006; font-weight: bold }
+	.mediawiki .com { color: #600; font-style: italic }
+	.mediawiki .typ { color: #404; font-weight: bold }
+	.mediawiki .lit { color: #044 }
+	.mediawiki .pun, .mediawiki .opn, .mediawiki .clo { color: #440 }
+	.mediawiki .tag { color: #006; font-weight: bold }
+	.mediawiki .atn { color: #404 }
+	.mediawiki .atv { color: #060 }
+}
+
+/* Put a border around prettyprinted code snippets. */
+.mediawiki pre.prettyprint {
+	border: 1px solid #f1f1f1;
+	border-radius: 3px;
+	padding: 2px;
+}
+
+/* Specify class=linenums on a pre to get line numbering */
+.mediawiki ol.linenums { margin-top: 0; margin-bottom: 0 } /* IE indents via margin-left */
+.mediawiki li.L0,
+.mediawiki li.L1,
+.mediawiki li.L2,
+.mediawiki li.L3,
+.mediawiki li.L5,
+.mediawiki li.L6,
+.mediawiki li.L7,
+.mediawiki li.L8 { list-style-type: none }
+/* Alternate shading for lines */
+.mediawiki li.L1,
+.mediawiki li.L3,
+.mediawiki li.L5,
+.mediawiki li.L7,
+.mediawiki li.L9 { background: #f1f1f1 }
