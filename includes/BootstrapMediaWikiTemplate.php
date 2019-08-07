@@ -18,6 +18,7 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 		global $wgLogo;
 		global $wgTOCLocation;
 		global $wgNavBarClasses;
+		global $wgGroupPermissions;
 
 		$this->skin = $this->data['skin'];
 		$action = $wgRequest->getText( 'action' );
@@ -83,9 +84,14 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 					} else {  // else if is logged in
 						?>
 						<ul class="nav navbar-nav navbar-right">
-							<li>
-								<?php echo Linker::linkKnown( SpecialPage::getTitleFor( 'Userlogin' ), wfMessage( 'login' ) ); ?>
+							<li class="nav-item">
+								<?php echo Linker::linkKnown( SpecialPage::getTitleFor( 'Userlogin' ), wfMessage( 'login' ), [ 'class' => 'nav-link' ] ); ?>
 							</li>
+							<?php if ( ! empty( $wgGroupPermissions['*']['createaccount'] ) ) : ?>
+								<li class="nav-item">
+									<?php echo Linker::linkKnown( SpecialPage::getTitleFor( 'CreateAccount' ), wfMessage( 'create' ), [ 'class' => 'nav-link' ] ); ?>
+								</li>
+							<?php endif; ?>
 						</ul>
 						<?php
 					}
