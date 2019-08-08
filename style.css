@@ -30,11 +30,11 @@ textarea {
 	padding-top: 2rem;
 }
 
-h2 .mw-headline { font-size: 18px; }
-h3 .mw-headline { font-size: 16px; }
-h4 .mw-headline { font-size: 14px; }
-h5 .mw-headline { font-size: 12px; }
-h6 .mw-headline { font-size: 12px; }
+h2, h2 .mw-headline { color: #2b474f; }
+h3, h3 .mw-headline { color: #157f9d; }
+h4, h4 .mw-headline { color: #5f7777; }
+h5, h5 .mw-headline { color: #666; }
+h6, h6 .mw-headline { color: #777; }
 
 p {
 	margin-bottom: 15px;
