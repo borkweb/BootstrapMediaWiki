@@ -74,6 +74,11 @@ p {
 	margin-left: -20px;
 }
 
+.mw-parser-output img {
+	height: auto;
+	max-width: 100%;
+}
+
 .jumbotron {
 	position: relative;
 }
