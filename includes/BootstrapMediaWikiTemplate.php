@@ -88,8 +88,8 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 								<?php echo Linker::linkKnown( SpecialPage::getTitleFor( 'Userlogin' ), wfMessage( 'login' ), [ 'class' => 'nav-link' ] ); ?>
 							</li>
 							<?php if ( ! empty( $wgGroupPermissions['*']['createaccount'] ) ) : ?>
-								<li class="nav-item">
-									<?php echo Linker::linkKnown( SpecialPage::getTitleFor( 'CreateAccount' ), wfMessage( 'create' ), [ 'class' => 'nav-link' ] ); ?>
+								<li class="nav-item ml-4">
+									<?php echo Linker::linkKnown( SpecialPage::getTitleFor( 'CreateAccount' ), 'New user? Register here!', [ 'class' => 'nav-link' ] ); ?>
 								</li>
 							<?php endif; ?>
 						</ul>
