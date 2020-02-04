@@ -1,0 +1,74 @@
+{
+	"name": "BootstrapMediaWiki",
+	"version": "2.0",
+	"author": "Matthew Batchelder",
+	"url": "https://github.com/borkweb/bootstrap-mediawiki",
+	"descriptionmsg": "Bootstrap MediaWiki",
+	"namemsg": "Bootstrap MediaWiki",
+	"license-name": "CC0-1.0",
+	"type": "skin",
+	"requires": {
+		"MediaWiki": ">= 1.29.0"
+	},
+	"ValidSkinNames": {
+		"bootstrapmediawiki": "BootstrapMediaWiki"
+	},
+	"MessagesDirs": {
+		"BootstrapMediaWiki": [
+			"i18n"
+		]
+	},
+	"ResourceModules": {
+		"skins.bootstrapmediawiki": {
+			"styles": {
+				"vendor/twbs/bootstrap/dist/css/bootstrap-reboot.min.css": {
+					"media": "screen"
+				},
+				"vendor/twbs/bootstrap/dist/css/bootstrap-grid.min.css": {
+					"media": "screen"
+				},
+				"vendor/twbs/bootstrap/dist/css/bootstrap.min.css": {
+					"media": "screen"
+				},
+				"font-awesome/css/all.css": {
+					"media": "screen"
+				},
+				"style.css": {
+					"media": "screen"
+				}
+			}
+		},
+		"skins.bootstrapmediawiki.custom": {
+			"styles": {
+				"resources/custom.css": {
+					"media": "screen"
+				}
+			}
+		},
+		"skins.bootstrapmediawiki.js": {
+			"scripts": [
+				"resources/main.js",
+				"vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"
+			]
+		},
+		"skins.bootstrapmediawiki.custom.js": {
+			"scripts": [
+				"resources/custom.js"
+			]
+		}
+	},
+	"ResourceFileModulePaths": {
+		"localBasePath": "",
+		"remoteSkinPath": "BootstrapMediaWiki"
+	},
+	"ResourceModuleSkinStyles": {
+		"example": {
+		"+ext.echo.styles.badge": "resources/extensions/echo.styles.badge.less"
+		}
+	},
+	"AutoloadClasses": {
+		"SkinBootstrapMediaWiki": "includes/SkinBootstrapMediaWiki.php",
+		"BootstrapMediaWikiTemplate": "includes/BootstrapMediaWikiTemplate.php"
+	},
+	"manifest_version": 1
+}

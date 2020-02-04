@@ -4,7 +4,6 @@ body {
 	background-repeat: repeat-x;
 	background-position: center 80px;
 	color: #222;
-	padding-top: 128px;
 }
 
 body.page-Main_Page .page-header,
@@ -27,18 +26,22 @@ textarea {
 	text-shadow: 1px 1px 0 rgb(255,255,255);
 }
 
-h2 .mw-headline { font-size: 18px; }
-h3 .mw-headline { font-size: 16px; }
-h4 .mw-headline { font-size: 14px; }
-h5 .mw-headline { font-size: 12px; }
-h6 .mw-headline { font-size: 12px; }
+.body > #mw-content-text {
+	padding-top: 2rem;
+}
+
+h2, h2 .mw-headline { color: #2b474f; }
+h3, h3 .mw-headline { color: #157f9d; }
+h4, h4 .mw-headline { color: #5f7777; }
+h5, h5 .mw-headline { color: #666; }
+h6, h6 .mw-headline { color: #777; }
 
 p {
 	margin-bottom: 15px;
 }
 
 .mw-content-ltr ul, .mw-content-ltr ol {
-	margin-bottom: 9px;;
+	margin-bottom: 9px;
 }
 
 .navbar-brand img {
@@ -71,8 +74,18 @@ p {
 	margin-left: -20px;
 }
 
+.mw-parser-output img {
+	height: auto;
+	max-width: 100%;
+}
+
 .jumbotron {
 	position: relative;
+}
+
+.jumbotron h1 {
+	border-bottom: 0;
+	padding-top: 0;
 }
 
 .jumbotron h1 img {
@@ -112,10 +125,6 @@ option.unclickable {
 }
 
 .nav .user-icon {
-	border: 1px solid rgba( 55, 55, 55, 0.1 );
-	display: inline-block;
-	margin-right: 0.5em;
-	vertical-align: middle;
 	width: 20px;
 	height: 20px;
 }
@@ -163,8 +172,6 @@ option.unclickable {
 	overflow-y: scroll;
 	right: 0;
 }
-#page-contents .dropdown-menu {
-}
 
 .page-header .nav i {
 	opacity: 0.3;
@@ -209,6 +216,12 @@ option.unclickable {
 	margin-left: 20px;
 }
 
+#toc.toc-sidebar li li,
+.mw-content-ltr .toc ul ul {
+	margin-left: 0;
+	padding-left: 0;
+}
+
 #toc.toc-sidebar h3 {
 	font-size: 1em;
 }
@@ -226,9 +239,10 @@ a.new {
 }
 
 #catlinks {
-	border-top: 1px dotted #eee;
-	margin-top: 2em;
-	padding: 1em 0;
+	background: #fafafa;
+	border: 1px dotted #eee;
+	margin-top: 2rem;
+	padding: 1rem;
 }
 
 #catlinks #mw-normal-catlinks > a {
@@ -245,9 +259,9 @@ a.new {
 
 .bottom {
 	background: #f5f5f5;
-	margin-top: 1em;
-	padding-bottom: 2em;
-	padding-top: 2em;
+	margin-top: 3rem;
+	padding-bottom: 2rem;
+	padding-top: 2rem;
 }
 
 .bottom .mw-editsection {
@@ -351,7 +365,6 @@ img.thumbborder {
 	body {
 		padding-left: 0;
 		padding-right: 0;
-		padding-top: 59px;
 	}
 
 	.bottom,
@@ -367,10 +380,6 @@ img.thumbborder {
 }
 
 @media (max-width: 979px) {
-	body {
-		padding-top: 59px;
-	}
-
 	#wiki-outer-body {
 		margin-top: 10px;
 	}
@@ -404,7 +413,7 @@ img.thumbborder {
      -moz-box-shadow: inset 0 3px 5px rgba(0,0,0,.05);
           box-shadow: inset 0 3px 5px rgba(0,0,0,.05);
 }
-.subnav .nav-tabs .dropdown-toggle .caret, 
+.subnav .nav-tabs .dropdown-toggle .caret,
 .subnav .nav-pills .dropdown-toggle .caret {
 	border-top-color: #000;
 }
@@ -430,8 +439,8 @@ img.thumbborder {
           border-radius: 0 0 4px 4px;
 }
 
-.subnav .nav-tabs .open .dropdown-toggle, 
-.subnav .nav-pills .open .dropdown-toggle, 
+.subnav .nav-tabs .open .dropdown-toggle,
+.subnav .nav-pills .open .dropdown-toggle,
 .subnav .nav > .open.active > a:hover {
 	color: #333;
 	background-color: #ddd;
@@ -448,16 +457,16 @@ pre.linenums ol {
 
 /* Fixed subnav on scroll, but only for 980px and up (sorry IE!) */
 .subnav-fixed {
-	position: fixed;
-	top: 49px;
+	position: sticky;
+	top: 71px;
 	left: 0;
 	right: 0;
-	z-index: 1020; /* 10 less than .navbar-fixed to prevent any overlap */
+	z-index: 1010; /* 10 less than .navbar-fixed to prevent any overlap */
 	border-color: #d5d5d5;
 	border-width: 0 0 1px; /* drop the border on the fixed edges */
 	-webkit-border-radius: 0;
-		 -moz-border-radius: 0;
-					border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
 }
 .subnav-fixed .nav {
 	width: 1170px;
@@ -468,13 +477,11 @@ pre.linenums ol {
 .subnav .nav > li:first-child > a,
 .subnav .nav > li:first-child > a:hover {
 	-webkit-border-radius: 0;
-		 -moz-border-radius: 0;
-					border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
 }
 
 @media (max-width: 979px) {
-	body { padding-top: 103px; }
-
 	.mw-headline {
 		margin-top: -103px;
 		padding-top: 103px;
@@ -770,3 +777,62 @@ table.list th {
 .list tbody > tr:nth-child(odd) > td {
   background-color: #f9f9f9;
 }
+
+/* Pretty printing styles. Used with prettify.js. */
+
+
+/* SPAN elements with the classes below are added by prettyprint. */
+.mediawiki .pln { color: #000 }  /* plain text */
+
+@media screen {
+	.mediawiki .str { color: #080 }  /* string content */
+	.mediawiki .kwd { color: #008 }  /* a keyword */
+	.mediawiki .com { color: #800 }  /* a comment */
+	.mediawiki .typ { color: #606 }  /* a type name */
+	.mediawiki .lit { color: #066 }  /* a literal value */
+	/* punctuation, lisp open bracket, lisp close bracket */
+	.mediawiki .pun, .mediawiki .opn, .mediawiki .clo { color: #660 }
+	.mediawiki .tag { color: #008 }  /* a markup tag name */
+	.mediawiki .atn { color: #606 }  /* a markup attribute name */
+	.mediawiki .atv { color: #080 }  /* a markup attribute value */
+	.mediawiki .dec, .mediawiki .var { color: #606 }  /* a declaration; a variable name */
+	.mediawiki .fun { color: red }  /* a function name */
+}
+
+/* Use higher contrast and text-weight for printable form. */
+@media print, projection {
+	.mediawiki .str { color: #060 }
+	.mediawiki .kwd { color: #006; font-weight: bold }
+	.mediawiki .com { color: #600; font-style: italic }
+	.mediawiki .typ { color: #404; font-weight: bold }
+	.mediawiki .lit { color: #044 }
+	.mediawiki .pun, .mediawiki .opn, .mediawiki .clo { color: #440 }
+	.mediawiki .tag { color: #006; font-weight: bold }
+	.mediawiki .atn { color: #404 }
+	.mediawiki .atv { color: #060 }
+}
+
+/* Put a border around prettyprinted code snippets. */
+.mediawiki pre.prettyprint {
+	border: 1px solid #f1f1f1;
+	border-radius: 3px;
+	padding: 2px;
+}
+
+/* Specify class=linenums on a pre to get line numbering */
+.mediawiki ol.linenums { margin-top: 0; margin-bottom: 0 } /* IE indents via margin-left */
+.mediawiki ol.linenums li::marker { color: #aaa; } /* IE indents via margin-left */
+.mediawiki li.L0,
+.mediawiki li.L1,
+.mediawiki li.L2,
+.mediawiki li.L3,
+.mediawiki li.L5,
+.mediawiki li.L6,
+.mediawiki li.L7,
+.mediawiki li.L8 { list-style-type: decimal !important; }
+/* Alternate shading for lines */
+.mediawiki li.L1,
+.mediawiki li.L3,
+.mediawiki li.L5,
+.mediawiki li.L7,
+.mediawiki li.L9 { background: #f1f1f1 }
