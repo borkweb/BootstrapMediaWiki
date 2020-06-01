@@ -48,7 +48,8 @@ p {
 	margin-left: 0;
 }
 
-.mw-content-ltr ul.list-group > li, .mw-content-ltr ol.list-group > li {
+#wiki-body .mw-content-ltr ul.list-group > li,
+#wiki-body .mw-content-ltr ol.list-group > li {
 	margin-top: 0;
 	margin-bottom: 0;
 }
