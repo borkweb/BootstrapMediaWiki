@@ -44,6 +44,15 @@ p {
 	margin-bottom: 9px;
 }
 
+.mw-content-ltr ul.list-group, .mw-content-ltr ol.list-group {
+	margin-left: 0;
+}
+
+.mw-content-ltr ul.list-group > li, .mw-content-ltr ol.list-group > li {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
 .navbar-brand img {
 	margin-right: 0.5em;
 	max-height: 30px;
