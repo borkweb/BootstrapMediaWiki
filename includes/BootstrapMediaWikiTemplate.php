@@ -872,7 +872,7 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 		$nav[] = [ 'title' => $title ];
 		foreach ( $array as $key => $item ) {
 			$link = [
-				'id'         => Sanitizer::escapeId( $key ),
+				'id'         => Sanitizer::escapeIdForAttribute( $key ),
 				'attributes' => $item['attributes'] ?? null,
 				'link'       => $item['href'] ?? null,
 				'key'        => $item['key'] ?? null,
