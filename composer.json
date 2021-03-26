@@ -4,7 +4,7 @@
 		"jakub-onderka/php-console-highlighter": "0.3.2",
 		"mediawiki/minus-x": "0.3.1",
 		"mediawiki/mediawiki-phan-config": "0.6.1",
-		"mediawiki/mediawiki-codesniffer": "24.0.0"
+		"mediawiki/mediawiki-codesniffer": "35.0.0"
 	},
 	"scripts": {
 		"fix": [
