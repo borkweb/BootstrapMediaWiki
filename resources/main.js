@@ -32,7 +32,7 @@ $(function() {
 	$('pre:not([data-raw="true"])').addClass('prettyprint linenums');
 	$('.jumbotron pre').removeClass('prettyprint linenums');
 
-	$('.editButtons').addClass('well');
+	$('.editButtons').addClass('card card-body bg-light');
 	$('input[type=submit],input[type=button],input[type=reset]').addClass('btn');
 	$('input[type=submit]').addClass('btn-primary');
 
@@ -53,7 +53,7 @@ $(function() {
 	});
 
 	$('.tip').tooltip();
-	$('[data-toggle="popover"]').popover();
+	$('[data-bs-toggle="popover"]').popover();
 
 	if ( $('.toc-sidebar').length > 0 ) {
 		if ( 0 === $('#toc').length ) {
@@ -88,9 +88,9 @@ $(function() {
 			$links.addClass( 'dropdown-item' );
 
 			var toc_html = [
-				'<ul class="nav nav-pills float-right bootstrap-toc mt-3">',
+				'<ul class="nav nav-pills float-end bootstrap-toc mt-3">',
 					'<li class="nav-item dropdown" id="page-contents">',
-						'<a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">',
+						'<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">',
 							'<i class="icon-list"></i> Contents <span class="caret"></span>',
 						'</a>',
 						'<ul class="dropdown-menu" aria-labelledby="contentsDropdownButton" style="min-width: ' + $toc.width() + 'px"></ul>',
@@ -98,16 +98,16 @@ $(function() {
 				'</ul>'
 			];
 
-			$('.page-header').prepend( toc_html.join( ' ' ) );
+			$('.pagetitle').prepend( toc_html.join( ' ' ) );
 
-			$('.page-header #page-contents').find('.dropdown-menu').html( $links );
+			$('.pagetitle #page-contents').find('.dropdown-menu').html( $links );
 		});
 
-		if( $('.page-header .nav').length === 0 ) {
-			$('.page-header').prepend('<ul class="nav nav-pills float-right"></li></ul>');
+		if( $('.pagetitle .nav').length === 0 ) {
+			$('.pagetitle').prepend('<ul class="nav nav-pills float-end"></li></ul>');
 		}//end if
 
-		var $header = $('.page-header');
+		var $header = $('.pagetitle');
 		var $hero = $('.jumbotron');
 		var $edit = $('.navbar .content-actions .edit');
 		if( $edit.length > 0 ) {
@@ -116,7 +116,7 @@ $(function() {
 
 			if( $hero.length ) {
 				if( ! $hero.find('.nav-pills').length ) {
-					$hero.prepend('<ul class="nav nav-pills float-right"></ul>');
+					$hero.prepend('<ul class="nav nav-pills float-end"></ul>');
 				}//end if
 
 				$editListItem.prependTo( $hero.find('.nav-pills') );

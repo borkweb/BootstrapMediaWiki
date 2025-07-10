@@ -1,6 +1,6 @@
 # Bootstrap Mediawiki
 
-This is a MediaWiki skin that uses Bootstrap 3 from Twitter!  The framework gives a boatload of features that play really nicely with a MediaWiki installation.  To get up and rolling, there's a few things that should be done.
+This is a MediaWiki skin that uses Bootstrap 5!  The framework gives a boatload of features that play really nicely with a MediaWiki installation.  To get up and rolling, there's a few things that should be done.
 
 If you'd like to see one of these in the wild, check out the [EotL Wiki](http://eotl.borkweb.com).
 
@@ -121,7 +121,7 @@ or
 This template is used to do Bootstrap popovers!
 
 ```html
-<span title="{{{2}}}" data-content="{{{3}}}" data-toggle="popover">{{{1}}}</span>
+<span title="{{{2}}}" data-content="{{{3}}}" data-bs-toggle="popover">{{{1}}}</span>
 ```
 
 Usage:

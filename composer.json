@@ -1,19 +1,37 @@
 {
+	"name": "borkweb/bootstrapmediawiki",
+	"type": "mediawiki-skin",
+	"description": "A MediaWiki skin based on Bootstrap 5",
+	"keywords": [
+		"wiki",
+		"mediawiki",
+		"skin",
+		"bootstrap",
+		"Twitter"
+	],
+	"license": "MIT",
+	"homepage": "https://github.com/borkweb/bootstrapmediawiki",
+	"authors": [
+		{
+			"name": "Matthew Batchelder",
+			"email": "borkweb@gmail.com"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/borkweb/bootstrapmediawiki/issues",
+		"source": "https://github.com/borkweb/bootstrapmediawiki"
+	},
 	"require-dev": {
 		"jakub-onderka/php-parallel-lint": "1.0.0",
 		"jakub-onderka/php-console-highlighter": "0.3.2",
-		"mediawiki/minus-x": "0.3.1",
-		"mediawiki/mediawiki-phan-config": "0.6.1",
-		"mediawiki/mediawiki-codesniffer": "24.0.0"
+		"mediawiki/mediawiki-phan-config": "0.16.0",
+		"mediawiki/mediawiki-codesniffer": "47.0.0"
 	},
 	"scripts": {
 		"fix": [
-			"minus-x fix .",
 			"phpcbf"
 		],
 		"test": [
-			"parallel-lint . --exclude vendor --exclude node_modules",
-			"minus-x check .",
 			"phpcs -sp"
 		]
 	},
@@ -21,6 +39,18 @@
 		"phan-taint-check-plugin": "2.0.1"
 	},
 	"require": {
-		"twbs/bootstrap": "4.3.1"
+		"php": ">=8.1.0",
+		"ext-dom": "*",
+		"ext-filter": "*",
+		"composer/installers": "^2|^1.0.12",
+		"mediawiki/bootstrap": "^5.0",
+		"jeroen/file-fetcher": "^6",
+		"twbs/bootstrap": "^5.3"
+	},
+	"config": {
+		"allow-plugins": {
+			"composer/installers": true,
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
 	}
 }
