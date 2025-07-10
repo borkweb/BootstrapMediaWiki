@@ -80,7 +80,8 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 								<?php echo $user_nav; ?>
 							</ul>
 							<?php
-						}// end if
+						}
+						// end if
 
 						$content_actions = $this->get( 'content_actions' );
 						if ( count( $content_actions ) > 0 ) {
@@ -88,8 +89,10 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 							?>
 							<ul class="nav navbar-nav navbar-right content-actions"><?php echo $content_nav; ?></ul>
 							<?php
-						}// end if
-					} else {  // else if is logged in
+						}
+						// end if
+					} else {
+						// else if is logged in
 						?>
 						<ul class="nav navbar-nav navbar-right">
 							<li class="nav-item">
@@ -184,7 +187,8 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 		</div><!-- bottom -->
 
 		<?php
-		$this->html( 'bottomscripts' ); /* JS call to runBodyOnloadHook */
+		$this->html( 'bottomscripts' );
+		/* JS call to runBodyOnloadHook */
 		$this->html( 'reporttime' );
 
 		if ( $this->data['debug'] ) {
@@ -193,7 +197,8 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 			<?php $this->text( 'debug' ); ?>
 			-->
 			<?php
-		}// end if
+		}
+		// end if
 		?>
 		</body>
 		</html>
@@ -227,7 +232,8 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 					} elseif ( !empty( $subLink['textonly'] ) ) {
 						$output .= "<div class='nav-header'>{$subLink['title']}</div>\n";
 					} elseif ( !empty( $subLink['link'] ) ) {
-						if ( $pageTitle = Title::newFromText( $subLink['link'] ) ) {
+						$pageTitle = Title::newFromText( $subLink['link'] );
+						if ( $pageTitle ) {
 							$href = str_replace( $path_replace, '/', $pageTitle->getLocalURL() );
 						} else {
 							$href = $subLink['link'];
@@ -265,6 +271,9 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 	/**
 	 * Render one or more navigations elements by name, automatically reveresed
 	 * when UI is in RTL mode
+	 *
+	 * @param array $nav Navigation array
+	 * @return string HTML output
 	 */
 	private function navSelect( $nav ) {
 		$output = '';
@@ -278,20 +287,28 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 					} elseif ( !empty( $subLink['textonly'] ) ) {
 						$output .= "<option value='' disabled='disabled' class='unclickable'>{$subLink['title']}</option>\n";
 					} else {
-						if ( !empty( $subLink['local'] ) && $pageTitle = Title::newFromText( $subLink['link'] ) ) {
+						if ( !empty( $subLink['local'] ) ) {
+							$pageTitle = Title::newFromText( $subLink['link'] );
+						}
+						if ( !empty( $subLink['local'] ) && $pageTitle ) {
 							$href = $pageTitle->getLocalURL();
 						} else {
 							$href = $subLink['link'];
-						}// end else
+						}
+						// end else
 
 						$output .= "<option value='{$href}'>{$subLink['title']}</option>";
-					}// end else
-				}// end foreach
+					}
+					// end else
+				}
+				// end foreach
 			} elseif ( $pageTitle ) {
 				$output .= '<option value="' . $pageTitle->getLocalURL() . '">' . $topItem['title'] . '</option>';
-			}// end else
+			}
+			// end else
 			$output .= '</optgroup>';
-		}// end foreach
+		}
+		// end foreach
 
 		return $output;
 	}
@@ -518,14 +535,17 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 					$item = [ 'title' => $title, 'link' => $item, 'local' => !$external, 'external' => $external ];
 				} else {
 					$item = [ 'title' => $title, 'link' => $item, 'textonly' => true, 'external' => $external ];
-				}// end else
-			}// end else
+				}
+				// end else
+			}
+			// end else
 
 			if ( $sub ) {
 				$nav[count( $nav ) - 1]['sublinks'][] = $item;
 			} else {
 				$nav[] = $item;
-			}// end else
+			}
+			// end else
 		}
 
 		return $nav;
