@@ -1,4 +1,8 @@
 <?php
+
+use MediaWiki\MediaWikiServices;
+use MediaWiki\Revision\SlotRecord;
+
 /**
  * BaseTemplate class for the BootstrapMediaWiki skin
  *
@@ -9,29 +13,32 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 	 * Outputs the entire contents of the page
 	 */
 	public function execute() {
-		global $wgRequest;
-		global $wgUser;
-		global $wgCopyrightLink;
-		global $wgCopyright;
-		global $wgArticlePath;
-		global $wgEnableUploads;
-		global $wgLogo;
-		global $wgTOCLocation;
-		global $wgNavBarClasses;
-		global $wgGroupPermissions;
+		$config = $this->getSkin()->getConfig();
+		$user = $this->getSkin()->getUser();
+		$request = $this->getSkin()->getRequest();
+
+		// Get configuration values
+		$copyrightLink = $config->get( 'BootstrapMediaWikiCopyrightLink' ) ?: $config->get( 'RightsUrl' );
+		$copyright = $config->get( 'BootstrapMediaWikiCopyright' ) ?: $config->get( 'RightsText' );
+		$articlePath = $config->get( 'ArticlePath' );
+		$enableUploads = $config->get( 'EnableUploads' );
+		$logo = $config->get( 'Logo' );
+		$tocLocation = $config->get( 'BootstrapMediaWikiTOCLocation' );
+		$navBarClasses = $config->get( 'BootstrapMediaWikiNavBarClasses' );
+		$groupPermissions = $config->get( 'GroupPermissions' );
 
 		$this->skin = $this->data['skin'];
-		$action = $wgRequest->getText( 'action' );
-		$url_prefix = str_replace( '$1', '', $wgArticlePath );
+		$action = $request->getText( 'action' );
+		$url_prefix = str_replace( '$1', '', $articlePath );
 		$subnav_links = $this->getPageLinks( 'Bootstrap:Subnav' );
 		$subnav_select = $this->navSelect( $subnav_links );
 
 		$this->html( 'headelement' );
 		?>
-		<nav class="navbar sticky-top navbar-expand-lg <?php echo $wgNavBarClasses; ?>  navbar-dark bg-primary" role="navigation">
+		<nav class="navbar sticky-top navbar-expand-lg <?php echo $navBarClasses; ?>  navbar-dark bg-primary" role="navigation">
 			<div class="container">
 				<a class="navbar-brand" href="<?php echo $this->data['nav_urls']['mainpage']['href'] ?>" title="<?php echo $this->get( 'sitename' ); ?>">
-					<?php echo isset( $wgLogo ) && $wgLogo ? "<img src='{$wgLogo}' alt='Logo'/> " : '';
+					<?php echo isset( $logo ) && $logo ? "<img src='{$logo}' alt='Logo'/> " : '';
 					echo $this->get( 'sitenameshort' ) ?: $this->get( 'sitename' ); ?>
 				</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +55,7 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 								<a class="dropdown-item recent-changes" href="<?php echo $url_prefix; ?>Special:RecentChanges"><i class="fa fa-edit"></i> Recent Changes</a>
 								<a class="dropdown-item special-pages" href="<?php echo $url_prefix; ?>Special:SpecialPages"><i class="fa fa-star"></i> Special Pages</a>
-								<?php if ( $wgEnableUploads ) { ?>
+								<?php if ( $enableUploads ) { ?>
 									<a class="dropdown-item upload-a-file" href="<?php echo $url_prefix; ?>Special:Upload"><i class="fa fa-upload"></i> Upload a File</a>
 								<?php } ?>
 							</div>
@@ -62,11 +69,11 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 						</div>
 					</form>
 					<?php
-					if ( $wgUser->isLoggedIn() ) {
+					if ( $user->isLoggedIn() ) {
 						$personal_urls = $this->get( 'personal_urls' );
 						if ( count( $personal_urls ) > 0 ) {
-							$user_icon = '<span class="user-icon me-1"><img src="https://secure.gravatar.com/avatar/' . md5( strtolower( $wgUser->getEmail() ) ) . '.jpg?s=20&r=g"/></span>';
-							$name = strtolower( $wgUser->getName() );
+							$user_icon = '<span class="user-icon me-1"><img src="https://secure.gravatar.com/avatar/' . md5( strtolower( $user->getEmail() ) ) . '.jpg?s=20&r=g"/></span>';
+							$name = strtolower( $user->getName() );
 							$user_nav = $this->getArrayLinks( $personal_urls, $user_icon . $name, 'user' );
 							?>
 							<ul<?php $this->html( 'userlangattributes' ) ?> class="nav navbar-nav navbar-right">
@@ -88,7 +95,7 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 							<li class="nav-item">
 								<?php echo Linker::linkKnown( SpecialPage::getTitleFor( 'Userlogin' ), wfMessage( 'login' ), [ 'class' => 'nav-link' ] ); ?>
 							</li>
-							<?php if ( !empty( $wgGroupPermissions['*']['createaccount'] ) ) { ?>
+							<?php if ( !empty( $groupPermissions['*']['createaccount'] ) ) { ?>
 								<li class="nav-item ms-4">
 									<?php echo Linker::linkKnown( SpecialPage::getTitleFor( 'CreateAccount' ), 'New user? Register here!', [ 'class' => 'nav-link' ] ); ?>
 								</li>
@@ -116,7 +123,7 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 		<?php } ?>
 		<div id="wiki-outer-body">
 			<div id="wiki-body" class="container">
-				<?php if ( 'sidebar' == $wgTOCLocation ) { ?>
+				<?php if ( $tocLocation == 'sidebar' ) { ?>
 					<div class="row">
 						<section class="col-md-3 toc-sidebar"></section>
 						<section class="col-md-9 wiki-body-section">
@@ -159,7 +166,7 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 						<!-- /dataAfterContent -->
 					</div>
 				<?php } ?>
-				<?php if ( 'sidebar' == $wgTOCLocation ) { ?>
+				<?php if ( $tocLocation == 'sidebar' ) { ?>
 						</section>
 					</section>
 				<?php } ?>
@@ -169,7 +176,7 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 			<div class="container">
 				<?php $this->includePage( 'Bootstrap:Footer' ); ?>
 				<footer>
-					<p>&copy; <?php echo date( 'Y' ); ?> by <a href="<?php echo ( isset( $wgCopyrightLink ) ? $wgCopyrightLink : 'http://borkweb.com' ); ?>"><?php echo ( isset( $wgCopyright ) ? $wgCopyright : 'BorkWeb' ); ?></a>
+					<p>&copy; <?php echo date( 'Y' ); ?> by <a href="<?php echo ( isset( $copyrightLink ) ? $copyrightLink : 'http://borkweb.com' ); ?>"><?php echo ( isset( $copyright ) ? $copyright : 'BorkWeb' ); ?></a>
 						&bull; Powered by <a href="http://mediawiki.org">MediaWiki</a>
 					</p>
 				</footer>
@@ -194,13 +201,17 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 	}
 
 	/**
-	 * Render one or more navigations elements by name, automatically reveresed
+	 * Render one or more navigations elements by name, automatically reversed
 	 * when UI is in RTL mode
+	 *
+	 * @param array $nav Navigation items
+	 * @return string HTML output
 	 */
 	private function nav( $nav ) {
-		global $wgArticlePath;
+		$config = $this->getSkin()->getConfig();
+		$articlePath = $config->get( 'ArticlePath' );
 
-		$path_replace = str_replace( '$1', '/', $wgArticlePath );
+		$path_replace = str_replace( '$1', '/', $articlePath );
 
 		$output = '';
 		foreach ( $nav as $topItem ) {
@@ -211,7 +222,7 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 				$output .= '<div class="dropdown-menu" aria-labelledby="navbarDropdown">';
 
 				foreach ( $topItem['sublinks'] as $subLink ) {
-					if ( 'divider' == $subLink ) {
+					if ( $subLink == 'divider' ) {
 						$output .= "<div class='dropdown-divider'></div>\n";
 					} elseif ( !empty( $subLink['textonly'] ) ) {
 						$output .= "<div class='nav-header'>{$subLink['title']}</div>\n";
@@ -262,7 +273,7 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 			$output .= '<optgroup label="' . strip_tags( $topItem['title'] ) . '">';
 			if ( array_key_exists( 'sublinks', $topItem ) ) {
 				foreach ( $topItem['sublinks'] as $subLink ) {
-					if ( 'divider' == $subLink ) {
+					if ( $subLink == 'divider' ) {
 						$output .= "<option value='' disabled='disabled' class='unclickable'>----</option>\n";
 					} elseif ( !empty( $subLink['textonly'] ) ) {
 						$output .= "<option value='' disabled='disabled' class='unclickable'>{$subLink['title']}</option>\n";
@@ -520,15 +531,25 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 		return $nav;
 	}
 
+	/**
+	 * Get raw text content of a wiki page
+	 *
+	 * @param string $title Page title
+	 * @return string Page content or error message
+	 */
 	public function getPageRawText( $title ) {
 		$pageTitle = Title::newFromText( $title );
 		if ( !$pageTitle->exists() ) {
 			return 'Create the page [[Bootstrap:TitleBar]]';
 		} else {
-			$page = WikiPage::factory( $pageTitle );
-			$revision = $page->getRevision();
-			$content  = $revision->getContent( Revision::RAW );
-			return ContentHandler::getContentText( $content );
+			$services = MediaWikiServices::getInstance();
+			$page = $services->getWikiPageFactory()->newFromTitle( $pageTitle );
+			$revision = $page->getRevisionRecord();
+			if ( $revision ) {
+				$content = $revision->getContent( SlotRecord::MAIN );
+				return $content ? $content->getText() : '';
+			}
+			return '';
 		}
 	}
 
@@ -753,7 +774,7 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 	protected function deprecatedHookHack( $hook, $hookOptions = [] ) {
 		$hookContents = '';
 		ob_start();
-		Hooks::run( $hook, $hookOptions );
+		MediaWikiServices::getInstance()->getHookContainer()->run( $hook, $hookOptions );
 		$hookContents = ob_get_contents();
 		ob_end_clean();
 		if ( !trim( $hookContents ) ) {
@@ -867,6 +888,14 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 		return $html;
 	}
 
+	/**
+	 * Build navigation links from array
+	 *
+	 * @param array $array Array of navigation items
+	 * @param string $title Navigation title
+	 * @param string $which Type of navigation ('page' or 'user')
+	 * @return string HTML output
+	 */
 	private function getArrayLinks( $array, $title, $which ) {
 		$nav = [];
 		$nav[] = [ 'title' => $title ];
@@ -882,7 +911,7 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 
 			$icon = null;
 
-			if ( 'page' == $which ) {
+			if ( $which == 'page' ) {
 				switch ( $link['title'] ) {
 					case 'Page':
 						$icon = 'file';
@@ -914,7 +943,7 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 				}
 
 				$link['title'] = '<i class="fa fa-' . $icon . '"></i> ' . $link['title'];
-			} elseif ( 'user' == $which ) {
+			} elseif ( $which == 'user' ) {
 				switch ( $link['title'] ) {
 					case 'My talk':
 						$icon = 'comment';
@@ -945,13 +974,23 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 		return $this->nav( $nav );
 	}
 
+	/**
+	 * Include and render a wiki page
+	 *
+	 * @param string $title Page title to include
+	 */
 	public function includePage( $title ) {
 		$pageTitle = Title::newFromText( $title );
 		if ( !$pageTitle->exists() ) {
 			echo 'The page [[' . $title . ']] was not found.';
 		} else {
-			$article = new Article( $pageTitle );
-			echo $article->getParserOutput()->getText();
+			$services = MediaWikiServices::getInstance();
+			$page = $services->getWikiPageFactory()->newFromTitle( $pageTitle );
+			$parserOptions = ParserOptions::newFromContext( $this->getSkin()->getContext() );
+			$parserOutput = $page->getParserOutput( $parserOptions );
+			if ( $parserOutput ) {
+				echo $parserOutput->getText();
+			}
 		}
 	}
 }

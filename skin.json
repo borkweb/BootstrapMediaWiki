@@ -8,7 +8,7 @@
 	"license-name": "CC0-1.0",
 	"type": "skin",
 	"requires": {
-		"MediaWiki": ">= 1.29.0"
+		"MediaWiki": ">= 1.35.0"
 	},
 	"ValidSkinNames": {
 		"bootstrapmediawiki": "BootstrapMediaWiki"
@@ -70,5 +70,23 @@
 		"SkinBootstrapMediaWiki": "includes/SkinBootstrapMediaWiki.php",
 		"BootstrapMediaWikiTemplate": "includes/BootstrapMediaWikiTemplate.php"
 	},
-	"manifest_version": 1
+	"config": {
+		"BootstrapMediaWikiNavBarClasses": {
+			"value": "",
+			"description": "Additional CSS classes for the navbar"
+		},
+		"BootstrapMediaWikiTOCLocation": {
+			"value": "default",
+			"description": "Location of table of contents (default or sidebar)"
+		},
+		"BootstrapMediaWikiCopyrightLink": {
+			"value": null,
+			"description": "URL for copyright link in footer (falls back to RightsUrl)"
+		},
+		"BootstrapMediaWikiCopyright": {
+			"value": null,
+			"description": "Copyright text for footer (falls back to RightsText)"
+		}
+	},
+	"manifest_version": 2
 }

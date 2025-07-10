@@ -5,15 +5,19 @@
  * @ingroup Skins
  */
 class SkinBootstrapMediaWiki extends SkinTemplate {
-	public $skinname       = 'bootstrap-mediawiki';
-	public $stylename      = 'bootstrap-mediawiki';
-	public $template       = 'BootstrapMediaWikiTemplate';
+	/** @var string Skin name */
+	public $skinname = 'bootstrap-mediawiki';
+	/** @var string Stylename */
+	public $stylename = 'bootstrap-mediawiki';
+	/** @var string Template name */
+	public $template = 'BootstrapMediaWikiTemplate';
+	/** @var bool Whether to use head element */
 	public $useHeadElement = true;
 
 	/**
 	 * Add CSS via ResourceLoader
 	 *
-	 * @param $out OutputPage
+	 * @param OutputPage $out OutputPage instance
 	 */
 	public function initPage( OutputPage $out ) {
 		$out->addMeta(
@@ -28,7 +32,7 @@ class SkinBootstrapMediaWiki extends SkinTemplate {
 		];
 
 		if ( file_exists( dirname( __DIR__ ) . '/resources/custom.css' ) ) {
-			$styles[] = 'skins.boostrapmediawiki.custom';
+			$styles[] = 'skins.bootstrapmediawiki.custom';
 		}
 
 		$scripts = [
@@ -36,7 +40,7 @@ class SkinBootstrapMediaWiki extends SkinTemplate {
 		];
 
 		if ( file_exists( dirname( __DIR__ ) . '/resources/custom.js' ) ) {
-			$styles[] = 'skins.boostrapmediawiki.custom.js';
+			$scripts[] = 'skins.bootstrapmediawiki.custom.js';
 		}
 
 		$out->addModuleStyles( $styles );
