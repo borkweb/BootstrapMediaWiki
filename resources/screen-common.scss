@@ -1,11 +1,11 @@
 /* Common styling for the Example skin */
 
-@import "variables.less";
+@import "variables.scss";
 
 // Page layout
 
 #mw-wrapper {
-	max-width: @width;
+	max-width: $width;
 	margin: 0 auto;
 	position: relative;
 	padding: 1em;
@@ -82,7 +82,7 @@ pre {
 // Footer
 #footer {
 	clear: both;
-	border-top: 1px solid @border;
+	border-top: 1px solid $border;
 
 	ul {
 		margin-top: 1em;
@@ -98,5 +98,5 @@ pre {
 #page-tools h3,
 #p-search h3,
 #p-personal h3 {
-	.hidden;
+	@include hidden;
 }
