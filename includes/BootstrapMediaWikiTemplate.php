@@ -18,13 +18,13 @@ class BootstrapMediaWikiTemplate extends BaseTemplate {
 		$request = $this->getSkin()->getRequest();
 
 		// Get configuration values
-		$copyrightLink = $config->get( 'BootstrapMediaWikiCopyrightLink' ) ?: $config->get( 'RightsUrl' );
-		$copyright = $config->get( 'BootstrapMediaWikiCopyright' ) ?: $config->get( 'RightsText' );
+		$copyrightLink = $config->get( 'bootstrapmediawikiCopyrightLink' ) ?: $config->get( 'RightsUrl' );
+		$copyright = $config->get( 'bootstrapmediawikiCopyright' ) ?: $config->get( 'RightsText' );
 		$articlePath = $config->get( 'ArticlePath' );
 		$enableUploads = $config->get( 'EnableUploads' );
 		$logo = $config->get( 'Logo' );
-		$tocLocation = $config->get( 'BootstrapMediaWikiTOCLocation' );
-		$navBarClasses = $config->get( 'BootstrapMediaWikiNavBarClasses' );
+		$tocLocation = $config->get( 'bootstrapmediawikiTOCLocation' );
+		$navBarClasses = $config->get( 'bootstrapmediawikiNavBarClasses' );
 		$groupPermissions = $config->get( 'GroupPermissions' );
 
 		$this->skin = $this->data['skin'];

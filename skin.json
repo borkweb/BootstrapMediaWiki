@@ -1,6 +1,6 @@
 {
-	"name": "BootstrapMediaWiki",
-	"version": "2.0",
+	"name": "bootstrapmediawiki",
+	"version": "3.0",
 	"author": "Matthew Batchelder",
 	"url": "https://github.com/borkweb/bootstrap-mediawiki",
 	"descriptionmsg": "Bootstrap MediaWiki",
@@ -11,10 +11,10 @@
 		"MediaWiki": ">= 1.35.0"
 	},
 	"ValidSkinNames": {
-		"bootstrapmediawiki": "BootstrapMediaWiki"
+		"bootstrapmediawiki": "bootstrapmediawiki"
 	},
 	"MessagesDirs": {
-		"BootstrapMediaWiki": [
+		"bootstrapmediawiki": [
 			"i18n"
 		]
 	},
@@ -59,7 +59,7 @@
 	},
 	"ResourceFileModulePaths": {
 		"localBasePath": "",
-		"remoteSkinPath": "BootstrapMediaWiki"
+		"remoteSkinPath": "bootstrapmediawiki"
 	},
 	"ResourceModuleSkinStyles": {
 		"example": {
@@ -71,19 +71,19 @@
 		"BootstrapMediaWikiTemplate": "includes/BootstrapMediaWikiTemplate.php"
 	},
 	"config": {
-		"BootstrapMediaWikiNavBarClasses": {
+		"bootstrapmediawikiNavBarClasses": {
 			"value": "",
 			"description": "Additional CSS classes for the navbar"
 		},
-		"BootstrapMediaWikiTOCLocation": {
+		"bootstrapmediawikiTOCLocation": {
 			"value": "default",
 			"description": "Location of table of contents (default or sidebar)"
 		},
-		"BootstrapMediaWikiCopyrightLink": {
+		"bootstrapmediawikiCopyrightLink": {
 			"value": null,
 			"description": "URL for copyright link in footer (falls back to RightsUrl)"
 		},
-		"BootstrapMediaWikiCopyright": {
+		"bootstrapmediawikiCopyright": {
 			"value": null,
 			"description": "Copyright text for footer (falls back to RightsText)"
 		}
