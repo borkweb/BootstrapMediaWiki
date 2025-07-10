@@ -1,0 +1,23 @@
+{
+	"extends": "wikimedia",
+	"env": {
+		"browser": true,
+		"jquery": true
+	},
+	"globals": {
+		"mw": "readonly"
+	},
+	"ignorePatterns": [
+		"vendor/**",
+		"node_modules/**",
+		"font-awesome/**",
+		"*.min.js"
+	],
+	"overrides": [
+		{
+			"files": ["*.json"],
+			"plugins": ["json"],
+			"extends": ["plugin:json/recommended"]
+		}
+	]
+}

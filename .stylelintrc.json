@@ -1,6 +1,14 @@
 {
 	"extends": "stylelint-config-wikimedia",
+	"ignoreFiles": [
+		"vendor/**",
+		"node_modules/**",
+		"font-awesome/**",
+		"*.min.css",
+		"extensions/Bootstrap/**"
+	],
 	"rules": {
-		"selector-max-id": null
+		"selector-max-id": null,
+		"declaration-no-important": null
 	}
 }
