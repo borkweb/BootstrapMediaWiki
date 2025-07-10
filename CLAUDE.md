@@ -11,11 +11,11 @@ BootstrapMediaWiki is a responsive MediaWiki skin that integrates Bootstrap 3 fr
 ### Build and Testing
 ```bash
 # Install dependencies
-npm install
+bun install
 composer install
 
 # Run all tests (linting for JS, JSON, CSS, PHP)
-npm test
+bun run test
 
 # Individual linting tasks
 grunt jshint      # JavaScript linting
@@ -50,7 +50,7 @@ vendor/bin/phpcs -p -s
    - Message keys for i18n
    - Hook handlers
 
-2. **Template System**: 
+2. **Template System**:
    - `includes/SkinBootstrapMediaWiki.php` - Main skin class handling initialization
    - `includes/BootstrapMediaWikiTemplate.php` - Template class responsible for HTML output
    - Uses MediaWiki's BaseTemplate pattern

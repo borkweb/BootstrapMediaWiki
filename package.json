@@ -1,7 +1,8 @@
 {
 	"private": true,
 	"scripts": {
-		"test": "grunt test"
+		"test": "grunt test",
+		"build": "grunt"
 	},
 	"devDependencies": {
 		"grunt": "1.0.3",
