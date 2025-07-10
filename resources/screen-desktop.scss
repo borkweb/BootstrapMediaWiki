@@ -1,6 +1,6 @@
 /* Styles appear on displays over 750 pixels wide */
 
-@import "variables.scss";
+@use "variables" as *;
 
 #site-navigation {
 	ul {

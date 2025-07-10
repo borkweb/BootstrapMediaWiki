@@ -1,6 +1,6 @@
 /* Common styling for the Example skin */
 
-@import "variables.scss";
+@use "variables" as *;
 
 // Page layout
 

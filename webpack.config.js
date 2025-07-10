@@ -1,6 +1,7 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
 
 module.exports = {
 	entry: {
@@ -21,6 +22,7 @@ module.exports = {
 					{
 						loader: 'sass-loader',
 						options: {
+							api: 'modern',
 							sassOptions: {
 								includePaths: [path.resolve(__dirname, 'resources')],
 							},
@@ -35,6 +37,7 @@ module.exports = {
 		],
 	},
 	plugins: [
+		new RemoveEmptyScriptsPlugin(),
 		new MiniCssExtractPlugin({
 			filename: 'style.css',
 		}),

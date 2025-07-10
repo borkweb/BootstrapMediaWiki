@@ -1,12 +1,12 @@
 // Main entry point for BootstrapMediaWiki styles
 
-// Import Bootstrap variables and common styles
-@import "variables.scss";
-@import "screen-common.scss";
+// Use Bootstrap variables and common styles
+@use "variables" as *;
+@use "screen-common";
 
-// Import responsive styles
-@import "screen-desktop.scss";
-@import "screen-mobile.scss";
+// Use responsive styles
+@use "screen-desktop";
+@use "screen-mobile";
 
-// Import extension-specific styles
-@import "extensions/echo.styles.badge.scss";
+// Use extension-specific styles
+@use "extensions/echo.styles.badge";
